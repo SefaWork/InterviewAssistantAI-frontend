@@ -1,5 +1,6 @@
 import './Home.css'
-import HomeImage from '../assets/home-image.jpg'
+import HomeImage from '../../assets/home-image.jpg'
+import { Link } from 'react-router-dom';
 
 function Home() {
     return (
@@ -11,7 +12,7 @@ function Home() {
                     <p className="hero-subtitle">
                         AI powered interview simulations to help you ace your next job interview.
                     </p>
-                    <button className="hero-cta">Get Started</button>
+                    <Link to={"/login"} className="hero-cta">Get Started</Link>
                 </div>
             </section>
         </div>
