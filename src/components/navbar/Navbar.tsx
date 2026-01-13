@@ -1,10 +1,10 @@
 import './Navbar.css'
 import DarkModeToggle from './DarkModeToggle'
 
-function Navbar({setDarkMode, darkMode}: {setDarkMode: () => void, darkMode: boolean}) {
+function Navbar() {
     return (
         <section className="navbar">
-            <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+            <DarkModeToggle />
         </section>
     )
 }

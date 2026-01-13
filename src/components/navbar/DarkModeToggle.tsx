@@ -5,12 +5,30 @@ import LightMode from '../../assets/brightness-high.svg'
 
 import DarkModeHover from '../../assets/moon-fill.svg'
 import DarkMode from '../../assets/moon.svg'
+import { useEffect, useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 
 /**
  * React component for Dark Mode toggle. 
  * @author SefaWork
  * */
-function DarkModeToggle({setDarkMode, darkMode}: {setDarkMode: () => void, darkMode: boolean}) {
+function DarkModeToggle() {
+    const [darkMode, setDarkMode] = useState(true);
+
+    const systemPrefersDark = useMediaQuery(
+        {query: "(prefers-color-scheme: dark)"},
+        undefined,
+        (isSystemDark) => setDarkMode(isSystemDark)
+    )
+
+    useEffect(() => {
+        if(darkMode) {
+            document.body.classList.add('dark')
+        } else {
+            document.body.classList.remove('dark')
+        }
+    }, [darkMode])
+
     return (
         <label className='dark-mode-toggle-container'>
             <input 
@@ -18,7 +36,7 @@ function DarkModeToggle({setDarkMode, darkMode}: {setDarkMode: () => void, darkM
                 id="dark-mode-toggle" 
                 className='dark-mode-toggle' 
                 checked={darkMode}
-                onChange={setDarkMode}
+                onChange={(e) => setDarkMode(e.currentTarget.checked)}
             />
             {darkMode && <img
                 src={DarkMode}

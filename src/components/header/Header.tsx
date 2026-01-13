@@ -3,7 +3,7 @@ import logo from '../../assets/logo.png'
 import Navbar from '../navbar/Navbar';
 import { Link } from 'react-router-dom';
 
-function Header({setDarkMode, darkMode}: {setDarkMode: () => void, darkMode: boolean}) {
+function Header() {
     return (
         <section className='header-container'>
             <section className='header-logo-container'>
@@ -13,7 +13,7 @@ function Header({setDarkMode, darkMode}: {setDarkMode: () => void, darkMode: boo
                 </Link>
             </section>
             <section className='header-navbar'>
-                <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+                <Navbar />
             </section>
         </section>
     )

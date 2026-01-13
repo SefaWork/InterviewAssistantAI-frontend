@@ -1,8 +1,5 @@
 body {
     margin: 0;
-}
-
-:root {
     --background-color: #f6f6f6;
     --foreground-color: #0055ff;
     --primary-text-color: #0a0a0a;
@@ -12,7 +9,7 @@ body {
     --header-shadow: #2f2f2f;
 }
 
-[data-theme="dark"] {
+body.dark {
     --background-color: #121212;
     --foreground-color: #3700b3;
     --primary-text-color: #f6f6f6;
