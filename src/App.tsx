@@ -3,16 +3,14 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import './App.css'
 import { useState } from 'react'
-import Toggle from './components/Toggle'
+import Header from './components/header/Header'
 
 function App() {
-
-  const [isDark, setIsDark] = useState(true);
-
+  const [darkMode, setDarkMode] = useState(true);
   return (
-    <div className="App" data-theme={isDark? "dark" : "light"}>
-      <Toggle isChecked={isDark} handleChange={() => setIsDark(!isDark)}></Toggle>
+    <div className="App" data-theme={darkMode? "dark" : "light"}>
       <BrowserRouter>
+        <Header darkMode={darkMode} setDarkMode={() => setDarkMode(!darkMode)} />
         <Routes>
           {/*Pages of the website. */}
           <Route path='/' element={<Home />} />
