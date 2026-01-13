@@ -15,12 +15,14 @@ import { useMediaQuery } from 'react-responsive'
 function DarkModeToggle() {
     const [darkMode, setDarkMode] = useState(true);
 
-    const systemPrefersDark = useMediaQuery(
+    // Checks if user's browser prefers dark mode.
+    useMediaQuery(
         {query: "(prefers-color-scheme: dark)"},
         undefined,
         (isSystemDark) => setDarkMode(isSystemDark)
     )
 
+    // Adds dark class to body.
     useEffect(() => {
         if(darkMode) {
             document.body.classList.add('dark')
