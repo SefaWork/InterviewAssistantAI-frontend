@@ -4,7 +4,7 @@ import './Register.css'
 
 function Register() {
     return (
-        <div className='register-page'>
+        <div className='register-page' data-testid='Register'>
             <Form formTitle='Register'>
                 <div className='form-field'>
                     <label htmlFor='email'>E-Mail Address:</label>

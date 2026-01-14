@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Home() {
     return (
-        <div className="home">
+        <div className="home" data-testid="Home">
             <section className="hero-section">
                 <img src={HomeImage} alt="Interview Assistant" className="hero-image" />
                 <div className="hero-content">

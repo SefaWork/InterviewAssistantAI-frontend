@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     return (
-        <section className='header-container'>
+        <section className='header-container' data-testid="Header">
             <section className='header-logo-container'>
                 <Link to='/' className='header-logo-link'>
                     <img className='header-logo' src={logo}>

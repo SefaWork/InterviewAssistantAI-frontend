@@ -5,7 +5,7 @@ import './Login.css'
 
 function Login() {
     return (
-        <div className='login-page'>
+        <div className='login-page' data-testid="Login">
             <Form formTitle='Login'>            
                 <div className='form-field'>
                     <label htmlFor='email'>E-Mail Address:</label>
