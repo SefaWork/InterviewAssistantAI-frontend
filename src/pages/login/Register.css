@@ -1,0 +1,12 @@
+.register-page {
+    width: 100%;
+    padding-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-link {
+    padding-top: 1rem;
+    display: block;
+}

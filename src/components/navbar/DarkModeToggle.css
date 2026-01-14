@@ -1,0 +1,18 @@
+.dark-mode-toggle-container {
+    position: relative;
+    cursor: pointer;
+    height: 40%;
+    display: flex;
+    align-items: center;
+}
+
+.dark-mode-toggle-container img {
+    height: 100%;
+    width: auto;
+    filter: brightness(0) saturate(100%) invert(96%) sepia(53%) saturate(398%) hue-rotate(243deg) brightness(118%) contrast(96%);
+    display: flex;
+}
+
+.dark-mode-toggle {
+    display: none;
+}
