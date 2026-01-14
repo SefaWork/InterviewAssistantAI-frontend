@@ -11,6 +11,8 @@ body {
     --toggle-bg: #f0eb9d;
     --toggle-fg: #ffd000;
     --header-shadow: #2f2f2f;
+    --link-color: #0000EE;
+    --link-visited-color: #551A8B;
 }
 
 body.dark {
@@ -25,4 +27,9 @@ body.dark {
     --toggle-bg: #283452;
     --toggle-fg: #00a6ff;
     --header-shadow: #0a0a0a;
+    --link-color: #386891;
+    --link-visited-color: #915938;
 }
+
+a { color: var(--link-color); }
+a:visited { color: var(--link-visited-color); }

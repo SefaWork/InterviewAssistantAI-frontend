@@ -48,3 +48,8 @@
     border-radius: 1rem;
     padding: 1rem;
 }
+
+.register-link {
+    padding-top: 1rem;
+    display: block;
+}

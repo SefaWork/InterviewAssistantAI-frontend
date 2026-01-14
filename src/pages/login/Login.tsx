@@ -1,4 +1,5 @@
 // wip
+import { Link } from 'react-router-dom';
 import Form from '../../components/common/Form';
 import './Login.css'
 
@@ -15,6 +16,7 @@ function Login() {
                     <input type='password' id='password' name='password' placeholder='*********' autoComplete='password' required />
                 </div>
                 <button className='form-submit' type='submit'>Login</button>
+                <Link className='register-link' to='/register'>Don't have an account?</Link>
             </Form>
         </div>
     )
