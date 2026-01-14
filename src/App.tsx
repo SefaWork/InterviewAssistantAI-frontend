@@ -4,6 +4,7 @@ import NotFound from './pages/home/NotFound'
 import './App.css'
 import Header from './components/header/Header'
 import Login from './pages/login/Login'
+import Register from './pages/login/Register'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           {/*Pages of the website. */}
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
 
           {/*Wild route to catch all invalid routes. */}
           <Route path='*' element={<NotFound />} />
