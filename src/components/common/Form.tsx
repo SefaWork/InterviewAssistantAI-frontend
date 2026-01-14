@@ -1,7 +1,12 @@
+import type { PropsWithChildren } from 'react';
 import './Form.css'
-import type React from 'react';
 
-function Form({formTitle, children}: {formTitle?: string, children: React.ReactNode}) {
+interface FormProps extends PropsWithChildren {
+    /**Name of the form. Creates a h1 with the name if provided. */
+    formTitle?: string
+}
+
+function Form({formTitle, children}: FormProps) {
     return (
         <div className='form-container' data-testid='Form'>
             {formTitle && <h1>{formTitle}</h1>}
