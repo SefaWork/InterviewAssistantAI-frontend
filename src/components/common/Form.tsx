@@ -1,17 +1,18 @@
+import type { FormEventHandler } from 'react'
 import './Form.css'
 
 interface FormProps {
     /**Name of the form. Creates a h1 with the name if provided. */
     formTitle?: string,
-    action?: (formData: FormData) => void | Promise<void> | undefined
+    onSubmit?: FormEventHandler<HTMLFormElement>,
     children: React.ReactNode
 }
 
-function Form({formTitle, action, children}: FormProps) {
+function Form({formTitle, onSubmit, children}: FormProps) {
     return (
         <div className='form-container' data-testid='Form'>
             {formTitle && <h1>{formTitle}</h1>}
-            <form className='form' action={action}>
+            <form className='form' onSubmit={onSubmit}>
                 {children}
             </form>
         </div>

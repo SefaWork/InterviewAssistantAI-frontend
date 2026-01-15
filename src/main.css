@@ -13,6 +13,7 @@ body {
     --header-shadow: #2f2f2f;
     --link-color: #0000EE;
     --link-visited-color: #551A8B;
+    --error-color: #ff0000;
 }
 
 body.dark {
@@ -29,6 +30,7 @@ body.dark {
     --header-shadow: #0a0a0a;
     --link-color: #386891;
     --link-visited-color: #915938;
+    --error-color: #d50000;
 }
 
 a { color: var(--link-color); }
