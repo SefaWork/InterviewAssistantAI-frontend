@@ -3,7 +3,7 @@ import './Form.css'
 interface FormProps {
     /**Name of the form. Creates a h1 with the name if provided. */
     formTitle?: string,
-    action?: (formData: FormData) => any | Promise<any>
+    action?: (formData: FormData) => void | Promise<void> | undefined
     children: React.ReactNode
 }
 
