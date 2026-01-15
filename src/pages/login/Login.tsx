@@ -13,7 +13,7 @@ function Login() {
                 </div>
                 <div className='form-field'>
                     <label htmlFor='email'>Password:</label>
-                    <input type='password' id='password' name='password' placeholder='*********' autoComplete='password' required />
+                    <input type='password' id='password' name='password' placeholder='*********' autoComplete='current-password' required />
                 </div>
                 <button className='form-submit' type='submit'>Login</button>
                 <Link className='register-link' to='/register'>Don't have an account?</Link>
