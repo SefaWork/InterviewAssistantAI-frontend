@@ -12,11 +12,11 @@ function Register() {
                 </div>
                 <div className='form-field'>
                     <label htmlFor='password'>Password:</label>
-                    <input type='password' id='password' name='password' placeholder='*********' autoComplete='off' required />
+                    <input type='password' id='password' name='password' placeholder='*********' autoComplete='new-password' required />
                 </div>
                 <div className='form-field'>
                     <label htmlFor='repeatpassword'>Repeat password:</label>
-                    <input type='password' id='repeatpassword' name='repeatpassword' placeholder='*********' autoComplete='off' required />
+                    <input type='password' id='repeatpassword' name='repeatpassword' placeholder='*********' autoComplete='new-password' required />
                 </div>
                 <button className='form-submit' type='submit'>Create Account</button>
                 <Link className='login-link' to='/login'>Already have an account?</Link>
