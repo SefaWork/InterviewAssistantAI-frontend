@@ -5,7 +5,7 @@ function NotFound() {
     <div>
         <h1>Not Found</h1>
         <p>The page you are searching for doesn't exist.</p>
-        <Webcam autoStart={true} showControls={true} />
+        <Webcam showControls={true} />
     </div>
   )
 }

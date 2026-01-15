@@ -13,17 +13,13 @@ interface WebcamProps {
 
     /**Whether to show test controls. */
     showControls?: boolean
-
-    /**Autostarts webcam view. */
-    autoStart?: boolean
 }
 
 function Webcam({ 
   onCapture, 
   width = 640, 
   height = 480, 
-  showControls = true,
-  autoStart = false 
+  showControls = true
 }: WebcamProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -96,14 +92,10 @@ function Webcam({
   }
 
   useEffect(() => {
-    if (autoStart) {
-      startWebcam()
-    }
-
     return () => {
       stopWebcam()
     }
-  }, [autoStart])
+  }, [])
 
   return (
     <div className="webcam-container" data-testid="Webcam">
