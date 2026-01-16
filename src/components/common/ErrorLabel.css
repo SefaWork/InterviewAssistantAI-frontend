@@ -1,0 +1,6 @@
+.error-label {
+    color: var(--error-color);
+    text-align: left;
+    font-weight: bold;
+    margin: 0;
+}

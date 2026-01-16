@@ -1,0 +1,9 @@
+.error-message {
+    color: var(--error-color);
+    font-weight: bold;
+    width: 100%;
+    padding: 1rem 0;
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: var(--error-color);
+}

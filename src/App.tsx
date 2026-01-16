@@ -5,23 +5,26 @@ import './App.css'
 import Header from './components/header/Header'
 import Login from './pages/login/Login'
 import Register from './pages/login/Register'
+import AuthProvider from './context/AuthProvider'
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <BrowserRouter>
-        <Header />
-        <Routes>
-          {/*Pages of the website. */}
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+        <div className="App">
+            <Header />
+            <Routes>
+              {/*Pages of the website. */}
+              <Route path='/' element={<Home />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
 
-          {/*Wild route to catch all invalid routes. */}
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+              {/*Wild route to catch all invalid routes. */}
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+        </div>
       </BrowserRouter>
-    </div>
+    </AuthProvider>
   )
 }
 
