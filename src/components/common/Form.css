@@ -62,3 +62,7 @@
 .form-submit:active {
     transform: scale(.9);
 }
+
+.form .error-message {
+    margin-bottom: 1rem;
+}

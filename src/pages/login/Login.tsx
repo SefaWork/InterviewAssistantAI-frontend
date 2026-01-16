@@ -4,6 +4,7 @@ import { useRef, useState, type FormEvent } from 'react';
 import ErrorLabel from '../../components/common/ErrorLabel';
 import './Login.css'
 import { useAuth } from '../../hooks/useAuth';
+import ErrorMessage from '../../components/common/ErrorMessage';
 
 interface ErrorMessageState {
     emailErr?: string | undefined,
@@ -33,9 +34,9 @@ function Login() {
         setErrors(newState)
         if(newState.emailErr || newState.passErr) return;
 
+        setSubmitErr(undefined);
         try {
             await authContext.fetchTokens(givenEmail, givenPassword);
-            setSubmitErr(undefined);
         } catch(err) {
             setSubmitErr(err instanceof Error ? err.message : 'An error occurred. Please try again.')
         }
@@ -54,7 +55,7 @@ function Login() {
                     <input type='password' id='password' name='password' placeholder='*********' autoComplete='current-password' ref={passRef} required />
                     <ErrorLabel errMsg={errors.passErr} />
                 </div>
-                <ErrorLabel errMsg={submitErr} />
+                <ErrorMessage errMsg={submitErr} />
                 <button className='form-submit' type='submit'>Login</button>
                 <Link className='register-link' to='/register'>Don't have an account?</Link>
             </Form>
