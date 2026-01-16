@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Form from '../../components/common/Form'
 import './Register.css'
 import { useRef, useState, type FormEvent } from 'react'
 import ErrorLabel from '../../components/common/ErrorLabel';
+import { useAuth } from '../../hooks/useAuth';
+import ErrorMessage from '../../components/common/ErrorMessage';
 
 interface ErrorMessageState {
     email?: string | undefined,
@@ -11,14 +13,17 @@ interface ErrorMessageState {
 }
 
 function Register() {
+    const authContext = useAuth();
+    const navigate = useNavigate();
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passRef = useRef<HTMLInputElement>(null);
     const repPassRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<ErrorMessageState>({});
+    const [submitErr, setSubmitErr] = useState<string | undefined>(undefined);
     
-    const onSubmit = (e: FormEvent) => {
+    const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
         const givenEmail = emailRef.current?.value ?? "";
@@ -35,6 +40,14 @@ function Register() {
 
         setErrors(newStates);
         if (newStates.email || newStates.pass || newStates.repPass) return;
+
+        setSubmitErr(undefined);
+        try {
+            await authContext.registerUser(givenEmail, givenPass);
+            navigate('/login')
+        } catch(err) {
+            setSubmitErr(err instanceof Error? err.message : "An error occured. Please try again.");
+        }
     }
 
     return (
@@ -55,6 +68,7 @@ function Register() {
                     <input type='password' id='repeatpassword' name='repeatpassword' placeholder='*********' autoComplete='new-password' ref={repPassRef} required />
                     <ErrorLabel errMsg={errors.repPass} />
                 </div>
+                <ErrorMessage errMsg={submitErr} />
                 <button className='form-submit' type='submit'>Create Account</button>
                 <Link className='login-link' to='/login'>Already have an account?</Link>
             </Form>

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Form from '../../components/common/Form';
 import { useRef, useState, type FormEvent } from 'react';
 import ErrorLabel from '../../components/common/ErrorLabel';
@@ -13,6 +13,7 @@ interface ErrorMessageState {
 
 function Login() {
     const authContext = useAuth();
+    const navigate = useNavigate();
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passRef = useRef<HTMLInputElement>(null);
@@ -37,6 +38,7 @@ function Login() {
         setSubmitErr(undefined);
         try {
             await authContext.fetchTokens(givenEmail, givenPassword);
+            navigate('/');
         } catch(err) {
             setSubmitErr(err instanceof Error ? err.message : 'An error occurred. Please try again.')
         }

@@ -10,6 +10,7 @@ export interface AuthContextType {
     fetchTokens: (email: string, password: string) => Promise<void>;
     logoutUser: () => void;
     setAuthTokens: (tokens: AuthTokens | null) => void;
+    registerUser: (email: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
