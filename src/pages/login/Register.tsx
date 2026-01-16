@@ -22,6 +22,7 @@ function Register() {
 
     const [errors, setErrors] = useState<ErrorMessageState>({});
     const [submitErr, setSubmitErr] = useState<string | undefined>(undefined);
+    const [processing, setProcessing] = useState<boolean>(false);
     
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -41,13 +42,14 @@ function Register() {
         setErrors(newStates);
         if (newStates.email || newStates.pass || newStates.repPass) return;
 
-        setSubmitErr(undefined);
+        setProcessing(true);
         try {
             await authContext.registerUser(givenEmail, givenPass);
-            navigate('/login')
+            navigate('/login');
         } catch(err) {
             setSubmitErr(err instanceof Error? err.message : "An error occured. Please try again.");
         }
+        setProcessing(false);
     }
 
     return (
@@ -69,7 +71,7 @@ function Register() {
                     <ErrorLabel errMsg={errors.repPass} />
                 </div>
                 <ErrorMessage errMsg={submitErr} />
-                <button className='form-submit' type='submit'>Create Account</button>
+                <button className='form-submit' type='submit' disabled={processing}>{processing? "Creating account..." : "Create Account"}</button>
                 <Link className='login-link' to='/login'>Already have an account?</Link>
             </Form>
         </div>  

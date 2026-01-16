@@ -63,6 +63,10 @@
     transform: scale(.9);
 }
 
+.form-submit:disabled {
+    background-color: var(--foreground-hover);
+}
+
 .form .error-message {
     margin-bottom: 1rem;
 }
