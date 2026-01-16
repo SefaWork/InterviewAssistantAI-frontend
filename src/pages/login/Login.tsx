@@ -3,6 +3,7 @@ import Form from '../../components/common/Form';
 import { useRef, useState, type FormEvent } from 'react';
 import ErrorLabel from '../../components/common/ErrorLabel';
 import './Login.css'
+import { useAuth } from '../../hooks/useAuth';
 
 interface ErrorMessageState {
     emailErr?: string | undefined,
@@ -10,16 +11,19 @@ interface ErrorMessageState {
 }
 
 function Login() {
+    const authContext = useAuth();
+
     const emailRef = useRef<HTMLInputElement>(null);
     const passRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<ErrorMessageState>({});
+    const [submitErr, setSubmitErr] = useState<string | undefined>(undefined);
 
     const action = async (e: FormEvent) => {
         e.preventDefault();
 
-        let givenEmail = emailRef.current?.value ?? "";
-        let givenPassword = passRef.current?.value ?? "";
+        const givenEmail = emailRef.current?.value ?? "";
+        const givenPassword = passRef.current?.value ?? "";
 
         const newState: ErrorMessageState = {
             emailErr: givenEmail.length < 4? "Please enter a valid e-mail address." : undefined,
@@ -28,6 +32,13 @@ function Login() {
 
         setErrors(newState)
         if(newState.emailErr || newState.passErr) return;
+
+        try {
+            await authContext.fetchTokens(givenEmail, givenPassword);
+            setSubmitErr(undefined);
+        } catch(err) {
+            setSubmitErr(err instanceof Error ? err.message : 'An error occurred. Please try again.')
+        }
     }
 
     return (
@@ -43,6 +54,7 @@ function Login() {
                     <input type='password' id='password' name='password' placeholder='*********' autoComplete='current-password' ref={passRef} required />
                     <ErrorLabel errMsg={errors.passErr} />
                 </div>
+                <ErrorLabel errMsg={submitErr} />
                 <button className='form-submit' type='submit'>Login</button>
                 <Link className='register-link' to='/register'>Don't have an account?</Link>
             </Form>
