@@ -12,9 +12,7 @@ function Header() {
                     </img>
                 </Link>
             </section>
-            <section className='header-navbar'>
-                <Navbar />
-            </section>
+            <Navbar />
         </section>
     )
 }
