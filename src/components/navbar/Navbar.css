@@ -3,4 +3,25 @@
     align-items: center;
     justify-content: flex-end;
     height: 100%;
+    flex: 1;
+    max-width: 150px;
+}
+
+.navbar-link-container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    margin: auto auto;
+}
+
+.navbar-link-container a {
+    color: var(--secondary-text-color);
+    font-size: large;
+    text-align: center;
+    text-decoration: none;
+}
+
+.navbar-link-container a:visited {
+    color: var(--secondary-text-color);
 }
