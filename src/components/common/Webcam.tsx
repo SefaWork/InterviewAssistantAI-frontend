@@ -6,7 +6,7 @@ function Webcam() {
 
   useEffect(() => {
     let currentStream: MediaStream | null = null;
-    let currentRef = videoReference.current;
+    const currentRef = videoReference.current;
     if (!currentRef) return;
 
     if (navigator.mediaDevices) {
