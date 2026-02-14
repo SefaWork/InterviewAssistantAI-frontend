@@ -9,14 +9,16 @@ function Webcam() {
     let currentRef = videoReference.current;
     if (!currentRef) return;
 
-    navigator.mediaDevices.getUserMedia({video: true}).then((stream: MediaStream) => {
-      currentStream = stream
-      currentRef.srcObject = stream
-    })
-    .catch(() => {
-      currentStream = null;
-      console.log("Something went wrong!")
-    })
+    if (navigator.mediaDevices) {
+      navigator.mediaDevices.getUserMedia({video: true}).then((stream: MediaStream) => {
+        currentStream = stream
+        currentRef.srcObject = stream
+      })
+      .catch(() => {
+        currentStream = null;
+        console.log("Something went wrong!")
+      })
+    }
 
     // Cleanup function.
     return () => {
