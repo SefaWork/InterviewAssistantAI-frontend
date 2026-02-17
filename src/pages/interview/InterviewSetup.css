@@ -1,0 +1,10 @@
+.interview-setup-main-div {
+    margin: 0 1rem;
+}
+
+.webcam-bg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+}
