@@ -1,5 +1,3 @@
-import Webcam from "../../components/common/Webcam"
-
 function NotFound() {
   return (
     <div>
