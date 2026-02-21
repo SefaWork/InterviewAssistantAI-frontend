@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import './Webcam.css'
 
 function Webcam() {
   const videoReference = useRef<HTMLVideoElement>(null)
@@ -32,7 +31,7 @@ function Webcam() {
   }, [])
 
   return (
-    <video autoPlay={true} id="videoElement" ref={videoReference} controls={false} />
+    <video className='video-frame' autoPlay={true} id="videoElement" ref={videoReference} controls={false} />
   )
 }
 

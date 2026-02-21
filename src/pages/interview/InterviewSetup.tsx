@@ -4,10 +4,14 @@ import './InterviewSetup.css'
 function InterviewSetup() {
     return (
         <div className="interview-setup-main-div">
-            <h1>Let's prepare your camera.</h1>
-            <p>You need to give Camera permission to continue. You know you have enabled it successfully if you see your face below.</p>
-            <div className="webcam-bg">
-                <Webcam />
+            <div className="setup-title">
+                <h1>Let's prepare your camera.</h1>
+                <p>We need permission to use your camera to continue. If you can see your face below, you have configured your camera correctly.</p>
+            </div>
+            <div className="webcam-container">
+                <div className="webcam-bg">
+                    <Webcam />
+                </div>
             </div>
         </div>
     )
