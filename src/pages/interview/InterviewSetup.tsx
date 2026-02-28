@@ -1,4 +1,4 @@
-import Webcam from '../../components/common/Webcam'
+import Webcam from 'react-webcam'
 import './InterviewSetup.css'
 
 function InterviewSetup() {
