@@ -1,28 +1,30 @@
-.header-container {
-    width: 100%;
-    height: 10vh;
-    padding: 0 2rem;
+header {
+    display: flex;
     box-sizing: border-box;
-    display: flex;
+    width: 100%;
+    height: 3rem;
+    padding: 0;
+    margin: 0;
+    text-align: center;
     align-items: center;
-    justify-content: space-between;
     background-color: var(--foreground-color);
-    box-shadow: .0rem .25rem 1rem var(--header-shadow);
-}
-
-.header-logo-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.header-logo-link {
-    height: 60%;
-    display: flex;
-    align-items: center;
 }
 
 .header-logo {
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    padding: 1rem 1rem;
+}
+
+.header-logo:visited {
+    color: var(--secondary-text-color);
+}
+
+.header-buttons-section {
+    display: flex;
+    flex: 1;
+    justify-content: right;
+    align-items: center;
     height: 100%;
-    width: auto;
+    margin-right: .5rem;
 }

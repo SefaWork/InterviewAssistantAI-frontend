@@ -1,19 +1,15 @@
-import './Header.css'
-import logo from '../../assets/logo.png'
-import Navbar from '../navbar/Navbar';
 import { Link } from 'react-router-dom';
+import ThemeToggle from '../navbar/ThemeToggle';
+import './Header.css'
 
 function Header() {
     return (
-        <section className='header-container' data-testid="Header">
-            <section className='header-logo-container'>
-                <Link to='/' className='header-logo-link'>
-                    <img className='header-logo' src={logo}>
-                    </img>
-                </Link>
-            </section>
-            <Navbar />
-        </section>
+        <header>
+            <Link className='header-logo' to={"/"}>InterviewHelper</Link>
+            <div className='header-buttons-section'>
+                <ThemeToggle />
+            </div>
+        </header>
     )
 }
 
