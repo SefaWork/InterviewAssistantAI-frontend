@@ -8,26 +8,31 @@ import Register from './pages/login/Register'
 import AuthProvider from './context/AuthProvider'
 import InterviewSetup from './pages/interview/InterviewSetup'
 import InterviewPage from './pages/interview/InterviewPage'
+import Topnav from './components/header/Topnav'
+import ThemeProvider from './context/ThemeProvider'
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <div className="App">
-            <Header />
-            <Routes>
-              {/*Pages of the website. */}
-              <Route path='/' element={<Home />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/interview/setup' element={<InterviewSetup />} />
-              <Route path='/interview' element={<InterviewPage />} />
+      <ThemeProvider>
+        <BrowserRouter>
+          <div className='app'>
+              <Header />
+              <Topnav />
+              <Routes>
+                {/*Pages of the website. */}
+                <Route path='/' element={<Home />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/interview/setup' element={<InterviewSetup />} />
+                <Route path='/interview' element={<InterviewPage />} />
 
-              {/*Wild route to catch all invalid routes. */}
-              <Route path='*' element={<NotFound />} />
-            </Routes>
-        </div>
-      </BrowserRouter>
+                {/*Wild route to catch all invalid routes. */}
+                <Route path='*' element={<NotFound />} />
+              </Routes>
+          </div>
+        </BrowserRouter>
+      </ThemeProvider>
     </AuthProvider>
   )
 }
