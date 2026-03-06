@@ -6,6 +6,7 @@ html, body, .root {
 
 body {
     --background-color: #f6f6f6;
+    --topnav-color: #002c83;
     --form-color: #ffffff;
     --field-color: #ffffff;
     --foreground-color: #0055ff;
@@ -19,10 +20,12 @@ body {
     --link-color: #0000EE;
     --link-visited-color: #551A8B;
     --error-color: #ff0000;
+    background: radial-gradient(circle at center, #ffffff 0%, #f6f6f6 100%);
 }
 
 body.dark {
     --background-color: #121212;
+    --topnav-color: #1a0057;
     --form-color: #1c1c1c;
     --field-color: #515151;
     --foreground-color: #3700b3;
@@ -36,6 +39,7 @@ body.dark {
     --link-color: #386891;
     --link-visited-color: #915938;
     --error-color: #d50000;
+    background: radial-gradient(circle at center, #202020 0%, #000000 100%);
 }
 
 a { color: var(--link-color); }

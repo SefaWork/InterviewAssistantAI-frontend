@@ -41,6 +41,7 @@ header {
 
 .header-nav-buttons {
     display: block;
+    margin-right: 1rem;
 }
 
 @media only screen and (max-width: 600px) {

@@ -4,7 +4,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: var(--form-color);
+    background-color: var(--topnav-color);
     justify-content: center;
     align-items: center;
 }
@@ -13,22 +13,17 @@
     flex: 1;
     padding: .25rem .75rem;
     text-decoration: none;
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
     transition: background-color 150ms ease;
     text-align: center;
 }
 
 .topnav-container a:hover {
     background-color: var(--foreground-hover);
-    color: var(--secondary-text-color);
 }
 
 .topnav-container a:visited {
-    color: var(--primary-text-color)
-}
-
-.topnav-container a:visited:hover {
-    color: var(--secondary-text-color)
+    color: var(--secondary-text-color);
 }
 
 .topnav-mobile {
