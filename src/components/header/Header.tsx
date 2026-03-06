@@ -6,7 +6,7 @@ function Header() {
     return (
         <header>
             <Link className='header-logo' to={"/"}>InterviewHelper</Link>
-            <div className='header-buttons-section'>
+            <div className='header-buttons-section' data-testid='Header'>
                 <div className='header-nav-buttons'>
                     <Link to="/interview/setup">Interview</Link>
                     <Link to="/login">Login</Link>
