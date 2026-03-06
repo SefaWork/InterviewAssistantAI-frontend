@@ -7,7 +7,6 @@
     background-color: var(--form-color);
     justify-content: center;
     align-items: center;
-    text-align: center;
 }
 
 .topnav-container a {
@@ -15,7 +14,29 @@
     padding: .25rem .75rem;
     text-decoration: none;
     color: var(--primary-text-color);
-    border-style: solid;
-    border-radius: 1rem;
-    border-color: var(--form-color);
+    transition: background-color 150ms ease;
+    text-align: center;
+}
+
+.topnav-container a:hover {
+    background-color: var(--foreground-hover);
+    color: var(--secondary-text-color);
+}
+
+.topnav-container a:visited {
+    color: var(--primary-text-color)
+}
+
+.topnav-container a:visited:hover {
+    color: var(--secondary-text-color)
+}
+
+.topnav-mobile {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .topnav-mobile {
+        display: block;
+    }
 }

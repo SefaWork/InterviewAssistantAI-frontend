@@ -19,17 +19,19 @@ function App() {
           <div className='app'>
               <Header />
               <Topnav />
-              <Routes>
-                {/*Pages of the website. */}
-                <Route path='/' element={<Home />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/interview/setup' element={<InterviewSetup />} />
-                <Route path='/interview' element={<InterviewPage />} />
+              <div className='app-content'>
+                <Routes>
+                  {/*Pages of the website. */}
+                  <Route path='/' element={<Home />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/register' element={<Register />} />
+                  <Route path='/interview/setup' element={<InterviewSetup />} />
+                  <Route path='/interview' element={<InterviewPage />} />
 
-                {/*Wild route to catch all invalid routes. */}
-                <Route path='*' element={<NotFound />} />
-              </Routes>
+                  {/*Wild route to catch all invalid routes. */}
+                  <Route path='*' element={<NotFound />} />
+                </Routes>
+              </div>
           </div>
         </BrowserRouter>
       </ThemeProvider>

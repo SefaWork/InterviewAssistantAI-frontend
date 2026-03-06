@@ -28,3 +28,23 @@ header {
     height: 50%;
     margin-right: .5rem;
 }
+
+.header-nav-buttons a {
+    padding: 0 1rem;
+    color: var(--secondary-text-color);
+    text-decoration: none;
+}
+
+.header-nav-buttons a:visited {
+    color: var(--secondary-text-color);
+}
+
+.header-nav-buttons {
+    display: block;
+}
+
+@media only screen and (max-width: 600px) {
+    .header-nav-buttons {
+        display: none;
+    }
+}

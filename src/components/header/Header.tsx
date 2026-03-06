@@ -7,6 +7,10 @@ function Header() {
         <header>
             <Link className='header-logo' to={"/"}>InterviewHelper</Link>
             <div className='header-buttons-section'>
+                <div className='header-nav-buttons'>
+                    <Link to="/interview/setup">Interview</Link>
+                    <Link to="/login">Login</Link>
+                </div>
                 <ThemeToggle />
             </div>
         </header>
