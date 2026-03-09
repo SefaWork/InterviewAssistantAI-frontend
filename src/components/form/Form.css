@@ -1,0 +1,23 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--form-color);
+    border: .1rem solid var(--foreground-color);
+    border-radius: 1rem;
+    box-shadow: 0 0 5rem 1rem var(--form-shadow-color);
+    padding: 2rem 2rem;
+
+    max-width: 30rem;
+    width: 50%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

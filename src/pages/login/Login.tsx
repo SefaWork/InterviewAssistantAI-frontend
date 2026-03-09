@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import Form from '../../components/common/Form';
+import Form from '../../components/form/Form';
 import { useRef, useState, type FormEvent } from 'react';
-import ErrorLabel from '../../components/common/ErrorLabel';
 import { useAuth } from '../../hooks/useAuth';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import FormEmailField from '../../components/form/FormEmailField';
+import FormPasswordField from '../../components/form/FormPasswordField';
+import FormSubmit from '../../components/form/FormSubmit';
 import './Login.css'
 
 interface ErrorMessageState {
@@ -48,20 +50,12 @@ function Login() {
 
     return (
         <div className='login-page' data-testid="Login">
-            <Form formTitle='Login' onSubmit={action}>            
-                <div className='form-field'>
-                    <label htmlFor='email'>E-Mail Address:</label>
-                    <input type='text' id='email' name='email' placeholder='e.g. name@email.com' autoComplete='email' ref={emailRef} required />
-                    <ErrorLabel errMsg={errors.emailErr} />
-                </div>
-                <div className='form-field'>
-                    <label htmlFor='email'>Password:</label>
-                    <input type='password' id='password' name='password' placeholder='*********' autoComplete='current-password' ref={passRef} required />
-                    <ErrorLabel errMsg={errors.passErr} />
-                </div>
+            <Form formTitle='Login' onSubmit={action}>        
+                <FormEmailField id='email' label='Email Address:' error={errors['emailErr']} ref={emailRef} />
+                <FormPasswordField id='password' label='Password:' error={errors['passErr']} ref={passRef} />
                 <ErrorMessage errMsg={submitErr} />
-                <button className='form-submit' type='submit' disabled={processing}>{processing? "Logging in..." : "Login"}</button>
-                <Link className='register-link' to='/register'>Don't have an account?</Link>
+                <FormSubmit disabled={processing} text={processing? "Logging in..." : "Login"} />
+                <Link to='/register'>Don't have an account?</Link>
             </Form>
         </div>
     )

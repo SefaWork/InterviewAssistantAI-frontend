@@ -8,37 +8,46 @@ body {
     --background-color: #f6f6f6;
     --topnav-color: #002c83;
     --form-color: #ffffff;
+    --form-shadow-color: #d0d0d0;
     --field-color: #ffffff;
     --foreground-color: #0055ff;
     --foreground-hover: #0044cd;
     --foreground-transparent: #0055ff40;
     --primary-text-color: #0a0a0a;
     --secondary-text-color: #ffffff;
-    --toggle-bg: #f0eb9d;
-    --toggle-fg: #ffd000;
     --header-shadow: #2f2f2f;
     --link-color: #0000EE;
     --link-visited-color: #551A8B;
     --error-color: #ff0000;
+
+    --primary-btn-color: #4784ff;
+    --primary-btn-hover-color: #0055ff;
+    --primary-btn-active-color: #0043ca;
+
     background: radial-gradient(circle at center, #ffffff 0%, #f6f6f6 100%);
+    font-family: 'Roboto', sans-serif;
 }
 
 body.dark {
     --background-color: #121212;
     --topnav-color: #1a0057;
     --form-color: #1c1c1c;
+    --form-shadow-color: #121212;
     --field-color: #515151;
     --foreground-color: #3700b3;
     --foreground-transparent: #3700b340;
     --foreground-hover: #280086;
     --primary-text-color: #f6f6f6;
     --secondary-text-color: #ffffff;
-    --toggle-bg: #283452;
-    --toggle-fg: #00a6ff;
     --header-shadow: #0a0a0a;
     --link-color: #386891;
     --link-visited-color: #915938;
     --error-color: #d50000;
+
+    --primary-btn-color: #5537ff;
+    --primary-btn-hover-color: #3015c9;
+    --primary-btn-active-color: #1901a0;
+
     background: radial-gradient(circle at center, #202020 0%, #000000 100%);
 }
 

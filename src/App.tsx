@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/home/Home'
 import NotFound from './pages/NotFound'
-import './App.css'
 import Header from './components/header/Header'
 import Login from './pages/login/Login'
 import Register from './pages/login/Register'
@@ -10,6 +9,7 @@ import InterviewSetup from './pages/interview/InterviewSetup'
 import InterviewPage from './pages/interview/InterviewPage'
 import Topnav from './components/header/Topnav'
 import ThemeProvider from './context/ThemeProvider'
+import './App.css'
 
 function App() {
   return (

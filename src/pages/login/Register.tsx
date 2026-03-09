@@ -1,10 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom'
-import Form from '../../components/common/Form'
+import Form from '../../components/form/Form'
 import './Register.css'
 import { useRef, useState, type FormEvent } from 'react'
 import ErrorLabel from '../../components/common/ErrorLabel';
 import { useAuth } from '../../hooks/useAuth';
 import ErrorMessage from '../../components/common/ErrorMessage';
+import FormEmailField from '../../components/form/FormEmailField';
+import FormPasswordField from '../../components/form/FormPasswordField';
+import FormSubmit from '../../components/form/FormSubmit';
 
 interface ErrorMessageState {
     email?: string | undefined,
@@ -55,24 +58,12 @@ function Register() {
     return (
         <div className='register-page' data-testid='Register'>
             <Form formTitle='Register' onSubmit={onSubmit}>
-                <div className='form-field'>
-                    <label htmlFor='email'>E-Mail Address:</label>
-                    <input type='text' id='email' name='email' placeholder='e.g. name@email.com' autoComplete='email' ref={emailRef} required />
-                    <ErrorLabel errMsg={errors.email} />
-                </div>
-                <div className='form-field'>
-                    <label htmlFor='password'>Password:</label>
-                    <input type='password' id='password' name='password' placeholder='*********' autoComplete='new-password' ref={passRef} required />
-                    <ErrorLabel errMsg={errors.pass} />
-                </div>
-                <div className='form-field'>
-                    <label htmlFor='repeatpassword'>Repeat password:</label>
-                    <input type='password' id='repeatpassword' name='repeatpassword' placeholder='*********' autoComplete='new-password' ref={repPassRef} required />
-                    <ErrorLabel errMsg={errors.repPass} />
-                </div>
+                <FormEmailField id="email" label='E-Mail Address:' ref={emailRef} error={errors.email} />
+                <FormPasswordField id="password" label='Password:' ref={passRef} error={errors.pass} />
+                <FormPasswordField id="repeat-password" label='Repeat password:' ref={repPassRef} error={errors.repPass} />
                 <ErrorMessage errMsg={submitErr} />
-                <button className='form-submit' type='submit' disabled={processing}>{processing? "Creating account..." : "Create Account"}</button>
-                <Link className='login-link' to='/login'>Already have an account?</Link>
+                <FormSubmit disabled={processing} text={processing? "Creating account..." : "Create Account"} />
+                <Link to='/login'>Already have an account?</Link>
             </Form>
         </div>  
     )
