@@ -11,6 +11,7 @@ interface FormPasswordField {
     ref?: React.RefObject<HTMLInputElement | null>
 }
 
+/**FormField suited for password input. Intended to be used under Form. */
 function FormPasswordField({id, label, error, max, min, ref} : FormPasswordField) {
     return (
         <FormField id={id} label={label} error={error}>

@@ -6,7 +6,7 @@ function Home() {
     return (
         <section className="hero-section">
             <img src={HomeImage} alt="Interview Assistant" className="hero-image" />
-            <div className="hero-content">
+            <div className="hero-content fade-in">
                 <h1 className="hero-title">InterviewAssistant</h1>
                 <p className="hero-subtitle">
                     AI powered interview simulations to help you ace your next job interview.

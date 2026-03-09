@@ -7,6 +7,7 @@ interface FormEmailField {
     ref?: React.RefObject<HTMLInputElement | null>
 }
 
+/**FormField suited for e-mail input. Intended to be used inside of a Form. */
 function FormEmailField({id, label, error, ref}: FormEmailField) {
     return (
         <FormField id={id} label={label} error={error}>

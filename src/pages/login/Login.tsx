@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Form from '../../components/form/Form';
 import { useRef, useState, type FormEvent } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import ErrorMessage from '../../components/common/ErrorMessage';
 import FormEmailField from '../../components/form/FormEmailField';
 import FormPasswordField from '../../components/form/FormPasswordField';
 import FormSubmit from '../../components/form/FormSubmit';
@@ -50,10 +49,9 @@ function Login() {
 
     return (
         <div className='login-page' data-testid="Login">
-            <Form formTitle='Login' onSubmit={action}>        
+            <Form formTitle='Login' error={submitErr} onSubmit={action}>        
                 <FormEmailField id='email' label='Email Address:' error={errors['emailErr']} ref={emailRef} />
                 <FormPasswordField id='password' label='Password:' error={errors['passErr']} ref={passRef} />
-                <ErrorMessage errMsg={submitErr} />
                 <FormSubmit disabled={processing} text={processing? "Logging in..." : "Login"} />
                 <Link to='/register'>Don't have an account?</Link>
             </Form>

@@ -7,6 +7,7 @@ interface FormFieldProps {
     children: React.ReactNode
 }
 
+/**Used for input fields. Intended to be used inside of a Form. */
 function FormField({id, label, children, error} : FormFieldProps) {
     return (
         <div className='form-field'>

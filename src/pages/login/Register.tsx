@@ -2,9 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Form from '../../components/form/Form'
 import './Register.css'
 import { useRef, useState, type FormEvent } from 'react'
-import ErrorLabel from '../../components/common/ErrorLabel';
 import { useAuth } from '../../hooks/useAuth';
-import ErrorMessage from '../../components/common/ErrorMessage';
 import FormEmailField from '../../components/form/FormEmailField';
 import FormPasswordField from '../../components/form/FormPasswordField';
 import FormSubmit from '../../components/form/FormSubmit';
@@ -57,11 +55,10 @@ function Register() {
 
     return (
         <div className='register-page' data-testid='Register'>
-            <Form formTitle='Register' onSubmit={onSubmit}>
+            <Form formTitle='Register' error={submitErr} onSubmit={onSubmit}>
                 <FormEmailField id="email" label='E-Mail Address:' ref={emailRef} error={errors.email} />
                 <FormPasswordField id="password" label='Password:' ref={passRef} error={errors.pass} />
                 <FormPasswordField id="repeat-password" label='Repeat password:' ref={repPassRef} error={errors.repPass} />
-                <ErrorMessage errMsg={submitErr} />
                 <FormSubmit disabled={processing} text={processing? "Creating account..." : "Create Account"} />
                 <Link to='/login'>Already have an account?</Link>
             </Form>
