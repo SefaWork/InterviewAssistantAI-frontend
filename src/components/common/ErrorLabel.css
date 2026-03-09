@@ -1,0 +1,25 @@
+.error-label {
+    display: block;
+    font-weight: bold;
+    font-size: medium;
+    animation: errorAnimation 500ms ease-out forwards;
+    color: var(--error-color);
+    margin-bottom: 1rem;
+}
+
+@keyframes errorAnimation {
+    0% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+    20%,60% {
+        transform: translateX(10px);
+    }
+    40%,80% {
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

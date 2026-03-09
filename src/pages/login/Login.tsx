@@ -26,12 +26,25 @@ function Login() {
     const action = async (e: FormEvent) => {
         e.preventDefault();
 
-        const givenEmail = emailRef.current?.value ?? "";
-        const givenPassword = passRef.current?.value ?? "";
+        const givenEmail = (emailRef.current?.value ?? "").trim();
+        const givenPassword = (passRef.current?.value ?? "").trim();
         
-        const newState: ErrorMessageState = {
-            emailErr: givenEmail.length < 4? "Please enter a valid e-mail address." : undefined,
-            passErr: givenPassword.length <= 3? "Please enter a valid password." : undefined
+        const newState: ErrorMessageState = {};
+        
+        if(givenEmail.length === 0) {
+            newState.emailErr = "Please fill this field."
+        } else if(givenEmail.length < 3) {
+            newState.emailErr = "Email address is too short."
+        } else if(givenEmail.length > 254) {
+            newState.emailErr = "Email address is too long."
+        } else if(!givenEmail.includes('@')) {
+            newState.emailErr = "A valid email address requires @ symbol."
+        } else if(givenPassword.length === 0) {
+            newState.passErr = "Please fill this field."
+        } else if(givenPassword.length < 8) {
+            newState.passErr = "Password is too short."
+        } else if(givenPassword.length > 32) {
+            newState.passErr = "Password is too long."
         }
         
         setErrors(newState)
@@ -47,12 +60,17 @@ function Login() {
         setProcessing(false);
     }
 
+    const onInput = () => {
+        setErrors({})
+        setSubmitErr(undefined)
+    }
+
     return (
         <div className='login-page' data-testid="Login">
-            <Form formTitle='Login' error={submitErr} onSubmit={action}>        
+            <Form formTitle='Login' onSubmit={action} onInput={onInput}>        
                 <FormEmailField id='email' label='Email Address:' error={errors['emailErr']} ref={emailRef} />
                 <FormPasswordField id='password' label='Password:' error={errors['passErr']} ref={passRef} />
-                <FormSubmit disabled={processing} text={processing? "Logging in..." : "Login"} />
+                <FormSubmit disabled={processing} text={processing? "Logging in..." : "Login"} error={submitErr} />
                 <Link to='/register'>Don't have an account?</Link>
             </Form>
         </div>

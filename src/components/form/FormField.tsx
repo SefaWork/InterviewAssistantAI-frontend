@@ -1,3 +1,4 @@
+import ErrorLabel from '../common/ErrorLabel'
 import './FormField.css'
 
 interface FormFieldProps {
@@ -10,10 +11,10 @@ interface FormFieldProps {
 /**Used for input fields. Intended to be used inside of a Form. */
 function FormField({id, label, children, error} : FormFieldProps) {
     return (
-        <div className='form-field'>
+        <div className={`form-field${error? " error" : ""}`}>
             {label && (<label htmlFor={id}>{label}</label>)}
             {children}
-            {error && (<p className='form-field-error'>{error}</p>)}
+            {error && (<ErrorLabel>{error}</ErrorLabel>)}
         </div>
     )
 }

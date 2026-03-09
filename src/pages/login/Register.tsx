@@ -28,20 +28,37 @@ function Register() {
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        const givenEmail = emailRef.current?.value ?? "";
-        const givenPass = passRef.current?.value ?? "";
-        const givenRepPass = repPassRef.current?.value ?? "";
+        const givenEmail = (emailRef.current?.value ?? "").trim();
+        const givenPass = (passRef.current?.value ?? "").trim();
+        const givenRepPass = (repPassRef.current?.value ?? "").trim();
 
         // TODO: Email and password validation.
 
-        const newStates: ErrorMessageState = {
-            email: givenEmail.length < 4? "Please input a valid e-mail address." : undefined,
-            pass: givenPass.length < 8? "Please input a password that is at least 8 characters long." : undefined,
-            repPass: givenPass != givenRepPass? "Passwords don't match." : undefined
+        const newState: ErrorMessageState = {}
+
+        if(givenEmail.length === 0) {
+            newState.email = "Please fill this field."
+        } else if(givenEmail.length < 3) {
+            newState.email = "Email address is too short."
+        } else if(givenEmail.length > 254) {
+            newState.email = "Email address is too long."
+        } else if(!givenEmail.includes('@')) {
+            newState.email = "A valid email address requires @ symbol."
+        } else if(givenPass.length === 0) {
+            newState.pass = "Please fill this field."
+        } else if(givenPass.length < 8) {
+            newState.pass = "Password is too short."
+        } else if(givenPass.length > 32) {
+            newState.pass = "Password is too long."
+        } else if(givenRepPass.length === 0) {
+            newState.repPass = "Please fill this field."
+        } else if(givenRepPass !== givenPass) {
+            newState.pass = "Passwords don't match."
+            newState.repPass = "Passwords don't match."
         }
 
-        setErrors(newStates);
-        if (newStates.email || newStates.pass || newStates.repPass) return;
+        setErrors(newState);
+        if (newState.email || newState.pass || newState.repPass) return;
 
         setProcessing(true);
         try {
@@ -53,13 +70,18 @@ function Register() {
         setProcessing(false);
     }
 
+    const onInput = () => {
+        setErrors({})
+        setSubmitErr(undefined)
+    }
+
     return (
         <div className='register-page' data-testid='Register'>
-            <Form formTitle='Register' error={submitErr} onSubmit={onSubmit}>
+            <Form formTitle='Register' onSubmit={onSubmit} onInput={onInput}>
                 <FormEmailField id="email" label='E-Mail Address:' ref={emailRef} error={errors.email} />
                 <FormPasswordField id="password" label='Password:' ref={passRef} error={errors.pass} />
                 <FormPasswordField id="repeat-password" label='Repeat password:' ref={repPassRef} error={errors.repPass} />
-                <FormSubmit disabled={processing} text={processing? "Creating account..." : "Create Account"} />
+                <FormSubmit disabled={processing} text={processing? "Creating account..." : "Create Account"} error={submitErr} />
                 <Link to='/login'>Already have an account?</Link>
             </Form>
         </div>  
