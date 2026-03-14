@@ -41,7 +41,7 @@ function InterviewPage() {
     return (
         <div className="interview-main-div">
             <div className='webcam-section'>
-                <Webcam ref={webcamRef} mirrored={true} screenshotFormat='image/jpeg'/>
+                <Webcam screenshotFormat='image/jpeg' videoConstraints={{facingMode: 'user'}} audio={false} mirrored />
             </div>
             <div className='instruction-section'>
                 <h1>Question 1</h1>
