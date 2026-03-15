@@ -1,0 +1,33 @@
+{
+    "project": {
+        "name": "InterviewHelper",
+        "slogan": "AI-powered simulations that will help you ace your next interview."
+    },
+    
+    "home": {
+        "start": "Get Started"
+    },
+
+    "error": {
+        "empty_field": "Please fill this field.",
+        "too_short": "Field is too short. Use at least {{length}} characters.",
+        "too_long": "Field is too long. Use at most {{length}} characters.",
+        "missing_email_symbol": "Valid e-mail addresses require the '@' symbol.",
+        "generic": "An error occured.",
+        "password_mismatch": "Passwords don't match."
+    },
+
+    "field": {
+        "email": "E-mail Address",
+        "password": "Password",
+        "repeat_password": "Repeat Password",
+        "fallback_email": "e.g. example@email.com"
+    },
+
+    "login": "Login",
+    "logging_in": "Logging in",
+    "register": "Register",
+    "registering": "Registering...",
+    "new_account": "Don't have an account?",
+    "existing_account": "Already have an account?"
+}

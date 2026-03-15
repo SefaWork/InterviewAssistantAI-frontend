@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import ThemeContext from '../../context/ThemeContext'
+import PreferenceContext from '../../context/PreferenceContext'
 
 import LightModeIcon from '../../assets/brightness-high.svg'
 import DarkModeIcon from '../../assets/moon.svg'
@@ -15,9 +15,9 @@ import './ThemeToggle.css'
  * */
 function ThemeToggle() {
     // Local storage dark mode state.
-    const context = useContext(ThemeContext);
+    const context = useContext(PreferenceContext);
     if (!context) {
-        throw new Error("ThemeContext is required to render this component.")
+        throw new Error("PreferenceContext is required to render this component.")
     }
 
     return (

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import ThemeToggle from '../navbar/ThemeToggle';
+import ThemeToggle from './ThemeToggle';
 import './Header.css'
+import LangToggle from './LangToggle';
 
 function Header() {
     return (
@@ -11,6 +12,7 @@ function Header() {
                     <Link to="/interview/setup">Interview</Link>
                     <Link to="/login">Login</Link>
                 </div>
+                <LangToggle />
                 <ThemeToggle />
             </div>
         </header>

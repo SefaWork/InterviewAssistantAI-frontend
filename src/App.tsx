@@ -8,13 +8,14 @@ import AuthProvider from './context/AuthProvider'
 import InterviewSetup from './pages/interview/InterviewSetup'
 import InterviewPage from './pages/interview/InterviewPage'
 import Topnav from './components/header/Topnav'
-import ThemeProvider from './context/ThemeProvider'
+import PreferenceProvider from './context/PreferenceProvider'
 import './App.css'
+import About from './pages/home/About'
 
 function App() {
   return (
     <AuthProvider>
-      <ThemeProvider>
+      <PreferenceProvider>
         <BrowserRouter>
           <div className='app'>
               <Header />
@@ -27,6 +28,7 @@ function App() {
                   <Route path='/register' element={<Register />} />
                   <Route path='/interview/setup' element={<InterviewSetup />} />
                   <Route path='/interview' element={<InterviewPage />} />
+                  <Route path='/about' element={<About />} />
 
                   {/*Wild route to catch all invalid routes. */}
                   <Route path='*' element={<NotFound />} />
@@ -34,7 +36,7 @@ function App() {
               </div>
           </div>
         </BrowserRouter>
-      </ThemeProvider>
+      </PreferenceProvider>
     </AuthProvider>
   )
 }

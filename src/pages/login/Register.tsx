@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 import FormEmailField from '../../components/form/FormEmailField';
 import FormPasswordField from '../../components/form/FormPasswordField';
 import FormSubmit from '../../components/form/FormSubmit';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorMessageState {
     email?: string | undefined,
@@ -14,6 +15,8 @@ interface ErrorMessageState {
 }
 
 function Register() {
+    const {t} = useTranslation();
+
     const authContext = useAuth();
     const navigate = useNavigate();
 
@@ -37,24 +40,24 @@ function Register() {
         const newState: ErrorMessageState = {}
 
         if(givenEmail.length === 0) {
-            newState.email = "Please fill this field."
+            newState.email = t("error.empty_field")
         } else if(givenEmail.length < 3) {
-            newState.email = "Email address is too short."
+            newState.email = t("error.too_short", {length: 3})
         } else if(givenEmail.length > 254) {
-            newState.email = "Email address is too long."
+            newState.email = t("error.too_long", {length: 254})
         } else if(!givenEmail.includes('@')) {
-            newState.email = "A valid email address requires @ symbol."
+            newState.email = t("error.missing_email_symbol")
         } else if(givenPass.length === 0) {
-            newState.pass = "Please fill this field."
+            newState.pass = t("error.empty_field")
         } else if(givenPass.length < 8) {
-            newState.pass = "Password is too short."
+            newState.pass = t("error.too_short", {length: 8})
         } else if(givenPass.length > 32) {
-            newState.pass = "Password is too long."
+            newState.pass = t("error.too_long", {length: 32})
         } else if(givenRepPass.length === 0) {
-            newState.repPass = "Please fill this field."
+            newState.repPass = t("error.empty_field")
         } else if(givenRepPass !== givenPass) {
-            newState.pass = "Passwords don't match."
-            newState.repPass = "Passwords don't match."
+            newState.pass = t("error.password_mismatch")
+            newState.repPass = newState.pass
         }
 
         setErrors(newState);
@@ -65,7 +68,7 @@ function Register() {
             await authContext.registerUser(givenEmail, givenPass);
             navigate('/login');
         } catch(err) {
-            setSubmitErr(err instanceof Error? err.message : "An error occured. Please try again.");
+            setSubmitErr(err instanceof Error? t(err.message) : t("error.generic"));
         }
         setProcessing(false);
     }
@@ -77,12 +80,12 @@ function Register() {
 
     return (
         <div className='register-page' data-testid='Register'>
-            <Form formTitle='Register' onSubmit={onSubmit} onInput={onInput}>
-                <FormEmailField id="email" label='E-Mail Address:' ref={emailRef} error={errors.email} />
-                <FormPasswordField id="password" label='Password:' ref={passRef} error={errors.pass} />
-                <FormPasswordField id="repeat-password" label='Repeat password:' ref={repPassRef} error={errors.repPass} />
-                <FormSubmit disabled={processing} text={processing? "Creating account..." : "Create Account"} error={submitErr} />
-                <Link to='/login'>Already have an account?</Link>
+            <Form formTitle={t("register")} onSubmit={onSubmit} onInput={onInput}>
+                <FormEmailField id="email" label={`${t("field.email")}:`} ref={emailRef} error={errors.email} />
+                <FormPasswordField id="password" label={`${t("field.password")}:`} ref={passRef} error={errors.pass} />
+                <FormPasswordField id="repeat-password" label={`${t("field.repeat_password")}:`} ref={repPassRef} error={errors.repPass} />
+                <FormSubmit disabled={processing} text={processing? `${t("registering")}...` : t("register")} error={submitErr} />
+                <Link to='/login'>{t("existing_account")}</Link>
             </Form>
         </div>  
     )

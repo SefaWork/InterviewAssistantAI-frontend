@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import ThemeContext, { type ThemeContextType } from "./ThemeContext";
+import PreferenceContext, { type PreferenceContextType } from "./PreferenceContext";
 
 const DARK_MODE_STORAGE_KEY = "dark-mode";
 
-interface ThemeProviderProps {
+interface PreferenceProviderProps {
     children: React.ReactNode
 }
 
-function ThemeProvider({children}: ThemeProviderProps) {
+function PreferenceProvider({children}: PreferenceProviderProps) {
     // Local storage dark mode state.
     const [darkModeStorage, setDarkModeStorage] = useState<boolean | null>(() => {
         const item = localStorage.getItem(DARK_MODE_STORAGE_KEY)
@@ -44,16 +44,16 @@ function ThemeProvider({children}: ThemeProviderProps) {
         }
     }, [darkModeStorage, prefersDarkMode]);
 
-    const contextData: ThemeContextType = {
+    const contextData: PreferenceContextType = {
         darkMode: darkModeStorage === null? prefersDarkMode : darkModeStorage,
         toggleDarkMode
     }
 
     return (
-        <ThemeContext.Provider value={contextData}>
+        <PreferenceContext.Provider value={contextData}>
             {children}
-        </ThemeContext.Provider>
+        </PreferenceContext.Provider>
     )
 }
 
-export default ThemeProvider;
+export default PreferenceProvider;

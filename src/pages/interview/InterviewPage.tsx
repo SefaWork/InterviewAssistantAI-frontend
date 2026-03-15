@@ -1,6 +1,6 @@
 import Webcam from 'react-webcam'
-import './InterviewPage.css'
 import { useEffect, useRef } from 'react';
+import './InterviewPage.css'
 
 // 1 second / FPS
 const SEND_INTERVAL = 1_000 / 5

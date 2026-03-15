@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Webcam from "react-webcam";
-import './InterviewSetup.css'
 import { useNavigate } from "react-router-dom";
+import './InterviewSetup.css'
 
 
 function InterviewSetup() {

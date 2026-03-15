@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import FormField from './FormField'
 
 interface FormEmailField {
@@ -9,6 +10,8 @@ interface FormEmailField {
 
 /**FormField suited for e-mail input. Intended to be used inside of a Form. */
 function FormEmailField({id, label, error, ref}: FormEmailField) {
+    const {t} = useTranslation();
+
     return (
         <FormField id={id} label={label} error={error}>
             <input 
@@ -18,7 +21,7 @@ function FormEmailField({id, label, error, ref}: FormEmailField) {
                 inputMode='email' 
                 autoComplete='email' 
                 maxLength={254} 
-                placeholder='e.g. example@email.com'
+                placeholder={t("field.fallback_email")}
                 ref={ref}   
                 required 
             />

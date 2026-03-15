@@ -1,0 +1,33 @@
+{
+    "project": {
+        "name": "InterviewHelper",
+        "slogan": "Bir sonraki mülakatında başarılı olmanı sağlayacak yapay zekâ destekli simülasyonlar."
+    },
+
+    "home": {
+        "start": "Hemen Başla"
+    },
+
+    "error": {
+        "empty_field": "Lütfen bu alanı doldurunuz.",
+        "too_short": "Alan çok kısa. En az {{length}} karakter kullanın.",
+        "too_long": "Alan çok uzun. En fazla {{length}} karakter kullanın.",
+        "missing_email_symbol": "Doğru e-mail adresi '@' sembolünü gerektirir.",
+        "generic": "Bir hata oluştu.",
+        "password_mismatch": "Şifreler aynı değil."
+    },
+
+    "field": {
+        "email": "E-mail Adresi",
+        "password": "Şifre",
+        "repeat_password": "Şifre Tekrarla",
+        "fallback_email": "örn. ornek@email.com"
+    },
+    
+    "login": "Giriş Yap",
+    "logging_in": "Giriş Yapılıyor",
+    "register": "Kayıt Ol",
+    "registering": "Kayıt Olunuyor...",
+    "new_account": "Hesabınız yok mu?",
+    "existing_account": "Hesabınız zaten var mı?"
+}
