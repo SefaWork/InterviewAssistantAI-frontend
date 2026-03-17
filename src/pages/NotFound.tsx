@@ -1,9 +1,13 @@
+import { useTranslation } from "react-i18next"
+import './NotFound.css'
+
 function NotFound() {
+  const {t} = useTranslation();
   return (
-    <>
-        <h1>Not Found</h1>
-        <p>The page you are searching for doesn't exist.</p>
-    </>
+    <div className="not-found">
+        <h1>{t("not_found.title")}</h1>
+        <p>{t("not_found.description")}</p>
+    </div>
   )
 }
 

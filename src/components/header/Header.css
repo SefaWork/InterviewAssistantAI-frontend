@@ -39,6 +39,10 @@ header {
     color: var(--secondary-text-color);
 }
 
+.header-nav-buttons a:hover {
+    text-decoration: underline;
+}
+
 .header-nav-buttons {
     display: block;
     margin-right: 1rem;

@@ -20,6 +20,7 @@
 
 .topnav-container a:hover {
     background-color: var(--foreground-hover);
+    text-decoration: underline;
 }
 
 .topnav-container a:visited {

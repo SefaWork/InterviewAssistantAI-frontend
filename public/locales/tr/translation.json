@@ -4,14 +4,10 @@
         "slogan": "Bir sonraki mülakatında başarılı olmanı sağlayacak yapay zekâ destekli simülasyonlar."
     },
 
-    "home": {
-        "start": "Hemen Başla"
-    },
-
     "error": {
         "empty_field": "Lütfen bu alanı doldurunuz.",
-        "too_short": "Alan çok kısa. En az {{length}} karakter kullanın.",
-        "too_long": "Alan çok uzun. En fazla {{length}} karakter kullanın.",
+        "too_short": "Alan çok kısa. En az {{length}} karakter kullanınız.",
+        "too_long": "Alan çok uzun. En fazla {{length}} karakter kullanınız.",
         "missing_email_symbol": "Doğru e-mail adresi '@' sembolünü gerektirir.",
         "generic": "Bir hata oluştu.",
         "password_mismatch": "Şifreler aynı değil."
@@ -24,10 +20,18 @@
         "fallback_email": "örn. ornek@email.com"
     },
     
+    "get_started": "Hemen Başla",
+    "home": "Ana Sayfa",
+    "about": "Hakkında",
+    "interview": "Mülakat",
     "login": "Giriş Yap",
     "logging_in": "Giriş Yapılıyor",
     "register": "Kayıt Ol",
     "registering": "Kayıt Olunuyor...",
     "new_account": "Hesabınız yok mu?",
-    "existing_account": "Hesabınız zaten var mı?"
+    "existing_account": "Hesabınız zaten var mı?",
+    "not_found": {
+        "title": "Sayfa Bulunamadı",
+        "description": "Aradığınız sayfa bulunamadı."
+    }
 }

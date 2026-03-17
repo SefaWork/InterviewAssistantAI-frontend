@@ -14,7 +14,7 @@ function Home() {
                 <p className="hero-subtitle">
                     {t("project.slogan")}
                 </p>
-                <Link to={"/login"} className="hero-cta">{t("home.start")}</Link>
+                <Link to={"/login"} className="hero-cta">{t("get_started")}</Link>
             </div>
         </section>
     )

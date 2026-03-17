@@ -3,10 +3,6 @@
         "name": "InterviewHelper",
         "slogan": "AI-powered simulations that will help you ace your next interview."
     },
-    
-    "home": {
-        "start": "Get Started"
-    },
 
     "error": {
         "empty_field": "Please fill this field.",
@@ -24,10 +20,18 @@
         "fallback_email": "e.g. example@email.com"
     },
 
+    "get_started": "Get Started",
+    "home": "Home",
+    "about": "About",
+    "interview": "Interview",
     "login": "Login",
     "logging_in": "Logging in",
     "register": "Register",
     "registering": "Registering...",
     "new_account": "Don't have an account?",
-    "existing_account": "Already have an account?"
+    "existing_account": "Already have an account?",
+    "not_found": {
+        "title": "Not Found",
+        "description": "The page you are searching for does not exist."
+    }
 }
