@@ -7,10 +7,10 @@ import '@testing-library/jest-dom'
 describe('App Routing', () => {
   it('renders NotFound component on invalid route', () => {
     window.history.pushState({}, '', '/invalid-route')
-    const {getByText} = render(<App />)
+    const {getByTestId} = render(<App />)
     
     // Check if NotFound page is rendered.
-    expect(getByText(/404|not found/i)).toBeInTheDocument()
+    expect(getByTestId('NotFound')).toBeInTheDocument()
   })
 
   it('renders Header component on all routes', () => {
