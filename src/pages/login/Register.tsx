@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
-import Form from '../../components/common/Form'
+import Form from '../../components/form/Form'
 import './Register.css'
 import { useRef, useState, type FormEvent } from 'react'
-import ErrorLabel from '../../components/common/ErrorLabel';
 import { useAuth } from '../../hooks/useAuth';
-import ErrorMessage from '../../components/common/ErrorMessage';
+import FormEmailField from '../../components/form/FormEmailField';
+import FormPasswordField from '../../components/form/FormPasswordField';
+import FormSubmit from '../../components/form/FormSubmit';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorMessageState {
     email?: string | undefined,
@@ -13,6 +15,8 @@ interface ErrorMessageState {
 }
 
 function Register() {
+    const {t} = useTranslation();
+
     const authContext = useAuth();
     const navigate = useNavigate();
 
@@ -27,52 +31,61 @@ function Register() {
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        const givenEmail = emailRef.current?.value ?? "";
-        const givenPass = passRef.current?.value ?? "";
-        const givenRepPass = repPassRef.current?.value ?? "";
+        const givenEmail = (emailRef.current?.value ?? "").trim();
+        const givenPass = (passRef.current?.value ?? "").trim();
+        const givenRepPass = (repPassRef.current?.value ?? "").trim();
 
         // TODO: Email and password validation.
 
-        const newStates: ErrorMessageState = {
-            email: givenEmail.length < 4? "Please input a valid e-mail address." : undefined,
-            pass: givenPass.length < 8? "Please input a password that is at least 8 characters long." : undefined,
-            repPass: givenPass != givenRepPass? "Passwords don't match." : undefined
+        const newState: ErrorMessageState = {}
+
+        if(givenEmail.length === 0) {
+            newState.email = t("error.empty_field")
+        } else if(givenEmail.length < 3) {
+            newState.email = t("error.too_short", {length: 3})
+        } else if(givenEmail.length > 254) {
+            newState.email = t("error.too_long", {length: 254})
+        } else if(!givenEmail.includes('@')) {
+            newState.email = t("error.missing_email_symbol")
+        } else if(givenPass.length === 0) {
+            newState.pass = t("error.empty_field")
+        } else if(givenPass.length < 8) {
+            newState.pass = t("error.too_short", {length: 8})
+        } else if(givenPass.length > 32) {
+            newState.pass = t("error.too_long", {length: 32})
+        } else if(givenRepPass.length === 0) {
+            newState.repPass = t("error.empty_field")
+        } else if(givenRepPass !== givenPass) {
+            newState.pass = t("error.password_mismatch")
+            newState.repPass = newState.pass
         }
 
-        setErrors(newStates);
-        if (newStates.email || newStates.pass || newStates.repPass) return;
+        setErrors(newState);
+        if (newState.email || newState.pass || newState.repPass) return;
 
         setProcessing(true);
         try {
             await authContext.registerUser(givenEmail, givenPass);
             navigate('/login');
         } catch(err) {
-            setSubmitErr(err instanceof Error? err.message : "An error occured. Please try again.");
+            setSubmitErr(err instanceof Error? t(err.message) : t("error.generic"));
         }
         setProcessing(false);
     }
 
+    const onInput = () => {
+        setErrors({})
+        setSubmitErr(undefined)
+    }
+
     return (
         <div className='register-page' data-testid='Register'>
-            <Form formTitle='Register' onSubmit={onSubmit}>
-                <div className='form-field'>
-                    <label htmlFor='email'>E-Mail Address:</label>
-                    <input type='text' id='email' name='email' placeholder='e.g. name@email.com' autoComplete='email' ref={emailRef} required />
-                    <ErrorLabel errMsg={errors.email} />
-                </div>
-                <div className='form-field'>
-                    <label htmlFor='password'>Password:</label>
-                    <input type='password' id='password' name='password' placeholder='*********' autoComplete='new-password' ref={passRef} required />
-                    <ErrorLabel errMsg={errors.pass} />
-                </div>
-                <div className='form-field'>
-                    <label htmlFor='repeatpassword'>Repeat password:</label>
-                    <input type='password' id='repeatpassword' name='repeatpassword' placeholder='*********' autoComplete='new-password' ref={repPassRef} required />
-                    <ErrorLabel errMsg={errors.repPass} />
-                </div>
-                <ErrorMessage errMsg={submitErr} />
-                <button className='form-submit' type='submit' disabled={processing}>{processing? "Creating account..." : "Create Account"}</button>
-                <Link className='login-link' to='/login'>Already have an account?</Link>
+            <Form formTitle={t("register")} onSubmit={onSubmit} onInput={onInput}>
+                <FormEmailField id="email" label={`${t("field.email")}:`} ref={emailRef} error={errors.email} />
+                <FormPasswordField id="password" label={`${t("field.password")}:`} ref={passRef} error={errors.pass} />
+                <FormPasswordField id="repeat-password" label={`${t("field.repeat_password")}:`} ref={repPassRef} error={errors.repPass} />
+                <FormSubmit disabled={processing} text={processing? `${t("registering")}...` : t("register")} error={submitErr} />
+                <Link to='/login'>{t("existing_account")}</Link>
             </Form>
         </div>  
     )

@@ -1,0 +1,41 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--form-color);
+    border: .1rem solid var(--foreground-color);
+    border-radius: 1rem;
+    box-shadow: 0 0 5rem 1rem var(--form-shadow-color);
+    padding: 2rem 2rem;
+
+    max-width: 30rem;
+    width: 50%;
+    opacity: 0;
+    animation: fadeIn 500ms ease forwards;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.form-error {
+    font-weight: bold;
+    text-align: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

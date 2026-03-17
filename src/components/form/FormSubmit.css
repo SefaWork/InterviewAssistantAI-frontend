@@ -1,0 +1,20 @@
+.form-submit-btn {
+    display: block;
+    padding: 1rem 25%;
+    margin: 1rem 0;
+    background-color: var(--primary-btn-color);
+    color: var(--secondary-text-color);
+    border-radius: 1rem;
+    font-size: large;
+    border: none;
+    transform: translateY(0);
+}
+
+.form-submit-btn:hover {
+    background-color: var(--primary-btn-hover-color);
+}
+
+.form-submit-btn:active {
+    background-color: var(--primary-btn-active-color);
+    transform: translateY(2px);
+}

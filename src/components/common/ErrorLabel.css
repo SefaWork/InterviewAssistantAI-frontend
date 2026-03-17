@@ -1,6 +1,25 @@
 .error-label {
-    color: var(--error-color);
-    text-align: left;
+    display: block;
     font-weight: bold;
-    margin: 0;
+    font-size: medium;
+    animation: errorAnimation 500ms ease-out forwards;
+    color: var(--error-color);
+    margin-bottom: 1rem;
+}
+
+@keyframes errorAnimation {
+    0% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+    20%,60% {
+        transform: translateX(10px);
+    }
+    40%,80% {
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

@@ -1,18 +1,13 @@
 import './ErrorLabel.css'
 
 interface ErrorLabelProps {
-    errMsg: string | undefined
+    children: React.ReactNode
 }
 
-/**
- * React component to create an error message if it exists.
- */
-function ErrorLabel({errMsg}: ErrorLabelProps) {
+function ErrorLabel({children}: ErrorLabelProps) {
     return (
-        <>
-            {errMsg && (<p className="error-label">{errMsg}</p>)}
-        </>
+        <div className="error-label">{children}</div>
     )
 }
 
-export default ErrorLabel
+export default ErrorLabel;

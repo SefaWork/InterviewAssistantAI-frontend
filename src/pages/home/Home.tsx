@@ -1,21 +1,22 @@
 import './Home.css'
 import HomeImage from '../../assets/home-image.jpg'
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Home() {
+    const {t} = useTranslation();
+    
     return (
-        <div className="home" data-testid="Home">
-            <section className="hero-section">
-                <img src={HomeImage} alt="Interview Assistant" className="hero-image" />
-                <div className="hero-content">
-                    <h1 className="hero-title">InterviewAssistant</h1>
-                    <p className="hero-subtitle">
-                        AI powered interview simulations to help you ace your next job interview.
-                    </p>
-                    <Link to={"/login"} className="hero-cta">Get Started</Link>
-                </div>
-            </section>
-        </div>
+        <section className="hero-section">
+            <img src={HomeImage} alt="Interview Assistant" className="hero-image" />
+            <div className="hero-content fade-in">
+                <h1 className="hero-title">{t("project.name")}</h1>
+                <p className="hero-subtitle">
+                    {t("project.slogan")}
+                </p>
+                <Link to={"/login"} className="hero-cta">{t("get_started")}</Link>
+            </div>
+        </section>
     )
 }
 

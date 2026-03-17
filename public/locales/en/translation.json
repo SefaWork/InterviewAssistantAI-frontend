@@ -1,0 +1,59 @@
+{
+    "project": {
+        "name": "InterviewHelper",
+        "slogan": "AI-powered simulations that will help you ace your next interview."
+    },
+
+    "error": {
+        "empty_field": "Please fill this field.",
+        "too_short": "Field is too short. Use at least {{length}} characters.",
+        "too_long": "Field is too long. Use at most {{length}} characters.",
+        "missing_email_symbol": "Valid e-mail addresses require the '@' symbol.",
+        "generic": "An error occured.",
+        "password_mismatch": "Passwords don't match."
+    },
+
+    "field": {
+        "email": "E-mail Address",
+        "password": "Password",
+        "repeat_password": "Repeat Password",
+        "fallback_email": "e.g. example@email.com"
+    },
+
+    "get_started": "Get Started",
+    "home": "Home",
+    "about": "About",
+    "interview": "Interview",
+    "login": "Login",
+    "logging_in": "Logging in",
+    "register": "Register",
+    "registering": "Registering...",
+    "new_account": "Don't have an account?",
+    "existing_account": "Already have an account?",
+
+    "not_found": {
+        "title": "Not Found",
+        "description": "The page you are searching for does not exist."
+    },
+
+    "interview_setup": {
+        "title": "Webcam Setup",
+        "description": "InterviewHelper requires webcam permission in order to evaluate your non-verbal performance. Please enable webcam permission from browser settings.",
+        "ready": "Webcam is ready!",
+        "not_ready": "Webcam is not ready.",
+        "start": "Start Interview"
+    },
+
+    "about_page": {
+        "objective_title": "Our Objective",
+        "objective": "Interviews play a crucial role in the job acquisition process. Interviewers typically not only assess a person's technical knowledge and abilities, but also their social skills. InterviewHelper aims to act as a self improvement assistant/tool that will help candidates better their non-verbal skills for upcoming interviews.",
+        "features_title": "Features",
+        "features": {
+            "1": "The main feature of InterviewHelper is the ability to take mock interviews. These mock interviews evaluate user's non-verbal performance using machine learning.",
+            "2": "During a mock interview, a few metrics are evaluated. These include the user's eye contact with the camera, their facial expressions and their posture.",
+            "3": "Users receive a higher score based on how confident they appear. Good posture, warm smiles and attentive eye contact leads to better score.",
+            "4": "At the end of an interview, users are informed on what they can improve upon, based on their scores.",
+            "5": "Users can also view their past interview scores to watch their improvement over time."
+        }
+    }
+}

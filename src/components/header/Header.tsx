@@ -1,19 +1,24 @@
-import './Header.css'
-import logo from '../../assets/logo.png'
-import Navbar from '../navbar/Navbar';
 import { Link } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
+import LangToggle from './LangToggle';
+import './Header.css'
+import { useTranslation } from 'react-i18next';
 
 function Header() {
+    const {t} = useTranslation();
+
     return (
-        <section className='header-container' data-testid="Header">
-            <section className='header-logo-container'>
-                <Link to='/' className='header-logo-link'>
-                    <img className='header-logo' src={logo}>
-                    </img>
-                </Link>
-            </section>
-            <Navbar />
-        </section>
+        <header>
+            <Link className='header-logo' to={"/"}>InterviewHelper</Link>
+            <div className='header-buttons-section' data-testid='Header'>
+                <div className='header-nav-buttons'>
+                    <Link to="/interview/setup">{t("interview")}</Link>
+                    <Link to="/login">{t("login")}</Link>
+                </div>
+                <LangToggle />
+                <ThemeToggle />
+            </div>
+        </header>
     )
 }
 

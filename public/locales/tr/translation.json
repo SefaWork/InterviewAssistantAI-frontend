@@ -1,0 +1,59 @@
+{
+    "project": {
+        "name": "InterviewHelper",
+        "slogan": "Bir sonraki mülakatında başarılı olmanı sağlayacak yapay zekâ destekli simülasyonlar."
+    },
+
+    "error": {
+        "empty_field": "Lütfen bu alanı doldurunuz.",
+        "too_short": "Alan çok kısa. En az {{length}} karakter kullanınız.",
+        "too_long": "Alan çok uzun. En fazla {{length}} karakter kullanınız.",
+        "missing_email_symbol": "Doğru e-mail adresi '@' sembolünü gerektirir.",
+        "generic": "Bir hata oluştu.",
+        "password_mismatch": "Şifreler aynı değil."
+    },
+
+    "field": {
+        "email": "E-mail Adresi",
+        "password": "Şifre",
+        "repeat_password": "Şifre Tekrarla",
+        "fallback_email": "örn. ornek@email.com"
+    },
+    
+    "get_started": "Hemen Başla",
+    "home": "Ana Sayfa",
+    "about": "Hakkında",
+    "interview": "Mülakat",
+    "login": "Giriş Yap",
+    "logging_in": "Giriş Yapılıyor",
+    "register": "Kayıt Ol",
+    "registering": "Kayıt Olunuyor...",
+    "new_account": "Hesabınız yok mu?",
+    "existing_account": "Hesabınız zaten var mı?",
+
+    "not_found": {
+        "title": "Sayfa Bulunamadı",
+        "description": "Aradığınız sayfa bulunamadı."
+    },
+
+    "interview_setup": {
+        "title": "Webcam Ayarlama",
+        "description": "InterviewHelper uygulamasının sizin iletişimde sözsüz performansınızı yorumlaması için webcam iznine ihtiyacı vardır. Lütfen internet tarayıcınız üzerinden webcam izni veriniz.",
+        "ready": "Webcam hazır!",
+        "not_ready": "Webcam hazır değil.",
+        "start": "Mülakata Başla"
+    },
+
+    "about_page": {
+        "objective_title": "Bizim Hedefimiz",
+        "objective": "Mülakatlar, iş alım sürecinde kritik bir rol oynar. İş verenler, genel olarak sadece birinin teknik bilgi ve tecrübesini değil, ayrıca kişinin sosyal performansını da gözler. InterviewHelper uygulaması, kişinin kendi sözel olmayan sosyal becerisini geliştirebilmesi için bir kişisel gelişim asistanı/aleti olmayı hedeflemektedir.",
+        "features_title": "Özellikler",
+        "features": {
+            "1": "InterviewHelper uygulamasının ana özelliği mülakat simülasyonu almaktır. Bu mülakat sürecinde makine öğrenimi (machine learning) sayesinde kişinin sözel olmayan sosyal performansı yorumlanır.",
+            "2": "Mülakat simülasyonu sürecinde birkaç metrik gözlenir. Kamera ile göz teması, yüz ifadesi ve kişinin duruşu yorumlanır.",
+            "3": "Kullanıcılar, daha özgüvenli göründüklerinde daha iyi puan alırlar. Dik duruş, samimi gülümseme ve özenli göz teması daha iyi puan almayı sağlar.",
+            "4": "Mülakat sonunda kullanıcılara aldıkları puana göre ip uçları ve kendilerini nasıl geliştirebilecekleri önerilir.",
+            "5": "Ayrıca, kullanıcılar geçmişte yaptıkları mülakatları ve puanlarını görebilir ve zamanla ne kadar ilerlediklerini görebilirler."
+        }
+    }
+}
