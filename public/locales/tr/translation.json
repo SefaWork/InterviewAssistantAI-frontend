@@ -30,8 +30,17 @@
     "registering": "Kayıt Olunuyor...",
     "new_account": "Hesabınız yok mu?",
     "existing_account": "Hesabınız zaten var mı?",
+
     "not_found": {
         "title": "Sayfa Bulunamadı",
         "description": "Aradığınız sayfa bulunamadı."
+    },
+
+    "interview_setup": {
+        "title": "Webcam Ayarlama",
+        "description": "InterviewHelper uygulamasının sizin iletişimde sözsüz performansınızı yorumlaması için webcam iznine ihtiyacı vardır. Lütfen internet tarayıcınız üzerinden webcam izni veriniz.",
+        "ready": "Webcam hazır!",
+        "not_ready": "Webcam hazır değil.",
+        "start": "Mülakata Başla"
     }
 }

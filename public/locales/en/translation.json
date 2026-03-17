@@ -30,8 +30,17 @@
     "registering": "Registering...",
     "new_account": "Don't have an account?",
     "existing_account": "Already have an account?",
+
     "not_found": {
         "title": "Not Found",
         "description": "The page you are searching for does not exist."
+    },
+
+    "interview_setup": {
+        "title": "Webcam Setup",
+        "description": "InterviewHelper requires webcam permission in order to evaluate your non-verbal performance. Please enable webcam permission from browser settings.",
+        "ready": "Webcam is ready!",
+        "not_ready": "Webcam is not ready.",
+        "start": "Start Interview"
     }
 }

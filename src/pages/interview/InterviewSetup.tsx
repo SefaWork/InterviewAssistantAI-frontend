@@ -2,9 +2,11 @@ import { useState } from "react"
 import Webcam from "react-webcam";
 import { useNavigate } from "react-router-dom";
 import './InterviewSetup.css'
+import { useTranslation } from "react-i18next";
 
 
 function InterviewSetup() {
+    const {t} = useTranslation();
     const [ready, setReady] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -24,14 +26,14 @@ function InterviewSetup() {
 
     return (
         <div className="interview-setup-container">
-            <h1>Camera Setup</h1>
-            <p>InterviewHelper requires webcam permission in order to evaluate your non-verbal performance. Please enable webcam permission from browser settings.</p>
+            <h1>{t("interview_setup.title")}</h1>
+            <p>{t("interview_setup.description")}</p>
             <div className="camera-wrapper">
                 <Webcam onUserMedia={handleUserMedia} onUserMediaError={handleMediaError} screenshotFormat='image/jpeg' videoConstraints={{facingMode: 'user'}} audio={false} mirrored />
             </div>
             <div className="webcam-ready-section">
-                <div>{ready? "✅ Webcam is ready!" : "❌ Webcam is not ready."}</div>
-                <button disabled={!ready} onClick={handleClick}>Start Interview</button>
+                <div>{ready? `✅ ${t("interview_setup.ready")}` : `❌ ${t("interview_setup.not_ready")}`}</div>
+                <button disabled={!ready} onClick={handleClick}>{t("interview_setup.start")}</button>
             </div>
         </div>
     )
