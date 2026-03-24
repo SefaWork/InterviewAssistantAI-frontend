@@ -55,5 +55,16 @@
             "4": "At the end of an interview, users are informed on what they can improve upon, based on their scores.",
             "5": "Users can also view their past interview scores to watch their improvement over time."
         }
-    }
+    },
+
+    "interview_page": {
+        "error": {
+            "no_face": "Face was not detected, make sure it isn't obstructed from view.",
+            "fetch": "There was an error communicating with the server."
+        },
+        "eye_contact": "Eye Contact",
+        "emotion": "Emotion"
+    },
+
+    "percentage_sign": "{{value}}%"
 }
