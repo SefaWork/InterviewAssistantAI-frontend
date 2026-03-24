@@ -55,5 +55,16 @@
             "4": "Mülakat sonunda kullanıcılara aldıkları puana göre ip uçları ve kendilerini nasıl geliştirebilecekleri önerilir.",
             "5": "Ayrıca, kullanıcılar geçmişte yaptıkları mülakatları ve puanlarını görebilir ve zamanla ne kadar ilerlediklerini görebilirler."
         }
-    }
+    },
+
+    "interview_page": {
+        "error": {
+            "no_face": "Yüz algılanamadı. Yüzünüzün görülebilir olduğundan emin olunuz.",
+            "fetch": "Sunucu ile iletişim sırasında sorun oluştu."
+        },
+        "eye_contact": "Göz Teması",
+        "emotion": "Duygu"
+    },
+
+    "percentage_sign": "%{{value}}"
 }

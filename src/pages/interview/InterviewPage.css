@@ -27,6 +27,63 @@
 }
 
 .feedback-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
     flex: 1;
-    padding: 1rem 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem 1rem;
+}
+
+.score-field {
+    display: inline;
+    font-size: large;
+    font-weight: bold;
+    padding: 1rem;
+    margin: 0 1rem;
+    flex: 1;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: var(--foreground-color);
+    max-width: 500px;
+
+    transition: border-color 100ms ease;
+}
+
+.score-field div {
+    font-size: larger;
+    font-weight: normal;
+    transition: text-shadow 100ms ease;
+}
+
+.score-field.good {
+    border-color: #14973b;
+}
+
+.score-field.good div {
+    text-shadow: #14973b 2px 0 10px;
+}
+
+.score-field.average {
+    border-color: #e09200;
+}
+
+.score-field.average div {
+    text-shadow: #e09200 2px 0 10px;
+}
+
+.score-field.bad {
+    border-color: #c21111;
+}
+
+.score-field.bad div {
+    text-shadow: #c21111 2px 0 10px;
+}
+
+.score-field.error {
+    border-color: var(--error-color);
+    color: var(--error-color);
 }
