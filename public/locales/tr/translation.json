@@ -60,6 +60,7 @@
     "interview_page": {
         "error": {
             "no_face": "Yüz algılanamadı. Yüzünüzün görülebilir olduğundan emin olunuz.",
+            "multiple_faces": "Lütfen mülakat simülasyonunu tek başınıza yapınız. Arka planda görülen yüzler yanlış skorlamaya neden olabilir.",
             "fetch": "Sunucu ile iletişim sırasında sorun oluştu."
         },
         "eye_contact": "Göz Teması",
