@@ -45,7 +45,7 @@ function InterviewPage() {
         emotion: "Nötr"
     });
 
-    const [err, setError] = useState<string | null>(null);
+    const [errorMsg, setError] = useState<string | null>(null);
 
     const sendFrame = async () => {
         
@@ -74,23 +74,21 @@ function InterviewPage() {
             
             const responseJson = await response.json();
 
-            // Throw error if theres no faces.
+            // Show error if theres no faces or when there are more than one.
             if (!responseJson.face_count || responseJson.face_count < 1) {
                 setError("no_face")
-            }
-
-            // Throw error if theres more than one face.
-            if (responseJson.face_count > 1) {
+            } else if (responseJson.face_count > 1) {
                 setError("multiple_faces")
+            } else {
+                // No issues, edit scores and reset errors.
+                const newScore: TrackedScore = {
+                    eyeScore: responseJson.eye_contact_score,
+                    emotion: responseJson.emotion
+                }
+    
+                setError(null);
+                setTrackedScore(newScore);
             }
-
-            const newScore: TrackedScore = {
-                eyeScore: responseJson.eye_contact_score,
-                emotion: responseJson.emotion
-            }
-
-            setError(null);
-            setTrackedScore(newScore);
         } catch (err) {
             console.log(err)
 
@@ -119,13 +117,13 @@ function InterviewPage() {
                 <p>Questions will end up here.</p>
             </div>
             <div className='feedback-section'>
-                {!err && (
+                {!errorMsg && (
                     <>
                         <div className={`score-field ${emotionToFieldState(trackedScore.emotion)}`}><u>{t("interview_page.emotion")}</u><div>{trackedScore.emotion}</div></div>
                         <div className={`score-field ${eyeScoreToFieldState(trackedScore.eyeScore)}`}><u>{t("interview_page.eye_contact")}</u><div>{t("percentage_sign", {value:trackedScore.eyeScore})}</div></div>
                     </>
                 )}
-                {err && (<div className='score-field error'>{t(`interview_page.error.${err}`)}</div>)}
+                {errorMsg && (<div className='score-field error'>{t(`interview_page.error.${errorMsg}`)}</div>)}
             </div>
         </div>
     )
