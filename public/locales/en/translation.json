@@ -60,6 +60,7 @@
     "interview_page": {
         "error": {
             "no_face": "Face was not detected, make sure it isn't obstructed from view.",
+            "multiple_faces": "Please do the interview simulation alone, as other people in the background can cause incorrect scoring.",
             "fetch": "There was an error communicating with the server."
         },
         "eye_contact": "Eye Contact",

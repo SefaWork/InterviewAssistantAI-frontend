@@ -74,8 +74,14 @@ function InterviewPage() {
             
             const responseJson = await response.json();
 
+            // Throw error if theres no faces.
             if (!responseJson.face_count || responseJson.face_count < 1) {
                 setError("no_face")
+            }
+
+            // Throw error if theres more than one face.
+            if (responseJson.face_count > 1) {
+                setError("multiple_faces")
             }
 
             const newScore: TrackedScore = {
@@ -87,6 +93,8 @@ function InterviewPage() {
             setTrackedScore(newScore);
         } catch (err) {
             console.log(err)
+
+            // Errors haven't been categorized yet, so will default to communcation error for now. TODO: Change this to clarify actual issue.
             setError("fetch")
         }
 
