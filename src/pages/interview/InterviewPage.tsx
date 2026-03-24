@@ -86,6 +86,7 @@ function InterviewPage() {
             setError(null);
             setTrackedScore(newScore);
         } catch (err) {
+            console.log(err)
             setError("fetch")
         }
 
