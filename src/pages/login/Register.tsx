@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth';
 import type { LocalizedMessage } from '../../types/i18n';
 import './Register.css'
+import axiosServer from '../../api/axiosServer';
+import axios from 'axios';
 
 interface ErrorMessageState {
     email?: LocalizedMessage,
@@ -30,6 +32,26 @@ function Register() {
     const [processing, setProcessing] = useState<boolean>(false);
 
     const localizeMessage = (msg: LocalizedMessage) => msg.params? t(msg.key, msg.params) : t(msg.key);
+
+    const register = async (email: string, password: string) => {
+        try {
+            await axiosServer.post("/api/auth/register/", {email, password});
+            return {success: true}
+        } catch (err) {
+            if (axios.isAxiosError(err) && err.response) {
+                switch (err.response.status) {
+                    case 409:
+                        return {success: false, reason: {key: "error.email_exists"}}
+                    case 403:
+                        return {success: false, reason: {key: "error.forbidden"}}
+                    default:
+                        return {success: false, reason: {key: "error.server_error"}}
+                }
+            }
+        }
+
+        return {success: false, reason: {key: "error.server_unreachable"}}
+    }
     
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -69,7 +91,7 @@ function Register() {
         setProcessing(true);
 
         try {
-            const result = await auth.register(givenEmail, givenPass);
+            const result = await register(givenEmail, givenPass);
             if (result.success) return navigate('/login');
             
             newState.submit = result.reason ?? {key: "error.generic"}
