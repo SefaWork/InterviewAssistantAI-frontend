@@ -1,92 +1,75 @@
-import { useState, useEffect } from 'react';
-import AuthContext, { type AuthTokens, type AuthContextType } from './AuthContext';
+import { useState } from "react";
+import axiosServer from "../api/axiosServer";
+import AuthContext from "./AuthContext";
+import axios from "axios";
+import type { LocalizedMessage } from "../types/i18n";
 
-interface AuthProviderProps {
+type AuthProviderProps = {
     children: React.ReactNode
 }
 
-export default function AuthProvider({children}: AuthProviderProps) {
-    const [authTokens, setAuthTokens] = useState<AuthTokens | null>(() => {
-        const tokens = localStorage.getItem('authTokens');
-        return tokens ? JSON.parse(tokens) : null;
-    });
+function AuthProvider({children}: AuthProviderProps) {
+    const [accessToken, setAccessToken] = useState<string | undefined>(undefined);
+    const [refreshToken, setRefreshToken] = useState<string | undefined>(undefined);
 
-    const [loading, setLoading] = useState(true);
-
-    const fetchTokens = async (email: string, password: string) => {
+    const login = async (email: string, password: string): Promise<{ success: boolean, reason?: LocalizedMessage }> => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
+            const {data} = await axiosServer.post("/api/auth/login/", {email, password});
 
-            if (!response.ok) {
-                if (response.status == 401) {
-                    throw new Error('Incorrect login credentials.');
-                } else {
-                    throw new Error('Login failed. Please check your internet and try again.');
+            if (data.access && data.refresh) {
+                // Login was successful.
+                setAccessToken(data.access);
+                setRefreshToken(data.refresh);
+                return {
+                    success: true
                 }
             }
 
-            const data = await response.json();
-            setAuthTokens(data);
-            localStorage.setItem('authTokens', JSON.stringify(data));
-        } catch (error) {
-            console.error('Login error:', error);
-            throw error;
-        }
-    };
-
-    const registerUser = async (email: string, password: string) => {
-        try {
-            const response = await fetch('http://127.0.0.1:8000/api/auth/register/', {
-                method: "POST",
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({email, password})
-            });
-
-            if (!response.ok) {
-                throw new Error('Register attempt failed.')
+            return {success: false, reason: {key: "error.server_error"}}
+        } catch(err) {
+            if (axios.isAxiosError(err) && err.response) {
+                switch (err.response.status) {
+                    case 401:
+                        return {success: false, reason: {key: "error.invalid_credentials"}}
+                    case 403:
+                        return {success: false, reason: {key: "error.forbidden"}}
+                    default:
+                        return {success: false, reason: {key: "error.server_error"}}
+                }
             }
+        }
 
-            const data = await response.json();
-            console.log(data)
-        } catch(error) {
-            console.error('Login error:', error);
-            throw error;
+        return {
+            success: false,
+            reason: {key: "error.server_unreachable"}
         }
     }
 
-    const logoutUser = () => {
-        setAuthTokens(null);
-        localStorage.removeItem('authTokens');
-    };
-
-    useEffect(() => {
-        if (authTokens) {
-            localStorage.setItem('authTokens', JSON.stringify(authTokens));
+    const register = async (email: string, password: string): Promise<{ success: boolean, reason?: LocalizedMessage }> => {
+        try {
+            await axiosServer.post("/api/auth/register/", {email, password});
+            return await login(email, password);
+        } catch (err) {
+            if (axios.isAxiosError(err) && err.response) {
+                switch (err.response.status) {
+                    case 409:
+                        return {success: false, reason: {key: "error.email_exists"}}
+                    case 403:
+                        return {success: false, reason: {key: "error.forbidden"}}
+                    default:
+                        return {success: false, reason: {key: "error.server_error"}}
+                }
+            }
         }
-        setLoading(false);
-    }, [authTokens]);
 
-    const contextData: AuthContextType = {
-        authTokens,
-        fetchTokens,
-        logoutUser,
-        setAuthTokens,
-        registerUser
-    };
+        return {success: false, reason: {key: "error.server_unreachable"}}
+    }
 
     return (
-        <AuthContext.Provider value={contextData}>
-            {!loading && children}
+        <AuthContext.Provider value={{accessToken, refreshToken, login, register}}>
+            {children}
         </AuthContext.Provider>
-    );
-};
+    )
+}
+
+export default AuthProvider;

@@ -1,16 +1,15 @@
-import { createContext } from 'react';
-
-export interface AuthTokens {
-    access: string;
-    refresh: string;
-}
+import { createContext } from "react";
+import type { LocalizedMessage } from "../types/i18n";
 
 export interface AuthContextType {
-    authTokens: AuthTokens | null;
-    fetchTokens: (email: string, password: string) => Promise<void>;
-    logoutUser: () => void;
-    setAuthTokens: (tokens: AuthTokens | null) => void;
-    registerUser: (email: string, password: string) => Promise<void>;
+    accessToken?: string,
+    refreshToken?: string,
+
+    /**Sends a request to the server to login. Throws an exception on failure. */
+    login: (email: string, password: string) => Promise<{success: boolean, reason?: LocalizedMessage}>,
+
+    /**Sends a request to the server to register. Throws an exception on failure. */
+    register: (email: string, password: string) => Promise<{success: boolean, reason?: LocalizedMessage}>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

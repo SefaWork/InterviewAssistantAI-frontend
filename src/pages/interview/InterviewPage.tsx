@@ -1,7 +1,9 @@
 import Webcam from 'react-webcam'
 import { useEffect, useRef, useState } from 'react';
-import './InterviewPage.css'
 import { useTranslation } from 'react-i18next';
+import axiosServer from '../../api/axiosServer';
+import axios from 'axios';
+import './InterviewPage.css'
 
 interface TrackedScore {
     eyeScore: number,
@@ -65,35 +67,35 @@ function InterviewPage() {
             
             const formData = new FormData();
             formData.append("image", await res.blob());
-            
-            const response = await fetch('http://127.0.0.1:8000/api/interview/analyze/', {
-                method: 'POST',
-                mode: 'cors',
-                body: formData
-            });
-            
-            const responseJson = await response.json();
+
+            const response = await axiosServer.post('/api/interview/analyze/', formData);
+            const responseData = response.data;
 
             // Show error if theres no faces or when there are more than one.
-            if (!responseJson.face_count || responseJson.face_count < 1) {
+            if (!responseData.face_count || responseData.face_count < 1) {
                 setError("no_face")
-            } else if (responseJson.face_count > 1) {
+            } else if (responseData.face_count > 1) {
                 setError("multiple_faces")
             } else {
                 // No issues, edit scores and reset errors.
                 const newScore: TrackedScore = {
-                    eyeScore: responseJson.eye_contact_score,
-                    emotion: responseJson.emotion
+                    eyeScore: responseData.eye_contact_score,
+                    emotion: responseData.emotion
                 }
     
                 setError(null);
                 setTrackedScore(newScore);
             }
         } catch (err) {
-            console.log(err)
-
-            // Errors haven't been categorized yet, so will default to communcation error for now. TODO: Change this to clarify actual issue.
-            setError("fetch")
+            if (axios.isAxiosError(err)) {
+                if (err.response) {
+                    setError("generic"); // Server responded with error
+                } else {
+                    setError("fetch"); // Network error.
+                }
+            } else {
+                setError("generic"); // Non-axios related error.
+            }
         }
 
         processingFrameRef.current = false;

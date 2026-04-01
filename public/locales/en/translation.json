@@ -10,7 +10,13 @@
         "too_long": "Field is too long. Use at most {{length}} characters.",
         "missing_email_symbol": "Valid e-mail addresses require the '@' symbol.",
         "generic": "An error occured.",
-        "password_mismatch": "Passwords don't match."
+        "password_mismatch": "Passwords don't match.",
+
+        "invalid_credentials": "E-mail or password is incorrect.",
+        "forbidden": "Server refused your request.",
+        "server_error": "There was a server related issue.",
+        "server_unreachable": "Could not reach the server.",
+        "email_exists": "There is already an account under the same e-mail address."
     },
 
     "field": {
@@ -61,7 +67,8 @@
         "error": {
             "no_face": "Face was not detected, make sure it isn't obstructed from view.",
             "multiple_faces": "Please do the interview simulation alone, as other people in the background can cause incorrect scoring.",
-            "fetch": "There was an error communicating with the server."
+            "fetch": "There was an error communicating with the server.",
+            "generic": "An error occured."
         },
         "eye_contact": "Eye Contact",
         "emotion": "Emotion"
