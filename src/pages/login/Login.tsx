@@ -1,13 +1,17 @@
 import type { LocalizedMessage } from '../../types/i18n';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Form from '../../components/form/Form';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import FormEmailField from '../../components/form/FormEmailField';
 import FormPasswordField from '../../components/form/FormPasswordField';
 import FormSubmit from '../../components/form/FormSubmit';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth';
+import axiosServer from '../../api/axiosServer';
+import axios from 'axios';
 import './Login.css'
+
+const LOGIN_PATH = "/api/auth/login/"
 
 interface ErrorMessageState {
     email?: LocalizedMessage,
@@ -18,7 +22,8 @@ interface ErrorMessageState {
 function Login() {
     const navigate = useNavigate();
     const {t} = useTranslation();
-    const auth = useAuth();
+    const { setAccessToken } = useAuth();
+    const location = useLocation();
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passRef = useRef<HTMLInputElement>(null);
@@ -26,8 +31,35 @@ function Login() {
     const [errors, setErrors] = useState<ErrorMessageState>({});
     const [processing, setProcessing] = useState<boolean>(false);
 
+    const navigateTo = location.state?.from?.pathname || "/";
+
     /**Helper function to translate messages with parameter support. */
     const localizeMessage = (msg: LocalizedMessage) => msg.params? t(msg.key, msg.params) : t(msg.key);
+
+    const login = async (email: string, password: string) => {
+        try {
+            const { data } = await axiosServer.post(LOGIN_PATH, {email, password}, {withCredentials: true});
+            setAccessToken(data.access);
+            return {success: true}
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                if (err.response) {
+                    switch (err.response.status) {
+                        case 401:
+                            return {success: false, reason: {key: "error.invalid_credentials"}}
+                        case 403:
+                            return {success: false, reason: {key: "error.forbidden"}}
+                        default:
+                            return {success: false, reason: {key: "error.server_error"}}
+                    }
+                } else {
+                    return {success: false, reason: {key: "error.server_unreachable"}}
+                }
+            }
+        }
+
+        return {success: false, reason: {key: "server.server_error"}}
+    }
 
     const action = async (e: FormEvent) => {
         e.preventDefault();
@@ -57,8 +89,8 @@ function Login() {
         
         setProcessing(true);
         try {
-            const result = await auth.login(givenEmail, givenPassword);
-            if (result.success) return navigate('/'); 
+            const result = await login(givenEmail, givenPassword);
+            if (result.success) return navigate(navigateTo); 
             newState.submit = result.reason ?? {key: "error.generic"}
         } catch(err) {
             newState.submit = {key: err instanceof Error ? err.message : "error.generic"}
@@ -71,13 +103,6 @@ function Login() {
     const onInput = () => {
         setErrors({})
     }
-
-    useEffect(() => {
-        if (auth.accessToken) {
-            // Already logged in.
-            navigate('/');
-        }
-    }, [])
 
     return (
         <div className='login-page' data-testid="Login">
