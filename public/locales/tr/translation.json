@@ -10,7 +10,13 @@
         "too_long": "Alan çok uzun. En fazla {{length}} karakter kullanınız.",
         "missing_email_symbol": "Doğru e-mail adresi '@' sembolünü gerektirir.",
         "generic": "Bir hata oluştu.",
-        "password_mismatch": "Şifreler aynı değil."
+        "password_mismatch": "Şifreler aynı değil.",
+
+        "invalid_credentials": "E-mail veya parola yanlış girdiniz.",
+        "forbidden": "Talebiniz sunucu tarafından reddedildi.",
+        "server_error": "Sunucu tarafında bir hata oluştu.",
+        "server_unreachable": "Sunucuya ulaşılamadı.",
+        "email_exists": "Bu e-mail adresi adına çoktan bir hesap var."
     },
 
     "field": {
@@ -61,7 +67,8 @@
         "error": {
             "no_face": "Yüz algılanamadı. Yüzünüzün görülebilir olduğundan emin olunuz.",
             "multiple_faces": "Lütfen mülakat simülasyonunu tek başınıza yapınız. Arka planda görülen yüzler yanlış skorlamaya neden olabilir.",
-            "fetch": "Sunucu ile iletişim sırasında sorun oluştu."
+            "fetch": "Sunucu ile iletişim sırasında sorun oluştu.",
+            "generic": "Bir hata oluştu."
         },
         "eye_contact": "Göz Teması",
         "emotion": "Duygu"
