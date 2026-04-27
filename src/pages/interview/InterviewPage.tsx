@@ -1,9 +1,11 @@
 import Webcam from 'react-webcam'
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import axiosServer from '../../api/axiosServer';
-import axios from 'axios';
 import './InterviewPage.css'
+import useWebSocket from '../../hooks/useWebSocket';
+
+// 1 second / FPS
+const SEND_INTERVAL = 1_000 / 5
 
 interface TrackedScore {
     eyeScore: number,
@@ -14,9 +16,6 @@ type FieldStates =
     | "good"
     | "average"
     | "bad"
-
-// 1 second / FPS
-const SEND_INTERVAL = 1_000 / 5
 
 /**Note: Current emotion names are temporary, will be changed to lowercase english names for localization table. */
 const emotionToFieldState = (emotionKey: string): FieldStates => {
@@ -38,10 +37,10 @@ const eyeScoreToFieldState = (eyeScore: number): FieldStates => {
 
 function InterviewPage() {
     const {t} = useTranslation();
-
     const webcamRef = useRef<Webcam>(null);
-    const processingFrameRef = useRef<boolean>(false);
-    
+
+    const {sendBinary, lastMessage} = useWebSocket("ws://localhost:8000/ws/stream/")
+
     const [trackedScore, setTrackedScore] = useState<TrackedScore>({
         eyeScore: 0,
         emotion: "Nötr"
@@ -49,57 +48,15 @@ function InterviewPage() {
 
     const [errorMsg, setError] = useState<string | null>(null);
 
-    const sendFrame = async () => {
-        
+    // Take screenshot and send to server.
+    const sendFrame = useCallback(() => {
         const imgSrc = webcamRef.current?.getScreenshot();
-        
-        // Null guard. (typescript is annoying sometimes)
-        if(!imgSrc) {
-            console.warn("Webcam component is not fully initialized. (Missing user permissions?)")
-            return;
-        }
-        
-        if (processingFrameRef.current) return;
-        processingFrameRef.current = true;
-        
-        try {
-            const res = await fetch(imgSrc);
-            
-            const formData = new FormData();
-            formData.append("image", await res.blob());
+        if (!imgSrc) return;
 
-            const response = await axiosServer.post('/api/interview/analyze/', formData);
-            const responseData = response.data;
-
-            // Show error if theres no faces or when there are more than one.
-            if (!responseData.face_count || responseData.face_count < 1) {
-                setError("no_face")
-            } else if (responseData.face_count > 1) {
-                setError("multiple_faces")
-            } else {
-                // No issues, edit scores and reset errors.
-                const newScore: TrackedScore = {
-                    eyeScore: responseData.eye_contact_score,
-                    emotion: responseData.emotion
-                }
-    
-                setError(null);
-                setTrackedScore(newScore);
-            }
-        } catch (err) {
-            if (axios.isAxiosError(err)) {
-                if (err.response) {
-                    setError("generic"); // Server responded with error
-                } else {
-                    setError("fetch"); // Network error.
-                }
-            } else {
-                setError("generic"); // Non-axios related error.
-            }
-        }
-
-        processingFrameRef.current = false;
-    }
+        fetch(imgSrc)
+            .then((res) => res.blob())
+            .then((blob) => sendBinary(blob))
+    }, [sendBinary])
 
     // Create interval to send frames.
     useEffect(() => {
@@ -108,6 +65,25 @@ function InterviewPage() {
             clearInterval(intervalID)
         }
     }, [])
+
+    useEffect(() => {
+        if (lastMessage?.type === "result") {
+            const data = lastMessage.data;
+            
+            if (!data.face_count || data.face_count < 1) {
+                setError("no_face")
+            } else {
+                // No issues, edit scores and reset errors.
+                const newScore: TrackedScore = {
+                    eyeScore: data.eye_contact_score,
+                    emotion: data.emotion
+                }
+    
+                setError(null);
+                setTrackedScore(newScore);
+            }
+        }
+    }, [lastMessage])
 
     return (
         <div className="interview-main-div">
