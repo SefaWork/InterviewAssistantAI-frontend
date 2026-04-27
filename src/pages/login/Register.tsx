@@ -112,7 +112,7 @@ function Register() {
             // Already logged in.
             navigate('/');
         }
-    }, [])
+    }, [auth, navigate])
 
     return (
         <div className='register-page' data-testid='Register'>
