@@ -1,0 +1,61 @@
+.interview-results-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.interview-results-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--form-color);
+    border: .1rem solid var(--foreground-color);
+    border-radius: 1rem;
+    box-shadow: 0 0 5rem 1rem var(--form-shadow-color);
+    padding: 2rem 2rem;
+
+    width: 50%;
+    max-width: 60vh;
+}
+
+.score-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.score-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.score-display .score-title {
+    font-size: x-large;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.score-display .score-value {
+    font-size: larger;
+    font-weight: bold;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+.total-score {
+    width: 100%;
+}
+
+.suggestion-section {
+    margin-top: 1rem;
+}
