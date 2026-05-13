@@ -9,6 +9,7 @@ import InterviewPage from './pages/interview/InterviewPage'
 import Topnav from './components/header/Topnav'
 import About from './pages/home/About'
 import RequireAuth from './components/auth/RequireAuth'
+import InterviewResults from './pages/interview/InterviewResults'
 import './App.css'
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
               <Route element={<RequireAuth />}>
                 <Route path='/interview' element={<InterviewPage />} />
                 <Route path='/interview/setup' element={<InterviewSetup />} />
+                <Route path='/interview/result' element={<InterviewResults />} />
               </Route>
 
               {/*Wild route to catch all other routes. */}
