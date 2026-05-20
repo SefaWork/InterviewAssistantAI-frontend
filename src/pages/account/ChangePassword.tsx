@@ -1,9 +1,11 @@
 import { useRef, type FormEvent } from "react";
 import FormPasswordField from "../../components/form/FormPasswordField";
 import FormSubmit from "../../components/form/FormSubmit";
+import { useTranslation } from "react-i18next";
 
 function ChangePassword() {
     // Child componenent to be rendered under ACccountSettings component.
+    const {t} = useTranslation();
 
     const curPasswordRef = useRef<HTMLInputElement>(null);
     const newPasswordRef = useRef<HTMLInputElement>(null);
@@ -17,12 +19,12 @@ function ChangePassword() {
 
     return (
         <>
-            <h1>Change Password</h1>
+            <h1>{t("account_settings_page.change_password")}</h1>
             <form onSubmit={handleSubmit}>
-                <FormPasswordField id="cur_password" label="Current Password" ref={curPasswordRef} />
-                <FormPasswordField id="new_password" label="New Password" ref={newPasswordRef} />
-                <FormPasswordField id="rep_password" label="Repeat Password" ref={repPasswordRef} />
-                <FormSubmit text="Change Password" />
+                <FormPasswordField id="cur_password" label={t("field.current_password")} ref={curPasswordRef} />
+                <FormPasswordField id="new_password" label={t("field.new_password")} ref={newPasswordRef} />
+                <FormPasswordField id="rep_password" label={t("field.repeat_password")} ref={repPasswordRef} />
+                <FormSubmit text={t("confirm")} />
             </form>
         </>
     )
