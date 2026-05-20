@@ -78,3 +78,15 @@
     background-color: var(--danger-btn-color);
     color: var(--danger-btn-text-color);
 }
+
+.settings-button.back {
+    background-color: var(--cancel-btn-color);
+    color: var(--cancel-btn-text-color);
+}
+
+.back-btn {
+    font-size: larger;
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--secondary-text-color);
+}

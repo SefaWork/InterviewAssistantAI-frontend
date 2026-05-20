@@ -23,7 +23,11 @@
         "email": "E-mail Adresi",
         "password": "Şifre",
         "repeat_password": "Şifre Tekrarla",
-        "fallback_email": "örn. ornek@email.com"
+        "fallback_email": "örn. ornek@email.com",
+        "current_password": "Mevcut Şifreniz",
+        "current_email": "Mevcut E-Mail Adresiniz",
+        "new_password": "Yeni Şifre",
+        "new_email": "Yeni E-Mail Adresi"
     },
     
     "get_started": "Hemen Başla",
@@ -74,5 +78,17 @@
         "emotion": "Duygu"
     },
 
-    "percentage_sign": "%{{value}}"
+    "percentage_sign": "%{{value}}",
+
+    "account_settings_page": {
+        "account_settings": "Hesap Ayarları",
+        "change_email": "E-Mail Değiştir",
+        "change_password": "Parola Değiştir",
+        "delete_account": "Hesabını Sil",
+        "confirmation_text": "Hesabınızı silmek üzeresiniz. Devam etmek için aşağıdaki boşluğa şifrenizi doldurunuz.",
+        "deletion_warning": "Silme işlemi geri alınamaz!"
+    },
+
+    "back": "Geri",
+    "confirm": "Onayla"
 }

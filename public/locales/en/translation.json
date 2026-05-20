@@ -23,7 +23,11 @@
         "email": "E-mail Address",
         "password": "Password",
         "repeat_password": "Repeat Password",
-        "fallback_email": "e.g. example@email.com"
+        "fallback_email": "e.g. example@email.com",
+        "current_password": "Current Password",
+        "current_email": "Current E-Mail Address",
+        "new_password": "New Password",
+        "new_email": "New E-Mail Address"
     },
 
     "get_started": "Get Started",
@@ -74,5 +78,17 @@
         "emotion": "Emotion"
     },
 
-    "percentage_sign": "{{value}}%"
+    "percentage_sign": "{{value}}%",
+
+    "account_settings_page": {
+        "account_settings": "Account Settings",
+        "change_email": "Change E-Mail",
+        "change_password": "Change Password",
+        "delete_account": "Delete Account",
+        "confirmation_text": "You are about to delete your account, type in your password to confirm the deletion.",
+        "deletion_warning": "This action is irreversible!"
+    },
+
+    "back": "Back",
+    "confirm": "Confirm"
 }
