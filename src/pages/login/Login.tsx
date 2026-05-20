@@ -106,7 +106,7 @@ function Login() {
 
     return (
         <div className='login-page' data-testid="Login">
-            <Form formTitle={t("login")} onSubmit={action} onInput={onInput}>        
+            <Form formTitle={t("login")} onSubmit={action} onInput={onInput}>
                 <FormEmailField id='email' label={`${t("field.email")}:`} error={errors.email && localizeMessage(errors.email)} ref={emailRef} />
                 <FormPasswordField id='password' label={`${t("field.password")}:`} error={errors.pass && localizeMessage(errors.pass)} ref={passRef} />
                 <FormSubmit disabled={processing} text={processing? `${t("logging_in")}...` : t("login")} error={errors.submit && localizeMessage(errors.submit)} />
