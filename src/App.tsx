@@ -11,6 +11,7 @@ import About from './pages/home/About'
 import RequireAuth from './components/auth/RequireAuth'
 import InterviewResults from './pages/interview/InterviewResults'
 import './App.css'
+import AccountSettings from './pages/account/AccountSettings'
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
                 <Route path='/interview/setup' element={<InterviewSetup />} />
                 <Route path='/interview/result' element={<InterviewResults />} />
               </Route>
+
+              <Route path='/test_account_settings' element={<AccountSettings />} />
 
               {/*Wild route to catch all other routes. */}
               <Route path='*' element={<NotFound />} />

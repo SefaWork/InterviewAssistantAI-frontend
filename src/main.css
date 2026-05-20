@@ -25,6 +25,12 @@ body {
     --primary-btn-active-color: #0043ca;
     --primary-btn-disabled-color: #54525a;
 
+    --danger-btn-color: #d50000;
+    --danger-btn-hover-color: #af0000;
+    --danger-btn-active-color: #dd4c4c;
+    --danger-btn-disabled-color: #4d1414;
+    --danger-btn-text-color: #ffffff;
+
     background: radial-gradient(circle at center, #ffffff 0%, #f6f6f6 100%);
     font-family: 'Roboto', sans-serif;
 }
@@ -49,6 +55,12 @@ body.dark {
     --primary-btn-hover-color: #3015c9;
     --primary-btn-active-color: #1901a0;
     --primary-btn-disabled-color: #3f3a59;
+
+    --danger-btn-color: #d50000;
+    --danger-btn-hover-color: #af0000;
+    --danger-btn-active-color: #dd4c4c;
+    --danger-btn-disabled-color: #4d1414;
+    --danger-btn-text-color: #ffffff;
 
     background: radial-gradient(circle at center, #202020 0%, #000000 100%);
 }
