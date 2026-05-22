@@ -1,37 +1,56 @@
 import { useEffect, useState } from 'react';
 import './InterviewHistory.css'
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
-interface HistorySummary {
+type HistorySummary = {
     id: number,
-    date: Date,
+    created_at: Date,
     totalScore: number
 }
 
-const formatDate = (d: Date) => {
-  const datePart = d.toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "2-digit",
-  });
+const formatDate = (date: Date) => {
+    const datePart = date.toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "2-digit",
+    });
 
-  const timePart = d.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+    const timePart = date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
 
-  return `${datePart.replace(/\//g, ".")} ${timePart}`;
+    return `${datePart.replace(/\//g, ".")} ${timePart}`;
 };
 
+const SESSION_LIST_PATH = '/api/account/interviews/'
+
+const deserializeResponse = (entry: {id: string, created_at: string}): HistorySummary => {
+    return {created_at: new Date(entry.created_at), id: parseInt(entry.id), totalScore: 100}
+}
+
 function InterviewHistory() {
-    const [interviews, setInterviews] = useState<HistorySummary[]>([
-        {id: 1, date: new Date(2026, 4, 3), totalScore: 81},
-        {id: 2, date: new Date(2026, 4, 1), totalScore: 77}
-    ]); // Demo values.
+    const [interviews, setInterviews] = useState<HistorySummary[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const axios = useAxiosPrivate();
 
     useEffect(() => {
-        
-    }, [])
+        const controller = new AbortController();
+
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get(SESSION_LIST_PATH, {params: {page: 1}});
+                setInterviews(data.map(deserializeResponse));
+                setLoading(false);
+            } catch(err) {
+                console.error(err)
+            }
+        }
+
+        fetchData();
+
+        return () => controller.abort();
+    }, [axios])
 
     return (
         <div className='interivew-history-main'>
@@ -41,7 +60,7 @@ function InterviewHistory() {
                 <ol>
                     {interviews.length <= 0 && <li>You haven't done any interviews!</li>}
                     {interviews.map(interviewData => (
-                        <li>{formatDate(interviewData.date)} {interviewData.totalScore}%</li>
+                        <li key={interviewData.id}>{formatDate(interviewData.created_at)} {interviewData.totalScore}%</li>
                     ))}
                 </ol>
             )}
