@@ -12,6 +12,7 @@ import RequireAuth from './components/auth/RequireAuth'
 import InterviewResults from './pages/interview/InterviewResults'
 import './App.css'
 import AccountSettings from './pages/account/AccountSettings'
+import InterviewHistory from './pages/account/InterviewHistory'
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
                 <Route path='/interview' element={<InterviewPage />} />
                 <Route path='/interview/setup' element={<InterviewSetup />} />
                 <Route path='/interview/result' element={<InterviewResults />} />
+                <Route path='/account' element={<AccountSettings />} />
+                <Route path='/history' element={<InterviewHistory />} />
               </Route>
 
               <Route path='/test_account_settings' element={<AccountSettings />} />

@@ -30,10 +30,8 @@ function InterviewHistory() {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        // Fetch and load past interviews.
-
-        setLoading(false);
-    })
+        
+    }, [])
 
     return (
         <div className='interivew-history-main'>

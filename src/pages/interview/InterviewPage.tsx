@@ -1,5 +1,5 @@
 import Webcam from 'react-webcam'
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { startTransition, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './InterviewPage.css'
 import useWebSocket from '../../hooks/useWebSocket';
@@ -7,7 +7,16 @@ import useWebSocket from '../../hooks/useWebSocket';
 // 1 second / FPS
 const SEND_INTERVAL = 1_000 / 5
 
-interface TrackedScore {
+type WebsocketResponseType = {
+    type?: "result",
+    data?: {
+        face_count: number,
+        eye_contact_score: number,
+        emotion: string
+    }
+}
+
+type TrackedScore = {
     eyeScore: number,
     emotion: string
 }
@@ -39,7 +48,7 @@ function InterviewPage() {
     const {t} = useTranslation();
     const webcamRef = useRef<Webcam>(null);
 
-    const {sendBinary, lastMessage} = useWebSocket("ws://localhost:8000/ws/stream/")
+    const {sendBinary, lastMessage} = useWebSocket<WebsocketResponseType>("ws://localhost:8000/ws/stream/")
 
     const [trackedScore, setTrackedScore] = useState<TrackedScore>({
         eyeScore: 0,
@@ -64,25 +73,24 @@ function InterviewPage() {
         return () => {
             clearInterval(intervalID)
         }
-    }, [])
+    }, [sendFrame])
 
     useEffect(() => {
-        if (lastMessage?.type === "result") {
-            const data = lastMessage.data;
-            
+        if (lastMessage?.type !== "result") return;
+        const data = lastMessage.data;
+        if (!data) return;
+
+        startTransition(() => {
             if (!data.face_count || data.face_count < 1) {
-                setError("no_face")
+                setError("no_face");
             } else {
-                // No issues, edit scores and reset errors.
-                const newScore: TrackedScore = {
+                setError(null);
+                setTrackedScore({
                     eyeScore: data.eye_contact_score,
                     emotion: data.emotion
-                }
-    
-                setError(null);
-                setTrackedScore(newScore);
+                });
             }
-        }
+        })
     }, [lastMessage])
 
     return (
