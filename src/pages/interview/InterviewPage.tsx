@@ -3,6 +3,7 @@ import { startTransition, useCallback, useEffect, useRef, useState } from 'react
 import { useTranslation } from 'react-i18next';
 import './InterviewPage.css'
 import useWebSocket from '../../hooks/useWebSocket';
+import { useParams } from 'react-router-dom';
 
 // 1 second / FPS
 const SEND_INTERVAL = 1_000 / 5
@@ -47,6 +48,9 @@ const eyeScoreToFieldState = (eyeScore: number): FieldStates => {
 function InterviewPage() {
     const {t} = useTranslation();
     const webcamRef = useRef<Webcam>(null);
+    const {id} = useParams();
+
+    console.log(id);
 
     const {sendBinary, lastMessage} = useWebSocket<WebsocketResponseType>("ws://localhost:8000/ws/stream/")
 
