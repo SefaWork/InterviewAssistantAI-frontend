@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import axiosServer from "../api/axiosServer";
 import useAuth from "./useAuth";
 
@@ -7,15 +8,17 @@ const REFRESH_PATH = "/api/auth/refresh/"
 function useRefresh(): () => Promise<string | undefined> {
     const { setAccessToken } = useAuth();
 
-    return async () => {
+    const refresh = useCallback(async () => {
         try {
             const {data} = await axiosServer.post(REFRESH_PATH, {}, { withCredentials: true });
-            setAccessToken(data.accessToken);
-            return data.accessToken;
+            setAccessToken(data.access);
+            return data.access;
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
-    }
+    }, [setAccessToken])
+
+    return refresh;
 }
 
 export default useRefresh;
