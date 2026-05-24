@@ -30,9 +30,9 @@ function App() {
               {/*These are pages that require user to be authenticated. Redirects to login if not authenticated. */}
               <Route element={<RequireAuth />}>
                 <Route path='/interview/:session/:ticket/' element={<InterviewPage />} />
-                <Route path='/interview/:session/' element={<InterviewResults />} />
                 <Route path='/interview/' element={<InterviewSetup />} />
                 <Route path='/account/' element={<AccountSettings />} />
+                <Route path='/history/:session/' element={<InterviewResults />} />
                 <Route path='/history/' element={<InterviewHistory />} />
               </Route>
 

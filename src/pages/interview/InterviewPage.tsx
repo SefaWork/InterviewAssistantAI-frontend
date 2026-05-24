@@ -73,7 +73,7 @@ function InterviewPage() {
 
     useEffect(() => {
         if (lastMessage?.type === "session_complete" && session) {
-            navigate(`/interview/${session}`)
+            navigate(`/history/${session}`)
             return;
         }
 
