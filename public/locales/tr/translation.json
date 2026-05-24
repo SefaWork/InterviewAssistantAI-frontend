@@ -78,6 +78,12 @@
         "emotion": "Duygu"
     },
 
+    "score_categories": {
+        "total_score": "Toplam Skor",
+        "emotion_score": "Duygu Skoru",
+        "eye_contact_score": "Göz Teması Skoru"
+    },
+
     "percentage_sign": "%{{value}}",
 
     "account_settings_page": {
