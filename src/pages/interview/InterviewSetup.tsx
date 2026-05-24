@@ -1,17 +1,20 @@
 import { useRef, useState } from "react"
 import Webcam from "react-webcam";
 import { useNavigate } from "react-router-dom";
-import './InterviewSetup.css'
 import { useTranslation } from "react-i18next";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import axios from "axios";
+
+import './InterviewSetup.css'
 
 const SESSION_CREATE_PATH = "/api/interview/create/"
+const SESSION_CONTINUE_PATH = "/api/interview/continue/"
 
 function InterviewSetup() {
     const {t} = useTranslation();
     const [ready, setReady] = useState<boolean>(false);
     const navigate = useNavigate();
-    const axios = useAxiosPrivate();
+    const axiosServer = useAxiosPrivate();
     const creatingRef = useRef<boolean>(false);
     
     const handleUserMedia = () => {
@@ -22,21 +25,43 @@ function InterviewSetup() {
         setReady(false);
     }
 
+    const handleContinue = async (id: string | number) => {
+        try {
+            const {data} = await axiosServer.post(`${SESSION_CONTINUE_PATH}${id}/`)
+            const ticket = data?.ticket;
+
+            if (!ticket) throw new Error("Failed to continue session.");
+            navigate(`/interview/${id}/${ticket}`)
+        } catch(err) {
+            console.error(err)
+            creatingRef.current = false;
+        }
+    }
+
     const handleClick = async () => {
         if (ready) {
             if (creatingRef.current) return;
             creatingRef.current = true;
 
             try {
-                const response = await axios.post(SESSION_CREATE_PATH);
-                const id = response.data?.id as number | undefined;
+                const {data} = await axiosServer.post(SESSION_CREATE_PATH);
 
-                if (!id) throw new Error("Failed to create interview session.");
+                const ticket = data?.ticket;
+                const id = data?.id;
 
-                navigate(`/interview/${id}`)
+                if (!id || !ticket) throw new Error("Failed to create session.");
+                navigate(`/interview/${id}/${ticket}`)
             } catch(err) {
-                creatingRef.current = false;
                 console.error(err);
+
+                if (axios.isAxiosError(err)) {
+                    if (err.status === 409 && err.response?.data?.session_id) {
+                        await handleContinue(err.response.data.session_id);
+                        return;
+                    }
+                }
+
+                creatingRef.current = false;
             }
         }
     }

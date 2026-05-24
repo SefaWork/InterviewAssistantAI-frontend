@@ -16,12 +16,13 @@ export interface WebSocketHookType<T = unknown, S = unknown> {
 }
 
 /** Hook for creating a WebSocket instance. Provides useful callbacks for data communication. */
-function useWebSocket<T = unknown, S = unknown>(url: string): WebSocketHookType<T, S> {
+function useWebSocket<T = unknown, S = unknown>(url: string | null): WebSocketHookType<T, S> {
     const ws = useRef<WebSocket | null>(null);
     const [status, setStatus] = useState<WebsocketStatus>("DISCONNECTED");
     const [lastMessage, setLastMessage] = useState<T | null>(null);
 
     useEffect(() => {
+        if (!url) return;
         ws.current = new WebSocket(url);
         ws.current.binaryType = "arraybuffer";
 

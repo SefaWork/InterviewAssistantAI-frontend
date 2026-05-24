@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import './InterviewHistory.css'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import './InterviewHistory.css'
 
 type HistorySummary = {
-    id: number,
+    id: string,
     created_at: Date,
     totalScore: number
 }
@@ -25,46 +25,38 @@ const formatDate = (date: Date) => {
 
 const SESSION_LIST_PATH = '/api/account/interviews/'
 
-const deserializeResponse = (entry: {id: string, created_at: string}): HistorySummary => {
-    return {created_at: new Date(entry.created_at), id: parseInt(entry.id), totalScore: 100}
+const deserializeResponse = (entry: {id: string, created_at: string, total_avg: number}): HistorySummary => {
+    return {created_at: new Date(entry.created_at), id: entry.id, totalScore: entry.total_avg}
 }
 
 function InterviewHistory() {
     const [interviews, setInterviews] = useState<HistorySummary[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const axios = useAxiosPrivate();
+    const axiosServer = useAxiosPrivate();
 
     useEffect(() => {
         const controller = new AbortController();
 
-        const fetchData = async () => {
-            try {
-                const { data } = await axios.get(SESSION_LIST_PATH, {params: {page: 1}});
-                setInterviews(data.map(deserializeResponse));
-                setLoading(false);
-            } catch(err) {
-                console.error(err)
-            }
-        }
-
-        fetchData();
+        axiosServer
+        .get(SESSION_LIST_PATH, {params: {page: 1}, signal: controller.signal})
+        .then(({ data }) => {
+            setInterviews(data.map(deserializeResponse));
+            setLoading(false);
+        })
+        .catch((err) => console.error(err))
 
         return () => controller.abort();
-    }, [axios])
+    }, [axiosServer])
+
+    if (loading) return (<div className='loading'>Loading...</div>);
 
     return (
-        <div className='interivew-history-main'>
-            {loading ? (
-                <div className='loading'>Loading...</div>
-            ) : (
-                <ol>
-                    {interviews.length <= 0 && <li>You haven't done any interviews!</li>}
-                    {interviews.map(interviewData => (
-                        <li key={interviewData.id}>{formatDate(interviewData.created_at)} {interviewData.totalScore}%</li>
-                    ))}
-                </ol>
-            )}
-        </div>
+        <ol>
+            {interviews.length <= 0 && <li>You haven't done any interviews!</li>}
+            {interviews.map(interviewData => (
+                <li key={interviewData.id}>{formatDate(interviewData.created_at)} {interviewData.totalScore}%</li>
+            ))}
+        </ol>
     )
 }
 
