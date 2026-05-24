@@ -23,20 +23,20 @@ function App() {
             <Routes>
               {/*Pages of the website that can be accessed regardless of authentication. */}
               <Route path='/' element={<Home />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/about' element={<About />} />
+              <Route path='/login/' element={<Login />} />
+              <Route path='/register/' element={<Register />} />
+              <Route path='/about/' element={<About />} />
               
               {/*These are pages that require user to be authenticated. Redirects to login if not authenticated. */}
               <Route element={<RequireAuth />}>
-                <Route path='/interview/:id' element={<InterviewPage />} />
-                <Route path='/interview/setup' element={<InterviewSetup />} />
-                <Route path='/interview/result' element={<InterviewResults />} />
-                <Route path='/account' element={<AccountSettings />} />
-                <Route path='/history' element={<InterviewHistory />} />
+                <Route path='/interview/:session/:ticket/' element={<InterviewPage />} />
+                <Route path='/interview/:session/' element={<InterviewResults />} />
+                <Route path='/interview/' element={<InterviewSetup />} />
+                <Route path='/account/' element={<AccountSettings />} />
+                <Route path='/history/' element={<InterviewHistory />} />
               </Route>
 
-              <Route path='/test_account_settings' element={<AccountSettings />} />
+              <Route path='/test_account_settings/' element={<AccountSettings />} />
 
               {/*Wild route to catch all other routes. */}
               <Route path='*' element={<NotFound />} />
