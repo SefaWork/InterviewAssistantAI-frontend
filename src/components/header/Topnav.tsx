@@ -8,9 +8,9 @@ function Topnav() {
     return (
         <div className='topnav-container'>
             <Link to="/">{t("home")}</Link>
-            <Link to="/about">{t("about")}</Link>
-            <Link className="topnav-mobile" to="/login">{t("login")}</Link>
-            <Link className="topnav-mobile" to="/interview/setup">{t("interview")}</Link>
+            <Link to="/about/">{t("about")}</Link>
+            <Link className="topnav-mobile" to="/login/">{t("login")}</Link>
+            <Link className="topnav-mobile" to="/interview/">{t("interview")}</Link>
         </div>
     )
 }

@@ -78,6 +78,12 @@
         "emotion": "Emotion"
     },
 
+    "score_categories": {
+        "total_score": "Total Score",
+        "emotion_score": "Emotion Score",
+        "eye_contact_score": "Eye Contact Score"
+    },
+
     "percentage_sign": "{{value}}%",
 
     "account_settings_page": {

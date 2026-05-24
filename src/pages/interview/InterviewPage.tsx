@@ -1,24 +1,28 @@
 import Webcam from 'react-webcam'
 import { startTransition, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import './InterviewPage.css'
 import useWebSocket from '../../hooks/useWebSocket';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+
+import './InterviewPage.css'
 
 // 1 second / FPS
 const SEND_INTERVAL = 1_000 / 5
 
 type WebsocketResponseType = {
-    type?: "result",
+    type?: "result" | "session_complete",
     data?: {
         face_count: number,
         eye_contact_score: number,
-        emotion: string
+        emotion: string,
+        emotion_avg: number,
+        eye_avg: number
     }
 }
 
 type TrackedScore = {
     eyeScore: number,
+    emotionScore: number,
     emotion: string
 }
 
@@ -27,19 +31,7 @@ type FieldStates =
     | "average"
     | "bad"
 
-/**Note: Current emotion names are temporary, will be changed to lowercase english names for localization table. */
-const emotionToFieldState = (emotionKey: string): FieldStates => {
-    switch(emotionKey) {
-        case "Mutlu":
-            return "good";
-        case "Nötr":
-            return "average";
-        default:
-            return "bad"
-    }
-}
-
-const eyeScoreToFieldState = (eyeScore: number): FieldStates => {
+const scoreValueToState = (eyeScore: number): FieldStates => {
     if (eyeScore > 75) return "good"
     else if (eyeScore > 35) return "average"
     return "bad"
@@ -48,14 +40,14 @@ const eyeScoreToFieldState = (eyeScore: number): FieldStates => {
 function InterviewPage() {
     const {t} = useTranslation();
     const webcamRef = useRef<Webcam>(null);
-    const {id} = useParams();
+    const {ticket, session} = useParams();
+    const navigate = useNavigate();
 
-    console.log(id);
-
-    const {sendBinary, lastMessage} = useWebSocket<WebsocketResponseType>("ws://localhost:8000/ws/stream/")
+    const {sendBinary, lastMessage} = useWebSocket<WebsocketResponseType>(ticket && session? `ws://localhost:8000/ws/stream/${session}/?ticket=${ticket}` : null)
 
     const [trackedScore, setTrackedScore] = useState<TrackedScore>({
         eyeScore: 0,
+        emotionScore: 0,
         emotion: "Nötr"
     });
 
@@ -80,8 +72,12 @@ function InterviewPage() {
     }, [sendFrame])
 
     useEffect(() => {
-        if (lastMessage?.type !== "result") return;
-        const data = lastMessage.data;
+        if (lastMessage?.type === "session_complete" && session) {
+            navigate(`/interview/${session}`)
+            return;
+        }
+
+        const data = lastMessage?.data;
         if (!data) return;
 
         startTransition(() => {
@@ -90,12 +86,16 @@ function InterviewPage() {
             } else {
                 setError(null);
                 setTrackedScore({
-                    eyeScore: data.eye_contact_score,
+                    eyeScore: data.eye_avg,
+                    emotionScore: data.emotion_avg,
                     emotion: data.emotion
                 });
             }
         })
-    }, [lastMessage])
+
+    }, [lastMessage, session, navigate])
+
+    if (!ticket || !session) return <Navigate to='/interview/setup' replace />
 
     return (
         <div className="interview-main-div">
@@ -109,8 +109,8 @@ function InterviewPage() {
             <div className='feedback-section'>
                 {!errorMsg && (
                     <>
-                        <div className={`score-field ${emotionToFieldState(trackedScore.emotion)}`}><u>{t("interview_page.emotion")}</u><div>{trackedScore.emotion}</div></div>
-                        <div className={`score-field ${eyeScoreToFieldState(trackedScore.eyeScore)}`}><u>{t("interview_page.eye_contact")}</u><div>{t("percentage_sign", {value:trackedScore.eyeScore})}</div></div>
+                        <div className={`score-field ${scoreValueToState(trackedScore.emotionScore)}`}><u>{t("interview_page.emotion")}</u><div>{trackedScore.emotion} [{t("percentage_sign", {value:trackedScore.emotionScore})}]</div></div>
+                        <div className={`score-field ${scoreValueToState(trackedScore.eyeScore)}`}><u>{t("interview_page.eye_contact")}</u><div>{t("percentage_sign", {value:trackedScore.eyeScore})}</div></div>
                     </>
                 )}
                 {errorMsg && (<div className='score-field error'>{t(`interview_page.error.${errorMsg}`)}</div>)}

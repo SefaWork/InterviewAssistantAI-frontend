@@ -12,7 +12,7 @@ function Header() {
             <Link className='header-logo' to={"/"}>InterviewHelper</Link>
             <div className='header-buttons-section' data-testid='Header'>
                 <div className='header-nav-buttons'>
-                    <Link to="/interview/setup">{t("interview")}</Link>
+                    <Link to="/interview/">{t("interview")}</Link>
                     <Link to="/login">{t("login")}</Link>
                 </div>
                 <LangToggle />
