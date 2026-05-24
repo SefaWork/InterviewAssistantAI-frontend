@@ -110,7 +110,7 @@ function Login() {
                 <FormEmailField id='email' label={`${t("field.email")}:`} error={errors.email && localizeMessage(errors.email)} ref={emailRef} />
                 <FormPasswordField id='password' label={`${t("field.password")}:`} error={errors.pass && localizeMessage(errors.pass)} ref={passRef} />
                 <FormSubmit disabled={processing} text={processing? `${t("logging_in")}...` : t("login")} error={errors.submit && localizeMessage(errors.submit)} />
-                <Link to='/register'>{t("new_account")}</Link>
+                <Link to='/register/'>{t("new_account")}</Link>
             </Form>
         </div>
     )
