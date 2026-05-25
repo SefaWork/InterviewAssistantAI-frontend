@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import FormPasswordField from "../../components/form/FormPasswordField";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const CHANGE_EMAIL_PATH = "/api/account/change-email"
+const CHANGE_EMAIL_PATH = "/api/account/change-email/"
 
 function ChangeEmail() {
     // Small component that is meant to be rendered in the AccountSettings parent component.

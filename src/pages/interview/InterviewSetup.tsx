@@ -8,7 +8,6 @@ import axios from "axios";
 import './InterviewSetup.css'
 
 const SESSION_CREATE_PATH = "/api/interview/create/"
-const SESSION_CONTINUE_PATH = "/api/interview/continue/"
 
 function InterviewSetup() {
     const {t} = useTranslation();
@@ -25,19 +24,6 @@ function InterviewSetup() {
         setReady(false);
     }
 
-    const handleContinue = async (id: string | number) => {
-        try {
-            const {data} = await axiosServer.post(`${SESSION_CONTINUE_PATH}${id}/`)
-            const ticket = data?.ticket;
-
-            if (!ticket) throw new Error("Failed to continue session.");
-            navigate(`/interview/${id}/${ticket}`)
-        } catch(err) {
-            console.error(err)
-            creatingRef.current = false;
-        }
-    }
-
     const handleClick = async () => {
         if (ready) {
             if (creatingRef.current) return;
@@ -45,18 +31,15 @@ function InterviewSetup() {
 
             try {
                 const {data} = await axiosServer.post(SESSION_CREATE_PATH);
-
-                const ticket = data?.ticket;
                 const id = data?.id;
-
-                if (!id || !ticket) throw new Error("Failed to create session.");
-                navigate(`/interview/${id}/${ticket}`)
+                if (!id) throw new Error("Failed to create session.");
+                navigate(`/interview/${id}`)
             } catch(err) {
                 console.error(err);
 
                 if (axios.isAxiosError(err)) {
                     if (err.status === 409 && err.response?.data?.session_id) {
-                        await handleContinue(err.response.data.session_id);
+                        navigate(`/interview/${err.response.data.session_id}`)
                         return;
                     }
                 }

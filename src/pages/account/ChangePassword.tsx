@@ -4,7 +4,7 @@ import FormSubmit from "../../components/form/FormSubmit";
 import { useTranslation } from "react-i18next";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const CHANGE_PASSWORD_PATH = "/api/account/change-password"
+const CHANGE_PASSWORD_PATH = "/api/account/change-password/"
 
 function ChangePassword() {
     // Child componenent to be rendered under ACccountSettings component.
