@@ -5,6 +5,7 @@ import useWebSocket from '../../hooks/useWebSocket';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import './InterviewPage.css'
+import useAuth from '../../hooks/useAuth';
 
 // 1 second / FPS
 const SEND_INTERVAL = 1_000 / 5
@@ -40,10 +41,11 @@ const scoreValueToState = (eyeScore: number): FieldStates => {
 function InterviewPage() {
     const {t} = useTranslation();
     const webcamRef = useRef<Webcam>(null);
-    const {ticket, session} = useParams();
+    const {session} = useParams();
     const navigate = useNavigate();
+    const { accessToken } = useAuth();
 
-    const {sendBinary, lastMessage} = useWebSocket<WebsocketResponseType>(ticket && session? `ws://localhost:8000/ws/stream/${session}/?ticket=${ticket}` : null)
+    const {sendBinary, lastMessage} = useWebSocket<WebsocketResponseType>(accessToken && session? `ws://localhost:8000/ws/stream/${session}/?token=${accessToken}` : null)
 
     const [trackedScore, setTrackedScore] = useState<TrackedScore>({
         eyeScore: 0,
@@ -95,7 +97,7 @@ function InterviewPage() {
 
     }, [lastMessage, session, navigate])
 
-    if (!ticket || !session) return <Navigate to='/interview/setup' replace />
+    if (!accessToken || !session) return <Navigate to='/interview/setup' replace />
 
     return (
         <div className="interview-main-div">
