@@ -24,7 +24,7 @@ function DeleteAccount() {
         try {
             await axiosServer.post(DELETE_ACCOUNT_PATH, {"password": givenPassword});
             auth.setAccessToken(undefined);
-            navigate('/')
+            navigate('/logout/')
         } catch(err) {
             console.error(err);
         }

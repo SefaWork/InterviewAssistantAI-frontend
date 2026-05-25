@@ -3,9 +3,11 @@ import ThemeToggle from './ThemeToggle';
 import LangToggle from './LangToggle';
 import './Header.css'
 import { useTranslation } from 'react-i18next';
+import useAuth from '../../hooks/useAuth';
 
 function Header() {
     const {t} = useTranslation();
+    const {accessToken} = useAuth();
 
     return (
         <header>
@@ -13,7 +15,15 @@ function Header() {
             <div className='header-buttons-section' data-testid='Header'>
                 <div className='header-nav-buttons'>
                     <Link to="/interview/">{t("interview")}</Link>
-                    <Link to="/login">{t("login")}</Link>
+                    {
+                        accessToken ? 
+                        <>
+                            <Link to="/account/">{t("account")}</Link>
+                            <Link to="/logout/">{t("logout")}</Link>
+                        </> 
+                        : 
+                        <Link to="/login/">{t("login")}</Link>
+                    }
                 </div>
                 <LangToggle />
                 <ThemeToggle />
