@@ -11,8 +11,11 @@ function Topnav() {
         <div className='topnav-container'>
             <Link to="/">{t("home")}</Link>
             <Link to="/about/">{t("about")}</Link>
-            {accessToken? <Link className="topnav-mobile" to="/logout/">{t("logout")}</Link> : <Link className="topnav-mobile" to="/login/">{t("login")}</Link>}
             <Link className="topnav-mobile" to="/interview/">{t("interview")}</Link>
+            {accessToken? <>
+                <Link className="topnav-mobile" to="/account/">{t("account")}</Link>
+                <Link className="topnav-mobile" to="/logout/">{t("logout")}</Link>
+            </> : <Link className="topnav-mobile" to="/login/">{t("login")}</Link>}
         </div>
     )
 }
