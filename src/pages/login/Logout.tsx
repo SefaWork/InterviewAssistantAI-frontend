@@ -13,7 +13,7 @@ function Logout() {
     const [loggedOut, setLoggedOut] = useState<boolean>(false);
 
     useEffect(() => {
-        let abortController = new AbortController()
+        const abortController = new AbortController()
         axiosServer.post(LOGOUT_PATH, undefined, {signal: abortController.signal})
         .catch((err) => {
             console.error(err)
