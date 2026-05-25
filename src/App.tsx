@@ -10,9 +10,12 @@ import Topnav from './components/header/Topnav'
 import About from './pages/home/About'
 import RequireAuth from './components/auth/RequireAuth'
 import InterviewResults from './pages/interview/InterviewResults'
-import './App.css'
 import AccountSettings from './pages/account/AccountSettings'
 import InterviewHistory from './pages/account/InterviewHistory'
+import Logout from './pages/login/Logout'
+
+import './App.css'
+import PersistLogin from './components/auth/PersistLogin'
 
 function App() {
   return (
@@ -21,25 +24,30 @@ function App() {
           <Topnav />
           <div className='app-content'>
             <Routes>
-              {/*Pages of the website that can be accessed regardless of authentication. */}
-              <Route path='/' element={<Home />} />
-              <Route path='/login/' element={<Login />} />
-              <Route path='/register/' element={<Register />} />
-              <Route path='/about/' element={<About />} />
-              
-              {/*These are pages that require user to be authenticated. Redirects to login if not authenticated. */}
-              <Route element={<RequireAuth />}>
-                <Route path='/interview/:session/:ticket/' element={<InterviewPage />} />
-                <Route path='/interview/' element={<InterviewSetup />} />
-                <Route path='/account/' element={<AccountSettings />} />
-                <Route path='/history/:session/' element={<InterviewResults />} />
-                <Route path='/history/' element={<InterviewHistory />} />
+              {/*Routes inside this will have updated access token. */}
+              <Route element={<PersistLogin />}>
+                {/*Pages of the website that can be accessed regardless of authentication. */}
+                <Route path='/' element={<Home />} />
+                <Route path='/about/' element={<About />} />
+                
+                {/*These are pages that require user to be authenticated. Redirects to login if not authenticated. */}
+                <Route element={<RequireAuth />}>
+                  <Route path='/interview/:session/:ticket/' element={<InterviewPage />} />
+                  <Route path='/interview/' element={<InterviewSetup />} />
+                  <Route path='/account/' element={<AccountSettings />} />
+                  <Route path='/history/:session/' element={<InterviewResults />} />
+                  <Route path='/history/' element={<InterviewHistory />} />
+                  <Route path='/account/' element={<AccountSettings />} />
+                </Route>
+
+                <Route path='/logout/' element={<Logout />} />
+
+                {/*Wild route to catch all other routes. */}
+                <Route path='*' element={<NotFound />} />
               </Route>
 
-              <Route path='/test_account_settings/' element={<AccountSettings />} />
-
-              {/*Wild route to catch all other routes. */}
-              <Route path='*' element={<NotFound />} />
+              <Route path='/login/' element={<Login />} />
+              <Route path='/register/' element={<Register />} />
             </Routes>
           </div>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ChangeEmail from './ChangeEmail';
 import DeleteAccount from './DeleteAccount';
 import ChangePassword from './ChangePassword';
@@ -11,10 +11,6 @@ function AccountSettings() {
     // Set e-mail, set password, delete account.
     const [pageState, setPageState] = useState<AccountSettingsPageState>("main");
     const {t} = useTranslation();
-
-    useEffect(() => {
-        console.log("Doing stuff...");
-    })
 
     return (
         <div className='account-settings-main'>
