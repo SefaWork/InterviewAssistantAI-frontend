@@ -31,10 +31,7 @@ function Logout() {
         position: "absolute", 
         top: "50%", 
         left: "50%", 
-        transform: "translate(-50%, -50%)",
-        border: "solid 5px var(--foreground-color)",
-        padding: "1rem 1rem",
-        borderRadius: "1rem"
+        transform: "translate(-50%, -50%)"
     }}>{t("logout")}...</h1>
 }
 
