@@ -106,6 +106,24 @@
         "options": "Options"
     },
 
+    "feedback": {
+        "emotion_good": "You did excellent in maintaining composure and confidence.",
+        "emotion_average": "You did well in maintaining your smile, but could use improvement.",
+        "emotion_bad": "You should smile more often during your interview to show your confidence. Avoid making facial expressions that may come off as uninterested.",
+
+        "eye_good": "You did excellent in maintaining eye contact.",
+        "eye_average": "Your eye contact with your interviewer was decent, but could use improvement.",
+        "eye_bad": "Try to maintain eye contact with your interviewer.",
+
+        "emotion_better": "You appeared more confident by smiling more than your last interview.",
+        "emotion_worse": "You appeared less confident by smiling less than your last interview.",
+        "emotion_same": "You did about the same as your last interview in terms of emotion.",
+
+        "eye_better": "You maintained eye contact better than your last interview.",
+        "eye_worse": "You maintained eye contact worse than your last interview.",
+        "eye_same": "Your eye contact was the same as your last interview."
+    },
+
     "back": "Back",
     "confirm": "Confirm",
     "view": "View",

@@ -17,9 +17,10 @@ const SESSION_DISPLAY_PATH = "api/account/interviews/"
 const convertFeedbackToTranslationKeys = (feedbackText: string): string[] => {
     if (!feedbackText) return [];
     return feedbackText.split(';').map(x => {
+        if(!x) return ""
         const split = x.split(':')
-        return `${split[0]}_${split[1]}`
-    })
+        return `feedback.${split[0]}_${split[1]}`
+    }).filter(Boolean)
 }
 
 function InterviewResults() {
@@ -80,16 +81,22 @@ function InterviewResults() {
                     </div>
                 </div>
                 <div className='suggestion-section'>
-                    <ol>
-                        {results.feedback.map(x => (<li key={x}>{t(x)}</li>))}
-                        {results.feedback.length === 0 && <li key="none">No feedback at this time.</li>}
-                    </ol>
+                    {results.feedback.length === 0? 
+                        (<h3>No past analysis at this time.</h3>)
+                        :
+                        (<ul>
+                            {results.feedback.map(x => (<li key={x}>{t(x)}</li>))}
+                        </ul>)
+                    }
                 </div>
                 <div className='past-analysis'>
-                    <ol>
-                        {results.past_analysis_feedback.map(x => (<li key={x}>{t(x)}</li>))}
-                        {results.past_analysis_feedback.length === 0 && <li key="none">No past analysis at this time.</li>}
-                    </ol>
+                    {results.past_analysis_feedback.length === 0? 
+                        (<h3>No past analysis at this time.</h3>)
+                        :
+                        (<ul>
+                            {results.past_analysis_feedback.map(x => (<li key={x}>{t(x)}</li>))}
+                        </ul>)
+                    }
                 </div>
             </div>
         </div>

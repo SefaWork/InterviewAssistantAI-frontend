@@ -106,6 +106,24 @@
         "options": "Seçenekler"
     },
 
+    "feedback": {
+        "emotion_good": "Sakinliğinizi ve özgüveninizi koruma konusunda mükemmel bir performans gösterdiniz.",
+        "emotion_average": "Gülümsemenizi koruma konusunda iyi bir iş çıkardınız, ancak geliştirmeniz gereken noktalar var.",
+        "emotion_bad": "Özgüveninizi göstermek için mülakat sırasında daha sık gülümsemeye çalışın. İlgisiz bir izlenim bırakabilecek yüz ifadelerinden kaçının.",
+
+        "eye_good": "Göz temasını koruma konusunda mükemmel bir performans gösterdiniz.",
+        "eye_average": "Görüşmeciyle göz temasın iyiydi, ancak geliştirilmesi gereken noktalar var.",
+        "eye_bad": "Görüşmeciyle göz temasını korumaya çalışın.",
+
+        "emotion_better": "Son mülakatınıza kıyasla daha fazla gülümseyerek daha özgüvenli göründünüz.",
+        "emotion_worse": "Son mülakatınıza kıyasla daha az gülümseyerek daha az özgüvenli göründünüz.",
+        "emotion_same": "Duygu açısından son mülakatınızla yaklaşık olarak aynı performansı gösterdiniz.",
+
+        "eye_better": "Son mülakatınıza kıyasla göz temasını daha iyi korudunuz.",
+        "eye_worse": "Son mülakatınıza kıyasla göz temasını daha kötü korudunuz.",
+        "eye_same": "Göz temasınız son mülakatınız ile yaklaşık olarak aynı seviyedeydi."
+    },
+
     "back": "Geri",
     "confirm": "Onayla",
     "view": "Görüntüle",
