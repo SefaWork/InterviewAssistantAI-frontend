@@ -98,6 +98,14 @@
         "deletion_warning": "Silme işlemi geri alınamaz!"
     },
 
+    "interview_history": {
+        "title": "Mülakat Geçmişi",
+        "no_interviews": "Daha mülakat simülasyonu yapmadınız. Hemen başlamak için <1>buraya tıklayınız.</1>",
+        "date": "Tarih",
+        "score": "Skor",
+        "options": "Seçenekler"
+    },
+
     "back": "Geri",
     "confirm": "Onayla"
 }

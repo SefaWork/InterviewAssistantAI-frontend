@@ -1,0 +1,73 @@
+.interview-history-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.interview-history-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--form-color);
+    border: .1rem solid var(--foreground-color);
+    border-radius: 1rem;
+    box-shadow: 0 0 5rem 1rem var(--form-shadow-color);
+    padding: 2rem 2rem;
+
+    width: 50%;
+    max-width: 60vh;
+}
+
+.interview-history-window table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.interview-history-window td, th {
+  border: 1px solid var(--foreground-color);
+  text-align: left;
+  padding: 8px;
+}
+
+.interview-history-window tr:nth-child(even) {
+  background-color: var(--background-color);
+}
+
+.options-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.options-block button {
+    text-decoration: none;
+    border: none;
+    padding: .5rem;
+    margin-right: .5rem;
+    cursor: pointer;
+    border-radius: .5rem;
+}
+
+.options-block button:hover {
+    transform: translateY(1px);
+}
+
+.options-block button:active {
+    transform: translateY(3px);
+}
+
+.view-btn {
+    background-color: var(--primary-btn-color);
+    color: var(--secondary-text-color);
+}
+
+.delete-btn {
+    background-color: var(--danger-btn-color);
+    color: var(--danger-btn-text-color);
+}
