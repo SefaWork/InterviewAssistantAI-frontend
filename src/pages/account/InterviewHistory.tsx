@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { Link } from 'react-router-dom';
 
 import './InterviewHistory.css'
-import { Link } from 'react-router-dom';
 
 type HistorySummary = {
     id: string,
