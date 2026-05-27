@@ -39,8 +39,8 @@ function ChangeEmail() {
         <>
             <h1>{t("account_settings_page.change_email")}</h1>
             <form onSubmit={handleSubmit}>
-                <FormPasswordField id="password" label={t("field.password")} ref={passwordRef} />
                 <FormEmailField id="new-email" label={t("field.new_email")} ref={newEmailRef} />
+                <FormPasswordField id="password" label={t("field.password")} ref={passwordRef} />
                 <FormSubmit text={t("confirm")} />
             </form>
         </>

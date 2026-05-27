@@ -7,10 +7,20 @@ import './InterviewResults.css'
 type InterviewResultsType = {
     total: number,
     emotion: number,
-    eye: number
+    eye: number,
+    feedback: string[],
+    past_analysis_feedback: string[]
 }
 
 const SESSION_DISPLAY_PATH = "api/account/interviews/"
+
+const convertFeedbackToTranslationKeys = (feedbackText: string): string[] => {
+    if (!feedbackText) return [];
+    return feedbackText.split(';').map(x => {
+        const split = x.split(':')
+        return `${split[0]}_${split[1]}`
+    })
+}
 
 function InterviewResults() {
     const {t} = useTranslation()
@@ -29,10 +39,18 @@ function InterviewResults() {
         axiosServer
             .get(`${SESSION_DISPLAY_PATH}${session}/`, { signal: controller.signal })
             .then(({ data }) => {
+                const {emotion_avg = 0, eye_avg = 0, total_avg = 0, feedback = "", past_analysis_feedback = ""} = data;
+
+                // Deconstruct the feedback and past analysis feedback.
+                const feedbackTranslated = convertFeedbackToTranslationKeys(feedback);
+                const pastAnalysisTranslated = convertFeedbackToTranslationKeys(past_analysis_feedback);
+
                 setResults({
-                    emotion: data.emotion_avg ?? 0,
-                    eye: data.eye_avg ?? 0,
-                    total: data.total_avg ?? 0,
+                    emotion: emotion_avg,
+                    eye: eye_avg,
+                    total: total_avg,
+                    feedback: feedbackTranslated,
+                    past_analysis_feedback: pastAnalysisTranslated
                 })
             })
             .catch(console.error)
@@ -62,10 +80,16 @@ function InterviewResults() {
                     </div>
                 </div>
                 <div className='suggestion-section'>
-                    <p>Suggestions go here.</p>
+                    <ol>
+                        {results.feedback.map(x => (<li key={x}>{t(x)}</li>))}
+                        {results.feedback.length === 0 && <li key="none">No feedback at this time.</li>}
+                    </ol>
                 </div>
                 <div className='past-analysis'>
-                    <p>Past analysis goes here.</p>
+                    <ol>
+                        {results.past_analysis_feedback.map(x => (<li key={x}>{t(x)}</li>))}
+                        {results.past_analysis_feedback.length === 0 && <li key="none">No past analysis at this time.</li>}
+                    </ol>
                 </div>
             </div>
         </div>
