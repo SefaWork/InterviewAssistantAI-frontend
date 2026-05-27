@@ -98,8 +98,8 @@ function InterviewHistory() {
                             <td>{dateFormatter.format(data.created_at)}</td>
                             <td>{t("percentage_sign", {value: data.totalScore})}</td>
                             <td className='options-block'>
-                                <button className='view-btn' onClick={(e) => handleView(e, data.id)}>View</button>
-                                <button className='delete-btn' onClick={(e) => handleDelete(e, data.id)}>Delete</button>
+                                <button className='view-btn' onClick={(e) => handleView(e, data.id)}>{t("view")}</button>
+                                <button className='delete-btn' onClick={(e) => handleDelete(e, data.id)}>{t("delete")}</button>
                             </td>
                         </tr>
                         ))
