@@ -98,6 +98,14 @@
         "deletion_warning": "This action is irreversible!"
     },
 
+    "interview_history": {
+        "title": "Interview History",
+        "no_interviews": "You haven't done any interviews. <1>Click here</1> to get started.",
+        "date": "Date",
+        "score": "Score",
+        "options": "Options"
+    },
+
     "back": "Back",
     "confirm": "Confirm"
 }

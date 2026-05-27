@@ -1,29 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { Link } from 'react-router-dom';
 
 import './InterviewHistory.css'
+import { Trans, useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
 
 type HistorySummary = {
     id: string,
     created_at: Date,
     totalScore: number
 }
-
-const formatDate = (date: Date) => {
-    const datePart = date.toLocaleDateString("en-US", {
-        month: "2-digit",
-        day: "2-digit",
-        year: "2-digit",
-    });
-
-    const timePart = date.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-
-    return `${datePart.replace(/\//g, ".")} ${timePart}`;
-};
 
 const SESSION_LIST_PATH = '/api/account/interviews/'
 const SESSION_DELETE_PATH = '/api/account/delete-interview/'
@@ -33,10 +19,20 @@ const deserializeResponse = (entry: {id: string, created_at: string, total_avg: 
 }
 
 function InterviewHistory() {
+    const {t, i18n} = useTranslation();
     const [interviews, setInterviews] = useState<HistorySummary[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const deletingStateRef = useRef<boolean>(false);
     const axiosServer = useAxiosPrivate();
+    const navigate = useNavigate();
+
+    const dateFormatter = new Intl.DateTimeFormat(i18n.language, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit'
+    })
 
     useEffect(() => {
         const controller = new AbortController();
@@ -71,20 +67,48 @@ function InterviewHistory() {
         }
     }
 
+    const handleView = async (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
+        e.stopPropagation()
+        navigate(`/history/${id}/`)
+    }
+
     if (loading) return (<div className='loading'>Loading...</div>);
 
     return (
-        <ol>
-            {interviews.length <= 0 && <li>You haven't done any interviews!</li>}
-            {interviews.map(interviewData => (
-                <li key={interviewData.id}>
-                    <Link to={`/history/${interviewData.id}`}>
-                        {formatDate(interviewData.created_at)} {interviewData.totalScore}%
-                    </Link>
-                    <button onClick={(e) => handleDelete(e, interviewData.id)}>Delete</button>
-                </li>
-            ))}
-        </ol>
+        <div className='interview-history-main'>
+            <div className='interview-history-window'>
+                <h1>{t("interview_history.title")}</h1>
+                {interviews.length === 0? 
+                (<p>
+                    <Trans i18nKey="interview_history.no_interviews">
+                        You haven't done any interviews. <Link to="/interview/">Click here</Link> to get started.
+                    </Trans>
+                </p>)
+                :
+                (
+                    <table>
+                        <tr>
+                            <th>{t("interview_history.date")}</th>
+                            <th>{t("interview_history.score")}</th>
+                            <th>{t("interview_history.options")}</th>
+                        </tr>
+                        {
+                        interviews.map(data => (
+                        <tr>
+                            <td>{dateFormatter.format(data.created_at)}</td>
+                            <td>{t("percentage_sign", {value: data.totalScore})}</td>
+                            <td className='options-block'>
+                                <button className='view-btn' onClick={(e) => handleView(e, data.id)}>View</button>
+                                <button className='delete-btn' onClick={(e) => handleDelete(e, data.id)}>Delete</button>
+                            </td>
+                        </tr>
+                        ))
+                        }
+                    </table>
+                )
+                }
+            </div>
+        </div>
     )
 }
 
