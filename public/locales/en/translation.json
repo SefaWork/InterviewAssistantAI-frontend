@@ -107,5 +107,7 @@
     },
 
     "back": "Back",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "view": "View",
+    "delete": "Delete"
 }
