@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-
-import './InterviewHistory.css'
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
+import './InterviewHistory.css'
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+
 type HistorySummary = {
     id: string,
-    created_at: Date,
+    created_at: number,
     totalScore: number
 }
 
@@ -15,7 +16,7 @@ const SESSION_LIST_PATH = '/api/account/interviews/'
 const SESSION_DELETE_PATH = '/api/account/delete-interview/'
 
 const deserializeResponse = (entry: {id: string, created_at: string, total_avg: number}): HistorySummary => {
-    return {created_at: new Date(entry.created_at), id: entry.id, totalScore: entry.total_avg}
+    return {created_at: new Date(entry.created_at).getTime(), id: entry.id, totalScore: entry.total_avg}
 }
 
 function InterviewHistory() {
@@ -26,12 +27,20 @@ function InterviewHistory() {
     const axiosServer = useAxiosPrivate();
     const navigate = useNavigate();
 
+    const chartData = useMemo(() => [...interviews].reverse(), [interviews]);
+
     const dateFormatter = new Intl.DateTimeFormat(i18n.language, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
         hour: 'numeric',
         minute: '2-digit'
+    })
+
+    const graphDateFormatter = new Intl.DateTimeFormat(i18n.language, {
+        year: "2-digit",
+        month: "2-digit",
+        day: "2-digit"
     })
 
     useEffect(() => {
@@ -86,25 +95,55 @@ function InterviewHistory() {
                 </p>)
                 :
                 (
-                    <table>
-                        <tr>
-                            <th>{t("interview_history.date")}</th>
-                            <th>{t("interview_history.score")}</th>
-                            <th>{t("interview_history.options")}</th>
-                        </tr>
-                        {
-                        interviews.map(data => (
-                        <tr>
-                            <td>{dateFormatter.format(data.created_at)}</td>
-                            <td>{t("percentage_sign", {value: data.totalScore})}</td>
-                            <td className='options-block'>
-                                <button className='view-btn' onClick={(e) => handleView(e, data.id)}>{t("view")}</button>
-                                <button className='delete-btn' onClick={(e) => handleDelete(e, data.id)}>{t("delete")}</button>
-                            </td>
-                        </tr>
-                        ))
-                        }
-                    </table>
+                    <>
+                        <table className='history-table'>
+                            <tr>
+                                <th>{t("interview_history.date")}</th>
+                                <th>{t("interview_history.score")}</th>
+                                <th>{t("interview_history.options")}</th>
+                            </tr>
+                            {
+                            interviews.map(data => (
+                            <tr>
+                                <td>{dateFormatter.format(data.created_at)}</td>
+                                <td>{t("percentage_sign", {value: data.totalScore})}</td>
+                                <td className='options-block'>
+                                    <button className='view-btn' onClick={(e) => handleView(e, data.id)}>{t("view")}</button>
+                                    <button className='delete-btn' onClick={(e) => handleDelete(e, data.id)}>{t("delete")}</button>
+                                </td>
+                            </tr>
+                            ))
+                            }
+                        </table>
+                        {chartData.length > 1 && (
+                            <LineChart width={400} height={400} margin={{ top: 20, right: 20, bottom: 20, left: 20 }} data={chartData}>
+                                <XAxis 
+                                    dataKey="created_at"
+                                    name={t("interview_history.date")}
+                                    domain={["dataMin", "dataMax"]}
+                                    ticks={[chartData[0]?.created_at, chartData[chartData.length - 1]?.created_at]}
+                                    tickFormatter={(timestamp) => graphDateFormatter.format(timestamp)}
+                                    tick={{dx: -10}} 
+                                />
+                                <YAxis 
+                                    dataKey="totalScore"
+                                    type='number'
+                                    domain={[dataMin => Math.max(0, dataMin - 10), dataMax => Math.min(100, dataMax + 10)]}
+                                    tickFormatter={(value) => t("percentage_sign", {value})}
+                                    tick={{dy: -10}} 
+                                />
+                                <Tooltip 
+                                    contentStyle={{color: "var(--secondary-text-color)", backgroundColor: "var(--foreground-color)"}}
+                                    labelStyle={{color: "var(--secondary-text-color)"}}
+                                    itemStyle={{color: "var(--secondary-text-color)"}}
+                                    labelFormatter={(timestamp) => dateFormatter.format(timestamp)} 
+                                    formatter={(value, name) => [t("percentage_sign", {value}), name]}
+                                />
+                                <CartesianGrid stroke="#f5f5f5" />
+                                <Line type="monotone" dataKey="totalScore" name={t("interview_history.score")} stroke="var(--foreground-color)" />
+                            </LineChart>
+                        )}
+                    </>
                 )
                 }
             </div>

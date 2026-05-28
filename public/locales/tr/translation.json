@@ -121,7 +121,10 @@
 
         "eye_better": "Son mülakatınıza kıyasla göz temasını daha iyi korudunuz.",
         "eye_worse": "Son mülakatınıza kıyasla göz temasını daha kötü korudunuz.",
-        "eye_same": "Göz temasınız son mülakatınız ile yaklaşık olarak aynı seviyedeydi."
+        "eye_same": "Göz temasınız son mülakatınız ile yaklaşık olarak aynı seviyedeydi.",
+
+        "no_feedback": "Öneri ve sonuçlar daha çıkmadı.",
+        "no_past_analysis": "Geçmiş analizi yapılamıyor."
     },
 
     "back": "Geri",

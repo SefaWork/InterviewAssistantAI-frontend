@@ -82,7 +82,7 @@ function InterviewResults() {
                 </div>
                 <div className='suggestion-section'>
                     {results.feedback.length === 0? 
-                        (<h3>No past analysis at this time.</h3>)
+                        (<h3>{t("feedback.no_feedback")}</h3>)
                         :
                         (<ul>
                             {results.feedback.map(x => (<li key={x}>{t(x)}</li>))}
@@ -91,7 +91,7 @@ function InterviewResults() {
                 </div>
                 <div className='past-analysis'>
                     {results.past_analysis_feedback.length === 0? 
-                        (<h3>No past analysis at this time.</h3>)
+                        (<h3>{t("feedback.no_past_analysis")}</h3>)
                         :
                         (<ul>
                             {results.past_analysis_feedback.map(x => (<li key={x}>{t(x)}</li>))}
