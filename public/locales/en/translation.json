@@ -121,7 +121,10 @@
 
         "eye_better": "You maintained eye contact better than your last interview.",
         "eye_worse": "You maintained eye contact worse than your last interview.",
-        "eye_same": "Your eye contact was the same as your last interview."
+        "eye_same": "Your eye contact was the same as your last interview.",
+
+        "no_feedback": "No feedback generated yet.",
+        "no_past_analysis": "No past analysis."
     },
 
     "back": "Back",
