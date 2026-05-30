@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-
-import './InterviewHistory.css'
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import axios from 'axios';
+import './InterviewHistory.css'
 
 type HistorySummary = {
     id: string,
@@ -33,6 +33,7 @@ function InterviewHistory() {
     const deletingStateRef = useRef<boolean>(false);
     const chartData = useMemo(() => [...interviews].reverse(), [interviews]);
     const [totalPages, setTotalPages] = useState<number>(1);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
     const currentPage = useMemo(() => {
         const value = parseInt(searchParams.get('page') ?? "1", 10)
@@ -66,10 +67,15 @@ function InterviewHistory() {
         .then(({ data }) => {
             setTotalPages(data.total_pages);
             setInterviews(data.results.map(deserializeResponse));
-            setLoading(false);
+            setErrorMsg(null)
         })
-        .catch((err) => console.error(err))
+        .catch((err) => {
+            if (!axios.isAxiosError(err)) return setErrorMsg("error.generic");
+            if (err.code === "ERR_NETWORK") return setErrorMsg("error.server_unreachable");
+            setErrorMsg("error.generic")
+        })
         .finally(() => {
+            setLoading(false)
             pageSwitchRef.current = false
         })
 
@@ -110,6 +116,11 @@ function InterviewHistory() {
     }
 
     if (loading) return (<div className='loading'>Loading...</div>);
+    if (errorMsg) return (<div className='interview-history-main'>
+        <div className='interview-history-window'>
+            <h1>{t(errorMsg)}</h1>
+        </div>
+    </div>)
 
     return (
         <div className='interview-history-main'>
