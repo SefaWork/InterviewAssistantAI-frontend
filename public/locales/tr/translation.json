@@ -78,7 +78,8 @@
             "generic": "Bir hata oluştu."
         },
         "eye_contact": "Göz Teması",
-        "emotion": "Duygu"
+        "emotion": "Duygu",
+        "instruction": "Kendinizi bir mülakatçıyla konuşuyormuş gibi hayal edin, bazı yaygın mülakat sorularına birkaç pratik cevap verin. Beden dilinizi analiz edeceğiz ve performansınıza uygun bir puan vereceğiz."
     },
 
     "score_categories": {
