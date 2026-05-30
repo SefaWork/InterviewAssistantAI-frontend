@@ -103,7 +103,8 @@
         "no_interviews": "Daha mülakat simülasyonu yapmadınız. Hemen başlamak için <1>buraya tıklayınız.</1>",
         "date": "Tarih",
         "score": "Skor",
-        "options": "Seçenekler"
+        "options": "Seçenekler",
+        "empty_page": "Bu sayfa boş, lütfen önceki sayfalara dönün."
     },
 
     "feedback": {
@@ -130,5 +131,6 @@
     "back": "Geri",
     "confirm": "Onayla",
     "view": "Görüntüle",
-    "delete": "Sil"
+    "delete": "Sil",
+    "page": "Sayfa"
 }

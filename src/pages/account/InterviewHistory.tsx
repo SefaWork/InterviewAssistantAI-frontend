@@ -117,9 +117,12 @@ function InterviewHistory() {
                 <h1>{t("interview_history.title")}</h1>
                 {interviews.length === 0? 
                 (<p>
-                    <Trans i18nKey="interview_history.no_interviews">
+                    {totalPages === 0?
+                    (<Trans i18nKey="interview_history.no_interviews">
                         You haven't done any interviews. <Link to="/interview/">Click here</Link> to get started.
-                    </Trans>
+                    </Trans>)
+                    : 
+                    t("interview_history.empty_page")}
                 </p>)
                 :
                 (
@@ -177,7 +180,7 @@ function InterviewHistory() {
             </div>
             <div className='page-navigator'>
                 <button disabled={currentPage === 1} onClick={(e) => handlePageSwitch(e, -1)}>&lt;</button>
-                Page: {currentPage} / {totalPages}
+                {t("page")}: {currentPage} / {totalPages}
                 <button disabled={(currentPage ?? 1) >= totalPages} onClick={(e) => handlePageSwitch(e, 1)}>&gt;</button>
             </div>
         </div>
