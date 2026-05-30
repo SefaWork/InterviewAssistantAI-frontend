@@ -59,3 +59,22 @@
 .suggestion-section {
     margin-top: 1rem;
 }
+
+.back-btn {
+    padding: .5rem 1rem;
+    margin-top: 1rem;
+    background-color: var(--primary-btn-color);
+    color: var(--secondary-text-color);
+    border: none;
+    border-radius: 1rem;
+    transition: background-color 200ms ease, transform 100ms ease;
+}
+
+.back-btn:hover {
+    background-color: var(--primary-btn-hover-color);
+}
+
+.back-btn:active {
+    transform: translateY(3px);
+    background-color: var(--primary-btn-active-color);
+}

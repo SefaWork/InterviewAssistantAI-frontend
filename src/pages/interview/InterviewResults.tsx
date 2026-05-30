@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { useTranslation } from 'react-i18next';
 import './InterviewResults.css'
@@ -31,6 +31,8 @@ function InterviewResults() {
 
     const { session } = useParams();
     const axiosServer = useAxiosPrivate();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         if (!session) return;
@@ -59,6 +61,16 @@ function InterviewResults() {
 
         return () => controller.abort();
     }, [axiosServer, session])
+
+    const handleBack = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        
+        if (location.pathname.startsWith('/history/')) {
+            navigate(-1)
+        } else {
+            navigate('/history/')
+        }
+    }, [navigate])
 
     if (loading) return <div className="interview-results-main">Loading...</div>;
     if (!results) return <div className="interview-results-main">404 - Not Found</div>;
@@ -98,6 +110,9 @@ function InterviewResults() {
                         </ul>)
                     }
                 </div>
+                <button className='back-btn' onClick={handleBack}>
+                    &lt;&lt; Interview History
+                </button>
             </div>
         </div>
     )

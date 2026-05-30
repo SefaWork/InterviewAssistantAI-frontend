@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 import './InterviewHistory.css'
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
@@ -20,14 +20,24 @@ const deserializeResponse = (entry: {id: string, created_at: string, total_avg: 
 }
 
 function InterviewHistory() {
+    // Hooks.
     const {t, i18n} = useTranslation();
-    const [interviews, setInterviews] = useState<HistorySummary[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const deletingStateRef = useRef<boolean>(false);
+    const [searchParams, setSearchParams] = useSearchParams("?page=1");
     const axiosServer = useAxiosPrivate();
     const navigate = useNavigate();
-
+    
+    // States and references.
+    const [interviews, setInterviews] = useState<HistorySummary[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const pageSwitchRef = useRef<boolean>(false);
+    const deletingStateRef = useRef<boolean>(false);
     const chartData = useMemo(() => [...interviews].reverse(), [interviews]);
+    const [totalPages, setTotalPages] = useState<number>(1);
+
+    const currentPage = useMemo(() => {
+        const value = parseInt(searchParams.get('page') ?? "1", 10)
+        return value > 0? value : null;
+    }, [searchParams])
 
     const dateFormatter = new Intl.DateTimeFormat(i18n.language, {
         year: 'numeric',
@@ -44,18 +54,27 @@ function InterviewHistory() {
     })
 
     useEffect(() => {
+        if (!currentPage) {
+            pageSwitchRef.current = false;
+            return;
+        };
+
         const controller = new AbortController();
 
         axiosServer
-        .get(SESSION_LIST_PATH, {params: {page: 1}, signal: controller.signal})
+        .get(SESSION_LIST_PATH, {params: {page: currentPage}, signal: controller.signal})
         .then(({ data }) => {
-            setInterviews(data.map(deserializeResponse));
+            setTotalPages(data.total_pages);
+            setInterviews(data.results.map(deserializeResponse));
             setLoading(false);
         })
         .catch((err) => console.error(err))
+        .finally(() => {
+            pageSwitchRef.current = false
+        })
 
         return () => controller.abort();
-    }, [axiosServer])
+    }, [currentPage, axiosServer])
 
     const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
         e.stopPropagation()
@@ -74,6 +93,15 @@ function InterviewHistory() {
         } finally {
             deletingStateRef.current = false;
         }
+    }
+
+    const handlePageSwitch = (e: React.MouseEvent<HTMLButtonElement>, increment: number) => {
+        e.stopPropagation();
+
+        const newPage = (currentPage ?? 1) + increment
+        if (newPage < 1 || newPage > totalPages || pageSwitchRef.current) return;
+        pageSwitchRef.current = true;
+        setSearchParams(`?page=${newPage}`)
     }
 
     const handleView = async (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
@@ -146,6 +174,11 @@ function InterviewHistory() {
                     </>
                 )
                 }
+            </div>
+            <div className='page-navigator'>
+                <button disabled={currentPage === 1} onClick={(e) => handlePageSwitch(e, -1)}>&lt;</button>
+                Page: {currentPage} / {totalPages}
+                <button disabled={(currentPage ?? 1) >= totalPages} onClick={(e) => handlePageSwitch(e, 1)}>&gt;</button>
             </div>
         </div>
     )

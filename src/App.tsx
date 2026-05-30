@@ -35,6 +35,7 @@ function App() {
                   <Route path='/interview/:session/' element={<InterviewPage />} />
                   <Route path='/interview/' element={<InterviewSetup />} />
                   <Route path='/account/' element={<AccountSettings />} />
+                  <Route path='/result/:session/' element={<InterviewResults />} />
                   <Route path='/history/:session/' element={<InterviewResults />} />
                   <Route path='/history/' element={<InterviewHistory />} />
                   <Route path='/account/' element={<AccountSettings />} />
