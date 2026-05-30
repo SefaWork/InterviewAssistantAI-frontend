@@ -103,7 +103,8 @@
         "no_interviews": "You haven't done any interviews. <1>Click here</1> to get started.",
         "date": "Date",
         "score": "Score",
-        "options": "Options"
+        "options": "Options",
+        "empty_page": "This page is empty. Please return to an earlier page."
     },
 
     "feedback": {
@@ -130,5 +131,6 @@
     "back": "Back",
     "confirm": "Confirm",
     "view": "View",
-    "delete": "Delete"
+    "delete": "Delete",
+    "page": "Page"
 }
