@@ -105,8 +105,7 @@ function InterviewPage() {
                 <Webcam screenshotFormat='image/jpeg' videoConstraints={{facingMode: 'user'}} audio={false} mirrored ref={webcamRef} />
             </div>
             <div className='instruction-section'>
-                <h1>Test Questions</h1>
-                <p>Questions will end up here.</p>
+                <p>{t("interview_page.instruction")}</p>
             </div>
             <div className='feedback-section'>
                 {!errorMsg && (

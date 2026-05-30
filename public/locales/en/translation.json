@@ -78,7 +78,8 @@
             "generic": "An error occured."
         },
         "eye_contact": "Eye Contact",
-        "emotion": "Emotion"
+        "emotion": "Emotion",
+        "instruction": "Try to picture yourself talking to an interviewer, recite a few practice answers to some common interview questions. We'll analyze your body language and give you an appropriate score!"
     },
 
     "score_categories": {
