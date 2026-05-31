@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import axios from 'axios';
 import './InterviewHistory.css'
@@ -24,12 +24,10 @@ function InterviewHistory() {
     const {t, i18n} = useTranslation();
     const [searchParams, setSearchParams] = useSearchParams("?page=1");
     const axiosServer = useAxiosPrivate();
-    const navigate = useNavigate();
     
     // States and references.
     const [interviews, setInterviews] = useState<HistorySummary[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const pageSwitchRef = useRef<boolean>(false);
     const deletingStateRef = useRef<boolean>(false);
     const chartData = useMemo(() => [...interviews].reverse(), [interviews]);
     const [totalPages, setTotalPages] = useState<number>(1);
@@ -55,10 +53,7 @@ function InterviewHistory() {
     })
 
     useEffect(() => {
-        if (!currentPage) {
-            pageSwitchRef.current = false;
-            return;
-        };
+        if (!currentPage) return;
 
         const controller = new AbortController();
 
@@ -70,13 +65,13 @@ function InterviewHistory() {
             setErrorMsg(null)
         })
         .catch((err) => {
+            if (axios.isCancel(err)) return;
             if (!axios.isAxiosError(err)) return setErrorMsg("error.generic");
             if (err.code === "ERR_NETWORK") return setErrorMsg("error.server_unreachable");
             setErrorMsg("error.generic")
         })
         .finally(() => {
             setLoading(false)
-            pageSwitchRef.current = false
         })
 
         return () => controller.abort();
@@ -85,8 +80,8 @@ function InterviewHistory() {
     const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
         e.stopPropagation()
 
-        if (deletingStateRef.current) return;
-        deletingStateRef.current = true;
+        if (loading) return;
+        setLoading(true);
 
         setInterviews((val) => {
             return val.filter(oldVal => oldVal.id !== id)
@@ -105,17 +100,17 @@ function InterviewHistory() {
         e.stopPropagation();
 
         const newPage = (currentPage ?? 1) + increment
-        if (newPage < 1 || newPage > totalPages || pageSwitchRef.current) return;
-        pageSwitchRef.current = true;
+        if (newPage < 1 || newPage > totalPages || loading) return;
+        setLoading(true)
         setSearchParams(`?page=${newPage}`)
     }
 
-    const handleView = async (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
-        e.stopPropagation()
-        navigate(`/history/${id}/`)
-    }
+    if (loading) return (<div className='interview-history-main'>
+        <div className='interview-history-window'>
+            <h1>{t("loading")}...</h1>
+        </div>
+    </div>)
 
-    if (loading) return (<div className='loading'>Loading...</div>);
     if (errorMsg) return (<div className='interview-history-main'>
         <div className='interview-history-window'>
             <h1>{t(errorMsg)}</h1>
@@ -150,8 +145,8 @@ function InterviewHistory() {
                                 <td>{dateFormatter.format(data.created_at)}</td>
                                 <td>{t("percentage_sign", {value: data.totalScore})}</td>
                                 <td className='options-block'>
-                                    <button className='view-btn' onClick={(e) => handleView(e, data.id)}>{t("view")}</button>
-                                    <button className='delete-btn' onClick={(e) => handleDelete(e, data.id)}>{t("delete")}</button>
+                                    <Link className='button primary' to={`/history/${data.id}/`}>{t("view")}</Link>
+                                    <button className='button danger' onClick={(e) => handleDelete(e, data.id)}>{t("delete")}</button>
                                 </td>
                             </tr>
                             ))
@@ -190,9 +185,9 @@ function InterviewHistory() {
                 }
             </div>
             <div className='page-navigator'>
-                <button disabled={currentPage === 1} onClick={(e) => handlePageSwitch(e, -1)}>&lt;</button>
-                {t("page")}: {currentPage} / {totalPages}
-                <button disabled={(currentPage ?? 1) >= totalPages} onClick={(e) => handlePageSwitch(e, 1)}>&gt;</button>
+                <button className='button primary small' disabled={currentPage === 1} onClick={(e) => handlePageSwitch(e, -1)}>&lt;</button>
+                {currentPage} / {totalPages}
+                <button className='button primary small' disabled={(currentPage ?? 1) >= totalPages} onClick={(e) => handlePageSwitch(e, 1)}>&gt;</button>
             </div>
         </div>
     )

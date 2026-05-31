@@ -50,50 +50,7 @@
 }
 
 .hero-cta {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: white;
-    background: var(--foreground-color);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-decoration: none;
     animation: fadeInStationary 600ms ease forwards;
     animation-delay: 300ms;
     opacity: 0;
-}
-
-.hero-cta:visited {
-    color: white
-}
-
-.hero-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.hero-cta:active {
-    transform: translateY(1px);
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInStationary {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
 }

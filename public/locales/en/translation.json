@@ -133,5 +133,6 @@
     "confirm": "Confirm",
     "view": "View",
     "delete": "Delete",
-    "page": "Page"
+    "page": "Page",
+    "loading": "Loading"
 }

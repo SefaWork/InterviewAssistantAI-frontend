@@ -1,5 +1,4 @@
 import ErrorLabel from '../common/ErrorLabel'
-import './FormSubmit.css'
 
 interface FormSubmitProps {
     text: string,
@@ -11,7 +10,7 @@ interface FormSubmitProps {
 function FormSubmit({text, error, disabled}: FormSubmitProps) {
     return (
         <>
-            <button type="submit" className="form-submit-btn" disabled={disabled}>{text}</button>
+            <button type="submit" style={{marginBottom: "1rem", minWidth: "25%"}} className="button primary large" disabled={disabled}>{text}</button>
             {error && (<ErrorLabel>{error}</ErrorLabel>)}
         </>
     )

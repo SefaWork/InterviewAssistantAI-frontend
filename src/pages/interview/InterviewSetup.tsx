@@ -58,7 +58,7 @@ function InterviewSetup() {
             </div>
             <div className="webcam-ready-section">
                 <div>{ready? `✅ ${t("interview_setup.ready")}` : `❌ ${t("interview_setup.not_ready")}`}</div>
-                <button disabled={!ready} onClick={handleClick}>{t("interview_setup.start")}</button>
+                <button className="button success" disabled={!ready} onClick={handleClick}>{t("interview_setup.start")}</button>
             </div>
         </div>
     )

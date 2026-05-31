@@ -36,7 +36,7 @@ function DeleteAccount() {
             <p>{t("account_settings_page.confirmation_text")} <b>{t("account_settings_page.deletion_warning")}</b></p>
             <form onSubmit={handleSubmit}>
                 <FormPasswordField id="password" ref={passwordRef} />
-                <button type="submit" className="account-deletion-btn">{t("confirm")}</button>
+                <button type="submit" style={{marginBottom: "1rem"}} className="button danger large">{t("confirm")}</button>
             </form>
         </>
     )

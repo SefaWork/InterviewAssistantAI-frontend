@@ -110,8 +110,8 @@ function InterviewResults() {
                         </ul>)
                     }
                 </div>
-                <button className='back-btn' onClick={handleBack}>
-                    &lt;&lt; Interview History
+                <button className='button primary large' onClick={handleBack}>
+                    &lt;&lt; {t("interview_history.title")}
                 </button>
             </div>
         </div>
