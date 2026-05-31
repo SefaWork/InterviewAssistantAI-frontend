@@ -5,6 +5,7 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
+    animation: fadeIn 600ms ease forwards;
 }
 
 .interview-history-window {
@@ -21,7 +22,8 @@
 
     width: 50%;
     max-width: 60vh;
-    margin: 2rem 0;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
 }
 
 .interview-history-window table {
@@ -41,62 +43,19 @@
   background-color: var(--background-color);
 }
 
-.options-block {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.options-block button {
-    text-decoration: none;
-    border: none;
+.options-block .button.primary, .options-block .button.danger {
     padding: .5rem;
-    margin-right: .5rem;
-    cursor: pointer;
     border-radius: .5rem;
-}
-
-.options-block button:hover {
-    transform: translateY(1px);
-}
-
-.options-block button:active {
-    transform: translateY(3px);
-}
-
-.view-btn {
-    background-color: var(--primary-btn-color);
-    color: var(--secondary-text-color);
-}
-
-.delete-btn {
-    background-color: var(--danger-btn-color);
-    color: var(--danger-btn-text-color);
+    margin-right: .5rem;
 }
 
 .page-navigator {
     margin-bottom: 2rem;
 }
 
-.page-navigator button {
-    margin: 0 1rem;
-    padding: .5rem 1rem;
-    border: none;
-    color: var(--secondary-text-color);
-    background-color: var(--primary-btn-color);
-    border-radius: .5rem;
-    cursor: pointer;
-}
-
-.page-navigator button:enabled:hover {
-    background-color: var(--primary-btn-hover-color);
-}
-
-.page-navigator button:enabled:active {
-    background-color: var(--primary-btn-active-color);
-}
-
-.page-navigator button:disabled {
-    background-color: var(--primary-btn-disabled-color);
-    cursor: not-allowed;
+.page-navigator .button.primary {
+    padding-top: .35rem;
+    padding-bottom: .35rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }

@@ -16,7 +16,7 @@ function Home() {
                 <p className="hero-subtitle">
                     {t("project.slogan")}
                 </p>
-                <Link to={accessToken? "/interview/" : "/login/"} className="hero-cta">{t("get_started")}</Link>
+                <Link to={accessToken? "/interview/" : "/login/"} className="hero-cta button primary large">{t("get_started")}</Link>
             </div>
         </section>
     )

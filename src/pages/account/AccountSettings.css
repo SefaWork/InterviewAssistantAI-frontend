@@ -5,6 +5,8 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
+    opacity: 0;
+    animation: fadeIn 600ms ease forwards;
 }
 
 .settings-window {
@@ -33,60 +35,12 @@
     width: 100%;
 }
 
-.account-deletion-btn {
-    display: block;
-    padding: 1rem 25%;
-    margin: 1rem 0;
-    background-color: var(--danger-btn-color);
-    color: var(--danger-btn-text-color);
-    border-radius: 1rem;
-    font-size: large;
-    border: none;
-    transform: translateY(0);
-}
-
-.account-deletion-btn:hover {
-    background-color: var(--danger-btn-hover-color);
-}
-
-.account-deletion-btn:active {
-    background-color: var(--danger-btn-active-color);
-    transform: translateY(2px);
-}
-
 .settings-window.delete-account {
     width: 40%;
     border-color: var(--error-color);
 }
 
-.settings-button {
-    padding: 1rem;
+.settings-button.button {
     margin-bottom: 1rem;
-    border-radius: 1rem;
-    cursor: pointer;
     min-width: 50%;
-    border-style: none;
-    font-size: larger;
-}
-
-.settings-button.primary {
-    background-color: var(--primary-btn-color);
-    color: var(--secondary-text-color);
-}
-
-.settings-button.danger {
-    background-color: var(--danger-btn-color);
-    color: var(--danger-btn-text-color);
-}
-
-.settings-button.back {
-    background-color: var(--cancel-btn-color);
-    color: var(--cancel-btn-text-color);
-}
-
-.back-btn {
-    font-size: larger;
-    text-decoration: none;
-    cursor: pointer;
-    color: var(--secondary-text-color);
 }

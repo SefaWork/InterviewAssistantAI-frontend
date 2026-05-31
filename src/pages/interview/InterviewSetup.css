@@ -28,25 +28,8 @@
     font-weight: bold;
 }
 
-.webcam-ready-section button {
-    padding: .5rem 1rem;
+.webcam-ready-section .button.success {
     margin-top: 1rem;
-    background-color: var(--primary-btn-color);
-    color: var(--secondary-text-color);
-    border: none;
-    border-radius: 1rem;
-    transition: background-color 200ms ease, transform 100ms ease;
-}
-
-.webcam-ready-section button:disabled {
-    background-color: var(--primary-btn-disabled-color);
-}
-
-.webcam-ready-section button:enabled:hover {
-    background-color: var(--primary-btn-hover-color);
-}
-
-.webcam-ready-section button:enabled:active {
-    transform: translateY(3px);
-    background-color: var(--primary-btn-active-color);
+    padding: .75rem 1rem;
+    border-radius: 2rem;
 }

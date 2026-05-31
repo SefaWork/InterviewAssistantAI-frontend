@@ -11,3 +11,114 @@
     width: 100%;
     flex: 1;
 }
+
+.button {
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-size: inherit;
+    transition: background-color 100ms ease, transform 100ms ease;
+}
+
+.button:visited {
+    color: inherit;
+}
+
+.button.large {
+    font-size: larger;
+}
+
+.button.small {
+    font-size: small;
+    padding: .75rem;
+    border-radius: .35rem;
+}
+
+.button:disabled {
+    cursor: not-allowed;
+}
+
+a.button:hover, .button:enabled:hover {
+    transform: translateY(3px);
+}
+
+a.button:active, .button:enabled:active {
+    transform: translateY(5px);
+}
+
+.button.primary {
+    color: var(--primary-btn-text-color);
+    background-color: var(--primary-btn-color);
+}
+
+a.button.primary:hover, .button.primary:enabled:hover {
+    background-color: var(--primary-btn-hover-color);
+}
+
+a.button.primary:active, .button.primary:enabled:active {
+    background-color: var(--primary-btn-active-color);
+}
+
+.button.primary:disabled {
+    background-color: var(--primary-btn-disabled-color);
+}
+
+.button.danger {
+    color: var(--danger-btn-text-color);
+    background-color: var(--danger-btn-color);
+}
+
+a.button.danger:hover, .button.danger:enabled:hover {
+    background-color: var(--danger-btn-hover-color);
+}
+
+a.button.danger:active, .button.danger:enabled:active {
+    background-color: var(--danger-btn-active-color);
+}
+
+.button.danger:disabled {
+    background-color: var(--danger-btn-disabled-color);
+}
+
+.button.success {
+    color: var(--success-btn-text-color);
+    background-color: var(--success-btn-color);
+}
+
+a.button.success:hover, .button.success:enabled:hover {
+    background-color: var(--success-btn-hover-color);
+}
+
+a.button.success:active, .button.success:enabled:active {
+    background-color: var(--success-btn-active-color);
+}
+
+.button.success:disabled {
+    color: var(--success-btn-disabled-text-color);
+    background-color: var(--success-btn-disabled-color);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInStationary {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

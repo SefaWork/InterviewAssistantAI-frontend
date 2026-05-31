@@ -4,6 +4,7 @@ import DeleteAccount from './DeleteAccount';
 import ChangePassword from './ChangePassword';
 import './AccountSettings.css'
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 export type AccountSettingsPageState = "main" | "change-password" | "change-email" | "delete-account";
 
@@ -18,18 +19,23 @@ function AccountSettings() {
                 {pageState === "main" && (
                     <>
                         <h1>{t("account_settings_page.account_settings")}</h1>
-                        <button className='settings-button primary' onClick={() => setPageState('change-email')}>{t("account_settings_page.change_email")}</button>
-                        <button className='settings-button primary' onClick={() => setPageState('change-password')}>{t("account_settings_page.change_password")}</button>
-                        <button className='settings-button danger' onClick={() => setPageState('delete-account')}>{t("account_settings_page.delete_account")}</button>
+                        <Link className='settings-button button primary large' to={'/history/'}>{t("interview_history.title")}</Link>
+                        <button className='settings-button button primary large' onClick={() => setPageState('change-email')}>{t("account_settings_page.change_email")}</button>
+                        <button className='settings-button button primary large' onClick={() => setPageState('change-password')}>{t("account_settings_page.change_password")}</button>
+                        <button className='settings-button button danger large' onClick={() => setPageState('delete-account')}>{t("account_settings_page.delete_account")}</button>
                     </>
                 )}
                 {pageState === "change-email" && (<ChangeEmail />)}
                 {pageState === "change-password" && (<ChangePassword />)}
                 {pageState === "delete-account" && (<DeleteAccount />)}
-                {pageState !== "main" && (
-                    <a className='back-btn' onClick={() => setPageState('main')}>{t("back")}</a>
-                )}
             </div>
+            {pageState !== "main" && (
+                    <a style={{
+                        borderRadius:"2rem",
+                        marginTop:"1rem",
+                        padding: ".5rem 1rem"
+                    }} className='button primary' onClick={() => setPageState('main')}>&lt; {t("back")}</a>
+            )}
         </div>
     )
 }
