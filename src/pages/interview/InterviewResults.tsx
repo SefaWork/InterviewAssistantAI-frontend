@@ -70,7 +70,7 @@ function InterviewResults() {
         } else {
             navigate('/history/')
         }
-    }, [navigate])
+    }, [navigate, location.pathname])
 
     if (loading) return <div className="interview-results-main">Loading...</div>;
     if (!results) return <div className="interview-results-main">404 - Not Found</div>;

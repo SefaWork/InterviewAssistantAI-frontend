@@ -42,7 +42,7 @@ function InterviewHistory() {
     // States and references.
     const [interviews, setInterviews] = useState<HistorySummary[]>([]);
     const chartData = useMemo(() => [...interviews].reverse(), [interviews]);
-    const slope = useMemo(() => calculateTrend(chartData), chartData);
+    const slope = useMemo(() => calculateTrend(chartData), [chartData]);
     const [loading, setLoading] = useState<boolean>(true);
     const deletingStateRef = useRef<boolean>(false);
     const [totalPages, setTotalPages] = useState<number>(1);
