@@ -44,6 +44,7 @@
     "new_account": "Hesabınız yok mu?",
     "existing_account": "Hesabınız zaten var mı?",
     "expired_session": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapınız.",
+    "connecting": "Bağlanıyor",
 
     "not_found": {
         "title": "Sayfa Bulunamadı",

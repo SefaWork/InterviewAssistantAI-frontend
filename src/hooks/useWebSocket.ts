@@ -4,6 +4,7 @@ export type WebsocketStatus =
     | "CONNECTING"
     | "CONNECTED"
     | "DISCONNECTED"
+    | "DISCONNECTING"
 
 export interface WebSocketHookType<T = unknown, S = unknown> {
     status: WebsocketStatus,
@@ -18,7 +19,7 @@ export interface WebSocketHookType<T = unknown, S = unknown> {
 /** Hook for creating a WebSocket instance. Provides useful callbacks for data communication. */
 function useWebSocket<T = unknown, S = unknown>(url: string | null): WebSocketHookType<T, S> {
     const ws = useRef<WebSocket | null>(null);
-    const [status, setStatus] = useState<WebsocketStatus>("DISCONNECTED");
+    const [status, setStatus] = useState<WebsocketStatus>("CONNECTING");
     const [lastMessage, setLastMessage] = useState<T | null>(null);
 
     useEffect(() => {
@@ -29,7 +30,7 @@ function useWebSocket<T = unknown, S = unknown>(url: string | null): WebSocketHo
         const connectingTimeout = setTimeout(() => setStatus("CONNECTING"), 0);
 
         ws.current.onopen = () => setStatus("CONNECTED");
-        ws.current.onclose = () => setStatus("DISCONNECTED");
+        ws.current.onclose = () => setStatus("DISCONNECTING");
         ws.current.onerror = (e) => console.error("WebSocket error: ", e);
         ws.current.onmessage = (e: MessageEvent<string>) => {
             const message = JSON.parse(e.data) as T;
@@ -42,16 +43,22 @@ function useWebSocket<T = unknown, S = unknown>(url: string | null): WebSocketHo
         }
     }, [url]);
 
+    useEffect(() => {
+        if (status !== "DISCONNECTING") return;
+        const disconnectingTimeout = setTimeout(() => {
+            setStatus("DISCONNECTED")
+        }, 3_000);
+        return () => clearTimeout(disconnectingTimeout);
+    }, [status])
+
     const sendBinary = useCallback((blob: Blob) => {
-        if (ws.current?.readyState === WebSocket.OPEN) {
-            ws.current.send(blob);
-        }
+        if (ws.current?.readyState !== WebSocket.OPEN) return;
+        ws.current.send(blob);
     }, []);
 
     const sendJSON = useCallback((payload: S) => {
-        if (ws.current?.readyState === WebSocket.OPEN) {
-            ws.current.send(JSON.stringify(payload));
-        }
+        if (ws.current?.readyState !== WebSocket.OPEN) return;
+        ws.current.send(JSON.stringify(payload));
     }, []);
 
     return { status, lastMessage, sendBinary, sendJSON };

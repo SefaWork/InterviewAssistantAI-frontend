@@ -1,3 +1,13 @@
+.connecting {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
+}
+
 .interview-main-div {
     display: flex;
     width: 100%;
