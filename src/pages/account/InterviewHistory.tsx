@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useSearchParams } from 'react-router-dom';
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import axios from 'axios';
 import './InterviewHistory.css'
 
@@ -19,6 +19,20 @@ const deserializeResponse = (entry: {id: string, created_at: string, total_avg: 
     return {created_at: new Date(entry.created_at).getTime(), id: entry.id, totalScore: entry.total_avg}
 }
 
+const calculateTrend = (data: HistorySummary[]) => {
+    const n = data.length;
+    let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+
+    for (let i = 0; i < n; i++) {
+        sumX  += i;
+        sumY  += data[i].totalScore;
+        sumXY += i * data[i].totalScore;
+        sumX2 += i * i;
+    }
+
+    return (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+}
+
 function InterviewHistory() {
     // Hooks.
     const {t, i18n} = useTranslation();
@@ -27,9 +41,10 @@ function InterviewHistory() {
     
     // States and references.
     const [interviews, setInterviews] = useState<HistorySummary[]>([]);
+    const chartData = useMemo(() => [...interviews].reverse(), [interviews]);
+    const slope = useMemo(() => calculateTrend(chartData), chartData);
     const [loading, setLoading] = useState<boolean>(true);
     const deletingStateRef = useRef<boolean>(false);
-    const chartData = useMemo(() => [...interviews].reverse(), [interviews]);
     const [totalPages, setTotalPages] = useState<number>(1);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -152,34 +167,39 @@ function InterviewHistory() {
                             ))
                             }
                         </table>
-                        {chartData.length > 1 && (
-                            <LineChart width={400} height={400} margin={{ top: 20, right: 20, bottom: 20, left: 20 }} data={chartData}>
-                                <XAxis 
-                                    dataKey="created_at"
-                                    name={t("interview_history.date")}
-                                    domain={["dataMin", "dataMax"]}
-                                    ticks={[chartData[0]?.created_at, chartData[chartData.length - 1]?.created_at]}
-                                    tickFormatter={(timestamp) => graphDateFormatter.format(timestamp)}
-                                    tick={{dx: -10}} 
-                                />
-                                <YAxis 
-                                    dataKey="totalScore"
-                                    type='number'
-                                    domain={[dataMin => Math.max(0, dataMin - 10), dataMax => Math.min(100, dataMax + 10)]}
-                                    tickFormatter={(value) => t("percentage_sign", {value})}
-                                    tick={{dy: -10}} 
-                                />
-                                <Tooltip 
-                                    contentStyle={{color: "var(--secondary-text-color)", backgroundColor: "var(--foreground-color)"}}
-                                    labelStyle={{color: "var(--secondary-text-color)"}}
-                                    itemStyle={{color: "var(--secondary-text-color)"}}
-                                    labelFormatter={(timestamp) => dateFormatter.format(timestamp)} 
-                                    formatter={(value, name) => [t("percentage_sign", {value}), name]}
-                                />
-                                <CartesianGrid stroke="#f5f5f5" />
-                                <Line type="monotone" dataKey="totalScore" name={t("interview_history.score")} stroke="var(--foreground-color)" />
-                            </LineChart>
-                        )}
+                        {chartData.length > 1 && (<>
+                            <h1>{t("interview_history.past_analysis")}</h1>
+                            <ResponsiveContainer width="100%" height={400}>
+                                <LineChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }} data={chartData}>
+                                    <XAxis 
+                                        dataKey="created_at"
+                                        name={t("interview_history.date")}
+                                        domain={["dataMin", "dataMax"]}
+                                        ticks={[chartData[0]?.created_at, chartData[chartData.length - 1]?.created_at]}
+                                        tickFormatter={(timestamp) => graphDateFormatter.format(timestamp)}
+                                        tick={{dx: -10}} 
+                                    />
+                                    <YAxis 
+                                        dataKey="totalScore"
+                                        type='number'
+                                        domain={[dataMin => Math.max(0, dataMin - 10), dataMax => Math.min(100, dataMax + 10)]}
+                                        tickFormatter={(value) => t("percentage_sign", {value})}
+                                        tick={{dy: -10}} 
+                                    />
+                                    <Tooltip 
+                                        contentStyle={{color: "var(--secondary-text-color)", backgroundColor: "var(--foreground-color)"}}
+                                        labelStyle={{color: "var(--secondary-text-color)"}}
+                                        itemStyle={{color: "var(--secondary-text-color)"}}
+                                        labelFormatter={(timestamp) => dateFormatter.format(timestamp)} 
+                                        formatter={(value, name) => [t("percentage_sign", {value}), name]}
+                                    />
+                                    <CartesianGrid stroke="#f5f5f5" />
+                                    <Line type="monotone" dataKey="totalScore" name={t("interview_history.score")} stroke="var(--foreground-color)" />
+                                </LineChart>
+                            </ResponsiveContainer>
+                            <h3>{t("interview_history.comment")}</h3>
+                            {t(Math.abs(slope) < 0.25? "interview_history.trend_zero" : slope > 0? "interview_history.trend_up" : "interview_history.trend_down")}
+                        </>)}
                     </>
                 )
                 }

@@ -105,7 +105,14 @@
         "date": "Date",
         "score": "Score",
         "options": "Options",
-        "empty_page": "This page is empty. Please return to an earlier page."
+        "empty_page": "This page is empty. Please return to an earlier page.",
+        "past_analysis": "Past Analysis",
+
+        "trend_zero": "Your performance didn't have significant changes within this time range.",
+        "trend_up": "Your performance had an overall increase within this time range.",
+        "trend_down": "Your performance had an overall decrease within this time range.",
+
+        "comment": "Graph Comment"
     },
 
     "feedback": {
