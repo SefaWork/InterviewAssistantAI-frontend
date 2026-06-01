@@ -15,8 +15,8 @@ type HistorySummary = {
 const SESSION_LIST_PATH = '/api/account/interviews/'
 const SESSION_DELETE_PATH = '/api/account/delete-interview/'
 
-const deserializeResponse = (entry: {id: string, created_at: string, total_avg: number}): HistorySummary => {
-    return {created_at: new Date(entry.created_at).getTime(), id: entry.id, totalScore: entry.total_avg}
+const deserializeResponse = (entry: {id: string, created_at: string, total_score: number}): HistorySummary => {
+    return {created_at: new Date(entry.created_at).getTime(), id: entry.id, totalScore: entry.total_score}
 }
 
 const calculateTrend = (data: HistorySummary[]) => {
@@ -95,15 +95,15 @@ function InterviewHistory() {
     const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
         e.stopPropagation()
 
-        if (loading) return;
-        setLoading(true);
-
+        if (deletingStateRef.current) return;
+        deletingStateRef.current = true
+        
         setInterviews((val) => {
             return val.filter(oldVal => oldVal.id !== id)
         })
 
         try {
-            await axiosServer.post(SESSION_DELETE_PATH, {"session_id": id})
+            await axiosServer.delete(`${SESSION_DELETE_PATH}${id}/`)
         } catch(err) {
             console.error(err)
         } finally {

@@ -18,7 +18,8 @@ type WebsocketResponseType = {
         emotion: string,
         emotion_avg: number,
         eye_avg: number
-    }
+    },
+    id?: string
 }
 
 type TrackedScore = {
@@ -74,8 +75,13 @@ function InterviewPage() {
     }, [sendFrame])
 
     useEffect(() => {
-        if (lastMessage?.type === "session_complete" && session) {
-            navigate(`/result/${session}`)
+        if (lastMessage?.type === "session_complete") {
+            if (lastMessage.id) {
+                navigate(`/result/${lastMessage.id}`)
+            } else {
+                navigate(`/history/`)
+            }
+            
             return;
         }
 
