@@ -19,6 +19,7 @@ function Header() {
                         accessToken ? 
                         <>
                             <Link to="/account/">{t("account")}</Link>
+                            <Link to="/history/">{t("history")}</Link>
                             <Link to="/logout/">{t("logout")}</Link>
                         </> 
                         : 

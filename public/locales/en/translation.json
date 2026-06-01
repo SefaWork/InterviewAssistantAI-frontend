@@ -134,5 +134,6 @@
     "view": "View",
     "delete": "Delete",
     "page": "Page",
-    "loading": "Loading"
+    "loading": "Loading",
+    "history": "History"
 }
