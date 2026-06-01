@@ -46,7 +46,7 @@ function InterviewPage() {
     const navigate = useNavigate();
     const { accessToken } = useAuth();
 
-    const {sendBinary, lastMessage} = useWebSocket<WebsocketResponseType>(accessToken && session? `ws://localhost:8000/ws/stream/${session}/?token=${accessToken}` : null)
+    const {sendBinary, lastMessage, status} = useWebSocket<WebsocketResponseType>(accessToken && session? `ws://localhost:8000/ws/stream/${session}/?token=${accessToken}` : null)
 
     const [trackedScore, setTrackedScore] = useState<TrackedScore>({
         eyeScore: 0,
@@ -58,13 +58,15 @@ function InterviewPage() {
 
     // Take screenshot and send to server.
     const sendFrame = useCallback(() => {
+        if (status !== "CONNECTED") return;
+
         const imgSrc = webcamRef.current?.getScreenshot();
         if (!imgSrc) return;
 
         fetch(imgSrc)
             .then((res) => res.blob())
             .then((blob) => sendBinary(blob))
-    }, [sendBinary])
+    }, [sendBinary, status])
 
     // Create interval to send frames.
     useEffect(() => {
@@ -104,6 +106,8 @@ function InterviewPage() {
     }, [lastMessage, session, navigate])
 
     if (!accessToken || !session) return <Navigate to='/interview/' replace />
+    if (status === "CONNECTING" || status === "DISCONNECTING") return <div className='connecting'>{t("connecting")}...</div>
+    if (status === "DISCONNECTED") return <Navigate to='/interview/' state={{disconnectedFromSession: true}} replace />
 
     return (
         <div className="interview-main-div">

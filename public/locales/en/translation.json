@@ -44,6 +44,7 @@
     "new_account": "Don't have an account?",
     "existing_account": "Already have an account?",
     "expired_session": "Your session has expired. Please login again.",
+    "connecting": "Connecting",
 
     "not_found": {
         "title": "Not Found",
