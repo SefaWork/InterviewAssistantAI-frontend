@@ -81,7 +81,7 @@ function InterviewPage() {
             } else {
                 navigate(`/history/`)
             }
-            
+
             return;
         }
 
@@ -103,7 +103,7 @@ function InterviewPage() {
 
     }, [lastMessage, session, navigate])
 
-    if (!accessToken || !session) return <Navigate to='/interview/setup' replace />
+    if (!accessToken || !session) return <Navigate to='/interview/' replace />
 
     return (
         <div className="interview-main-div">
@@ -114,13 +114,19 @@ function InterviewPage() {
                 <p>{t("interview_page.instruction")}</p>
             </div>
             <div className='feedback-section'>
-                {!errorMsg && (
+                {errorMsg ?
+                (
+                    <div className='score-field error'>
+                        {t(`interview_page.error.${errorMsg}`)}
+                    </div>
+                )
+                : 
+                (
                     <>
                         <div className={`score-field ${scoreValueToState(trackedScore.emotionScore)}`}><u>{t("interview_page.emotion")}</u><div>{trackedScore.emotion} [{t("percentage_sign", {value:trackedScore.emotionScore})}]</div></div>
                         <div className={`score-field ${scoreValueToState(trackedScore.eyeScore)}`}><u>{t("interview_page.eye_contact")}</u><div>{t("percentage_sign", {value:trackedScore.eyeScore})}</div></div>
                     </>
                 )}
-                {errorMsg && (<div className='score-field error'>{t(`interview_page.error.${errorMsg}`)}</div>)}
             </div>
         </div>
     )
