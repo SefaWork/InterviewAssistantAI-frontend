@@ -43,6 +43,7 @@
     "registering": "Registering...",
     "new_account": "Don't have an account?",
     "existing_account": "Already have an account?",
+    "expired_session": "Your session has expired. Please login again.",
 
     "not_found": {
         "title": "Not Found",

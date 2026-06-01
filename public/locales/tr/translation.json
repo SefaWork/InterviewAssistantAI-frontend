@@ -43,6 +43,7 @@
     "registering": "Kayıt Olunuyor...",
     "new_account": "Hesabınız yok mu?",
     "existing_account": "Hesabınız zaten var mı?",
+    "expired_session": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapınız.",
 
     "not_found": {
         "title": "Sayfa Bulunamadı",

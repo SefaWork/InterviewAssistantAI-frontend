@@ -32,6 +32,7 @@ function Login() {
     const [processing, setProcessing] = useState<boolean>(false);
 
     const navigateTo = location.state?.from?.pathname || "/";
+    const expired = !!location.state?.expiredSession;
 
     /**Helper function to translate messages with parameter support. */
     const localizeMessage = (msg: LocalizedMessage) => msg.params? t(msg.key, msg.params) : t(msg.key);
@@ -112,6 +113,7 @@ function Login() {
                 <FormSubmit disabled={processing} text={processing? `${t("logging_in")}...` : t("login")} error={errors.submit && localizeMessage(errors.submit)} />
                 <Link to='/register/'>{t("new_account")}</Link>
             </Form>
+            {expired && (<div className='expired-session'>{t("expired_session")}</div>)}
         </div>
     )
 }

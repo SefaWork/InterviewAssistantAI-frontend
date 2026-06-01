@@ -6,3 +6,10 @@
     height: 100%;
     width: 100%;
 }
+
+.expired-session {
+    margin-top: 2rem;
+    color: #ff0000;
+    font-size: large;
+    font-weight: bold;
+}

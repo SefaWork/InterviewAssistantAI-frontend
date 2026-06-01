@@ -6,7 +6,7 @@ function RequireAuth() {
     const location = useLocation();
 
     if (accessToken) return <Outlet />
-    return <Navigate to={'/login'} state={{from: location, needsAuth: true}} replace />
+    return <Navigate to={'/login'} state={{from: location, expiredSession: true}} replace />
 }
 
 export default RequireAuth
