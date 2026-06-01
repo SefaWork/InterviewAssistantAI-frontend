@@ -105,7 +105,14 @@
         "date": "Tarih",
         "score": "Skor",
         "options": "Seçenekler",
-        "empty_page": "Bu sayfa boş, lütfen önceki sayfalara dönün."
+        "empty_page": "Bu sayfa boş, lütfen önceki sayfalara dönün.",
+        "past_analysis": "Geçmiş Analizi",
+
+        "trend_zero": "Bu zaman aralığında performansınız çok değişmedi.",
+        "trend_up": "Bu zaman aralığında performansınız genel olarak yükseldi.",
+        "trend_down": "Bu zaman aralığında performansınız genel olarak azaldı.",
+
+        "comment": "Grafik Yorumu"
     },
 
     "feedback": {
