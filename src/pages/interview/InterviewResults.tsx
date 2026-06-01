@@ -42,16 +42,16 @@ function InterviewResults() {
         axiosServer
             .get(`${SESSION_DISPLAY_PATH}${session}/`, { signal: controller.signal })
             .then(({ data }) => {
-                const {emotion_avg = 0, eye_avg = 0, total_avg = 0, feedback = "", past_analysis_feedback = ""} = data;
+                const {emotion_score = 0, eye_score = 0, total_score = 0, feedback = "", past_analysis_feedback = ""} = data;
 
                 // Deconstruct the feedback and past analysis feedback.
                 const feedbackTranslated = convertFeedbackToTranslationKeys(feedback);
                 const pastAnalysisTranslated = convertFeedbackToTranslationKeys(past_analysis_feedback);
 
                 setResults({
-                    emotion: emotion_avg,
-                    eye: eye_avg,
-                    total: total_avg,
+                    emotion: emotion_score,
+                    eye: eye_score,
+                    total: total_score,
                     feedback: feedbackTranslated,
                     past_analysis_feedback: pastAnalysisTranslated
                 })
