@@ -11,11 +11,14 @@ function Topnav() {
         <div className='topnav-container'>
             <Link to="/">{t("home")}</Link>
             <Link to="/about/">{t("about")}</Link>
-            <Link className="topnav-mobile" to="/interview/">{t("interview")}</Link>
-            {accessToken? <>
-                <Link className="topnav-mobile" to="/account/">{t("account")}</Link>
-                <Link className="topnav-mobile" to="/logout/">{t("logout")}</Link>
-            </> : <Link className="topnav-mobile" to="/login/">{t("login")}</Link>}
+            <div className='topnav-mobile'>
+                <Link to="/interview/">{t("interview")}</Link>
+                {accessToken? <>
+                    <Link to="/account/">{t("account")}</Link>
+                    <Link to="/history/">{t("history")}</Link>
+                    <Link to="/logout/">{t("logout")}</Link>
+                </> : <Link to="/login/">{t("login")}</Link>}
+            </div>
         </div>
     )
 }
