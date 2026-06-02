@@ -33,9 +33,9 @@ type FieldStates =
     | "average"
     | "bad"
 
-const scoreValueToState = (eyeScore: number): FieldStates => {
-    if (eyeScore > 75) return "good"
-    else if (eyeScore > 35) return "average"
+const scoreValueToState = (score: number): FieldStates => {
+    if (score > 50) return "good"
+    else if (score > 25) return "average"
     return "bad"
 }
 
