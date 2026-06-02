@@ -1,3 +1,75 @@
 .about-page {
-    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5rem;
+    margin: 5rem 2rem;
+    overflow-x: hidden;
+}
+
+.image-text-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 90%;
+}
+
+.image-text-wrapper div {
+    flex: 1;
+    max-width: 600px;
+    text-align: justify;
+    font-size: larger;
+}
+
+.image-text-wrapper img {
+  width: 25%;
+  height: auto;
+  border-radius: 5%;
+}
+
+.image-text-wrapper li {
+    margin-bottom: 1rem;
+}
+
+.left {
+    align-self: flex-start;
+    opacity: 0;
+    animation: leftSlide 1000ms ease-in-out forwards;
+}
+
+.right {
+    align-self: flex-end;
+    opacity: 0;
+    animation: rightSlide 1000ms ease-in-out forwards;
+}
+
+.left h1 {
+    text-align: left;
+}
+
+.right h1 {
+    text-align: right;
+}
+
+@keyframes leftSlide {
+    from {
+        transform: translateX(-10%);
+        opacity: 0;
+    } 
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rightSlide {
+    from {
+        transform: translateX(10%);
+        opacity: 0;
+    } 
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }

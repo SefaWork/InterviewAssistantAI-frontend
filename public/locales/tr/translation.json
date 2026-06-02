@@ -60,16 +60,20 @@
     },
 
     "about_page": {
-        "objective_title": "Bizim Hedefimiz",
-        "objective": "Mülakatlar, iş alım sürecinde kritik bir rol oynar. İş verenler, genel olarak sadece birinin teknik bilgi ve tecrübesini değil, ayrıca kişinin sosyal performansını da gözler. InterviewHelper uygulaması, kişinin kendi sözel olmayan sosyal becerisini geliştirebilmesi için bir kişisel gelişim asistanı/aleti olmayı hedeflemektedir.",
-        "features_title": "Özellikler",
-        "features": {
-            "1": "InterviewHelper uygulamasının ana özelliği mülakat simülasyonu almaktır. Bu mülakat sürecinde makine öğrenimi (machine learning) sayesinde kişinin sözel olmayan sosyal performansı yorumlanır.",
-            "2": "Mülakat simülasyonu sürecinde birkaç metrik gözlenir. Kamera ile göz teması, yüz ifadesi ve kişinin duruşu yorumlanır.",
-            "3": "Kullanıcılar, daha özgüvenli göründüklerinde daha iyi puan alırlar. Dik duruş, samimi gülümseme ve özenli göz teması daha iyi puan almayı sağlar.",
-            "4": "Mülakat sonunda kullanıcılara aldıkları puana göre ip uçları ve kendilerini nasıl geliştirebilecekleri önerilir.",
-            "5": "Ayrıca, kullanıcılar geçmişte yaptıkları mülakatları ve puanlarını görebilir ve zamanla ne kadar ilerlediklerini görebilirler."
-        }
+        "about_title": "InterviewHelper nedir?",
+        "reasoning_title": "Niye InterviewHelper?",
+        "features_title": "Prototip Özellikleri",
+
+        "about_paragraph": "Bu prototip, InterviewHelper projesi için bir demodur. Kullanıcıların küçük mülakat simülasyonu almalarını ve bu mülakattan sözel olmayan iletişim becerilerini yorumlamasını sağlar. Puanlama makine öğrenimi (ML) teknolojisi ile sağlanır.",
+        "reasoning_paragraph": "Sözel olmayan beceriler, işe alım sürecinde önemli bir rol oynamaktadır. Kendine ve yeteneklerine daha güvenli görünen adaylar diğerlerinden daha fazla öne çıkar ve bunu pratik yapmak pek kolay değildir. Bu araç, sözel olmayan becerilerinizi geliştirmeniz için bir ortam sunar.",
+
+        "features": [
+            "InterviewHelper'ın temel özelliği, mülakat simülasyon yapabilme imkânıdır. Bu simülasyonlar, kullanıcının sözel olmayan performansını makine öğrenimi (ML) teknolojisi kullanarak değerlendirir.",
+            "Mülakat simülasyonu sırasında birkaç metrik değerlendirilir. Bunlar arasında kullanıcının kamerayla göz teması ve yüz ifadeleri yer almaktadır.",
+            "Kullanıcılar, ne kadar güvenli göründüklerine göre daha yüksek puan alır. Sıcak, kendinden emin bir gülümseme ve dikkatli göz teması daha iyi bir puana yol açacaktır.",
+            "Mülakat sonunda kullanıcılara, aldıkları puanlara göre neyi geliştirebilecekleri hakkında bilgi verilir.",
+            "Kullanıcılar ayrıca zaman içindeki gelişimlerini izlemek için geçmiş mülakat puanlarını görüntüleyebilir ve grafik ile analizini yapabilir."
+        ]
     },
 
     "interview_page": {
