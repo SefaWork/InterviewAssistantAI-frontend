@@ -23,6 +23,8 @@ const convertFeedbackToTranslationKeys = (feedbackText: string): string[] => {
     }).filter(Boolean)
 }
 
+// @TODO Improve the UI design.
+// @TODO Add distribution pie chart.
 function InterviewResults() {
     const {t} = useTranslation()
 

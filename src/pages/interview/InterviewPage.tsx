@@ -3,9 +3,8 @@ import { startTransition, useCallback, useEffect, useRef, useState } from 'react
 import { useTranslation } from 'react-i18next';
 import useWebSocket from '../../hooks/useWebSocket';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-
-import './InterviewPage.css'
 import useAuth from '../../hooks/useAuth';
+import './InterviewPage.css'
 
 // 1 second / FPS
 const SEND_INTERVAL = 1_000 / 5
@@ -39,6 +38,9 @@ const scoreValueToState = (score: number): FieldStates => {
     return "bad"
 }
 
+// @TODO Improve UI design.
+// @TODO Add progress bar.
+// @TODO Add confidence indicator.
 function InterviewPage() {
     const {t} = useTranslation();
     const webcamRef = useRef<Webcam>(null);
