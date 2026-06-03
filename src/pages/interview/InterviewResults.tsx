@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { useTranslation } from 'react-i18next';
@@ -64,7 +64,7 @@ function InterviewResults() {
         return () => controller.abort();
     }, [axiosServer, session])
 
-    const handleBack = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleBack = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         
         if (location.pathname.startsWith('/history/')) {
@@ -72,7 +72,7 @@ function InterviewResults() {
         } else {
             navigate('/history/')
         }
-    }, [navigate, location.pathname])
+    }
 
     if (loading) return <div className="interview-results-main">Loading...</div>;
     if (!results) return <div className="interview-results-main">404 - Not Found</div>;
