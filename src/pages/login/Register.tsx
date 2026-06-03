@@ -84,11 +84,10 @@ function Register() {
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
+        // Take given email, password and repeat password, validate and send to server.
         const givenEmail = (emailRef.current?.value ?? "").trim();
         const givenPass = (passRef.current?.value ?? "").trim();
         const givenRepPass = (repPassRef.current?.value ?? "").trim();
-
-        // TODO: Email and password validation.
 
         const newState: ErrorMessageState = {}
 
@@ -120,7 +119,7 @@ function Register() {
 
         try {
             const result = await register(givenEmail, givenPass);
-            if (result.success) return navigate('/login');
+            if (result.success) return navigate('/');
             
             newState.submit = result.reason ?? {key: "error.generic"}
         } catch(err) {

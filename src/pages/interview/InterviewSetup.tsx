@@ -9,6 +9,8 @@ import './InterviewSetup.css'
 
 const SESSION_CREATE_PATH = "/api/interview/create/"
 
+// @TODO Improve UI design.
+// @TODO Add popup for continuing session.
 function InterviewSetup() {
     const {t} = useTranslation();
     const [ready, setReady] = useState<boolean>(false);

@@ -33,6 +33,7 @@ const calculateTrend = (data: HistorySummary[]) => {
     return (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
 }
 
+// @TODO Collapsible past analysis section.
 function InterviewHistory() {
     // Hooks.
     const {t, i18n} = useTranslation();
