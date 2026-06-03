@@ -7,9 +7,12 @@ import FormSubmit from '../../components/form/FormSubmit';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth';
 import type { LocalizedMessage } from '../../types/i18n';
-import './Register.css'
 import axiosServer from '../../api/axiosServer';
 import axios from 'axios';
+import './Register.css'
+
+const LOGIN_PATH = "/api/auth/login/"
+const REGISTER_PATH = "/api/auth/register/"
 
 interface ErrorMessageState {
     email?: LocalizedMessage,
@@ -20,7 +23,7 @@ interface ErrorMessageState {
 
 function Register() {
     const {t} = useTranslation();
-    const auth = useAuth();
+    const { setAccessToken, accessToken } = useAuth();
 
     const navigate = useNavigate();
 
@@ -33,10 +36,35 @@ function Register() {
 
     const localizeMessage = (msg: LocalizedMessage) => msg.params? t(msg.key, msg.params) : t(msg.key);
 
+    const login = async (email: string, password: string) => {
+        try {
+            const { data } = await axiosServer.post(LOGIN_PATH, {email, password}, {withCredentials: true});
+            setAccessToken(data.access);
+            return {success: true}
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                if (err.response) {
+                    switch (err.response.status) {
+                        case 401:
+                            return {success: false, reason: {key: "error.invalid_credentials"}}
+                        case 403:
+                            return {success: false, reason: {key: "error.forbidden"}}
+                        default:
+                            return {success: false, reason: {key: "error.server_error"}}
+                    }
+                } else {
+                    return {success: false, reason: {key: "error.server_unreachable"}}
+                }
+            }
+        }
+
+        return {success: false, reason: {key: "server.server_error"}}
+    }
+
     const register = async (email: string, password: string) => {
         try {
-            await axiosServer.post("/api/auth/register/", {email, password});
-            return {success: true}
+            await axiosServer.post(REGISTER_PATH, {email, password});
+            return await login(email, password);
         } catch (err) {
             if (axios.isAxiosError(err) && err.response) {
                 switch (err.response.status) {
@@ -108,11 +136,11 @@ function Register() {
     }
 
     useEffect(() => {
-        if (auth.accessToken) {
+        if (accessToken) {
             // Already logged in.
             navigate('/');
         }
-    }, [auth, navigate])
+    }, [accessToken, navigate])
 
     return (
         <div className='register-page' data-testid='Register'>
