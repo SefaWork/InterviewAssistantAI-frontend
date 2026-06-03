@@ -2,24 +2,30 @@ import Webcam from 'react-webcam'
 import { startTransition, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useWebSocket from '../../hooks/useWebSocket';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import './InterviewPage.css'
 
 // 1 second / FPS
 const SEND_INTERVAL = 1_000 / 5
 
-type WebsocketResponseType = {
-    type?: "result" | "session_complete",
-    data?: {
+type SessionCompleteResponse = {
+    type: "session_complete",
+    id?: string
+}
+
+type FrameResultResponse = {
+    type: "result",
+    data: {
         face_count: number,
         eye_contact_score: number,
         emotion: string,
         emotion_avg: number,
         eye_avg: number
-    },
-    id?: string
+    }
 }
+
+type WebsocketMessageType = SessionCompleteResponse | FrameResultResponse;
 
 type TrackedScore = {
     eyeScore: number,
@@ -44,11 +50,10 @@ const scoreValueToState = (score: number): FieldStates => {
 function InterviewPage() {
     const {t} = useTranslation();
     const webcamRef = useRef<Webcam>(null);
-    const {session} = useParams();
     const navigate = useNavigate();
     const { accessToken } = useAuth();
 
-    const {sendBinary, lastMessage, status} = useWebSocket<WebsocketResponseType>(accessToken && session? `ws://localhost:8000/ws/stream/${session}/?token=${accessToken}` : null)
+    const {sendBinary, sendJSON, lastMessage, status} = useWebSocket<WebsocketMessageType>(accessToken? `ws://localhost:8000/ws/stream/?token=${accessToken}` : null)
 
     const [trackedScore, setTrackedScore] = useState<TrackedScore>({
         eyeScore: 0,
@@ -69,6 +74,11 @@ function InterviewPage() {
             .then((res) => res.blob())
             .then((blob) => sendBinary(blob))
     }, [sendBinary, status])
+
+    const handleFinish = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        sendJSON({"type": "finish"});
+    }
 
     // Create interval to send frames.
     useEffect(() => {
@@ -105,9 +115,9 @@ function InterviewPage() {
             }
         })
 
-    }, [lastMessage, session, navigate])
+    }, [lastMessage, navigate])
 
-    if (!accessToken || !session) return <Navigate to='/interview/' replace />
+    if (!accessToken) return <Navigate to='/interview/' replace />
     if (status === "CONNECTING" || status === "DISCONNECTING") return <div className='connecting'>{t("connecting")}...</div>
     if (status === "DISCONNECTED") return <Navigate to='/interview/' state={{disconnectedFromSession: true}} replace />
 
@@ -134,6 +144,7 @@ function InterviewPage() {
                     </>
                 )}
             </div>
+            <button style={{marginBottom: "1rem"}} onClick={handleFinish} className='button danger large'>Finish</button>
         </div>
     )
 }

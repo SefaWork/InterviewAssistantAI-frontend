@@ -32,16 +32,14 @@ function InterviewSetup() {
             creatingRef.current = true;
 
             try {
-                const {data} = await axiosServer.post(SESSION_CREATE_PATH);
-                const id = data?.id;
-                if (!id) throw new Error("Failed to create session.");
-                navigate(`/interview/${id}`)
+                await axiosServer.post(SESSION_CREATE_PATH);
+                navigate(`/interview/session/`)
             } catch(err) {
                 console.error(err);
 
                 if (axios.isAxiosError(err)) {
-                    if (err.status === 409 && err.response?.data?.session_id) {
-                        navigate(`/interview/${err.response.data.session_id}`)
+                    if (err.status === 409) {
+                        navigate(`/interview/session/`)
                         return;
                     }
                 }
