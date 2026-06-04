@@ -1,5 +1,5 @@
 import Webcam from 'react-webcam'
-import { startTransition, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useWebSocket from '../../hooks/useWebSocket';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import './InterviewPage.css'
 
 // 1 second / FPS
 const SEND_INTERVAL = 1_000 / 5
+const UPDATE_INTERVAL = 1_000 / 30
 
 type SessionCompleteResponse = {
     type: "session_complete",
@@ -25,7 +26,12 @@ type FrameResultResponse = {
     }
 }
 
-type WebsocketMessageType = SessionCompleteResponse | FrameResultResponse;
+type TimeSyncMessage = {
+    type: "time",
+    elapsed_time: number
+}
+
+type WebsocketMessageType = SessionCompleteResponse | FrameResultResponse | TimeSyncMessage;
 
 type TrackedScore = {
     eyeScore: number,
@@ -44,6 +50,13 @@ const scoreValueToState = (score: number): FieldStates => {
     return "bad"
 }
 
+const formatTime = (ms: number): string => {
+    const minutes = Math.floor(ms / 60000)
+    const seconds = Math.floor((ms % 60000) / 1000)
+    const milliseconds = Math.floor((ms % 1000) / 10) // 2 digits
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(2, '0')}`
+}
+
 // @TODO Improve UI design.
 // @TODO Add progress bar.
 // @TODO Add confidence indicator.
@@ -51,17 +64,43 @@ function InterviewPage() {
     const {t} = useTranslation();
     const webcamRef = useRef<Webcam>(null);
     const navigate = useNavigate();
+    const [ startTime, setStartTime ] = useState<number>(() => Date.now());
+    const [ currentTime, setCurrentTime ] = useState<number>(0);
     const { accessToken } = useAuth();
-
-    const {sendBinary, sendJSON, lastMessage, status} = useWebSocket<WebsocketMessageType>(accessToken? `ws://localhost:8000/ws/stream/?token=${accessToken}` : null)
 
     const [trackedScore, setTrackedScore] = useState<TrackedScore>({
         eyeScore: 0,
         emotionScore: 0,
         emotion: "Nötr"
     });
-
+    
     const [errorMsg, setError] = useState<string | null>(null);
+
+    const handleMessage = useCallback((message: WebsocketMessageType) => {
+        if (!message.type) return;
+
+        switch (message.type) {
+            case "session_complete":
+                if (!message.id) return;
+                return navigate(message.id? `/result/${message.id}` : `/history/`);
+            case "time":
+                return setStartTime(Date.now() - message.elapsed_time);
+            case "result":
+                const {face_count = 0, eye_avg = 0, emotion_avg = 0, emotion = "Nötr"} = message.data
+                if (face_count < 1) return setError("no_face");
+                else {
+                    setError(null);
+                    setTrackedScore({
+                        eyeScore: eye_avg,
+                        emotionScore: emotion_avg,
+                        emotion: emotion
+                    });
+                    return;
+                }
+        }
+    }, [navigate])
+
+    const {sendBinary, sendJSON, status} = useWebSocket<WebsocketMessageType>(accessToken? `ws://localhost:8000/ws/stream/?token=${accessToken}` : null, handleMessage)
 
     // Take screenshot and send to server.
     const sendFrame = useCallback(() => {
@@ -74,6 +113,10 @@ function InterviewPage() {
             .then((res) => res.blob())
             .then((blob) => sendBinary(blob))
     }, [sendBinary, status])
+
+    const updateTime = useCallback(() => {
+        setCurrentTime(Date.now() - startTime)
+    }, [startTime])
 
     const handleFinish = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
@@ -89,33 +132,11 @@ function InterviewPage() {
     }, [sendFrame])
 
     useEffect(() => {
-        if (lastMessage?.type === "session_complete") {
-            if (lastMessage.id) {
-                navigate(`/result/${lastMessage.id}`)
-            } else {
-                navigate(`/history/`)
-            }
-
-            return;
+        const intervalID = setInterval(updateTime, UPDATE_INTERVAL)
+        return () => {
+            clearInterval(intervalID)
         }
-
-        const data = lastMessage?.data;
-        if (!data) return;
-
-        startTransition(() => {
-            if (!data.face_count || data.face_count < 1) {
-                setError("no_face");
-            } else {
-                setError(null);
-                setTrackedScore({
-                    eyeScore: data.eye_avg,
-                    emotionScore: data.emotion_avg,
-                    emotion: data.emotion
-                });
-            }
-        })
-
-    }, [lastMessage, navigate])
+    }, [updateTime])
 
     if (!accessToken) return <Navigate to='/interview/' replace />
     if (status === "CONNECTING" || status === "DISCONNECTING") return <div className='connecting'>{t("connecting")}...</div>
@@ -140,6 +161,7 @@ function InterviewPage() {
                 (
                     <>
                         <div className={`score-field ${scoreValueToState(trackedScore.emotionScore)}`}><u>{t("interview_page.emotion")}</u><div>{trackedScore.emotion} [{t("percentage_sign", {value:trackedScore.emotionScore})}]</div></div>
+                        <div className={`score-field good`}><h1>{formatTime(currentTime)}</h1></div>
                         <div className={`score-field ${scoreValueToState(trackedScore.eyeScore)}`}><u>{t("interview_page.eye_contact")}</u><div>{t("percentage_sign", {value:trackedScore.eyeScore})}</div></div>
                     </>
                 )}
