@@ -6,10 +6,8 @@ export type WebsocketStatus =
     | "DISCONNECTED"
     | "DISCONNECTING"
 
-export interface WebSocketHookType<T = unknown, S = unknown> {
+export interface WebSocketHookType<S = unknown> {
     status: WebsocketStatus,
-    /** The last message that was received. */
-    lastMessage: T | null,
     /** Send binary blobs to the server. */
     sendBinary: (blob: Blob) => void,
     /** Send JSON data to the server. */
@@ -17,13 +15,12 @@ export interface WebSocketHookType<T = unknown, S = unknown> {
 }
 
 /** Hook for creating a WebSocket instance. Provides useful callbacks for data communication. */
-function useWebSocket<T = unknown, S = unknown>(url: string | null): WebSocketHookType<T, S> {
+function useWebSocket<T = unknown, S = unknown>(url: string | null, onMessage: ((msg: T) => unknown) | null): WebSocketHookType<S> {
     const ws = useRef<WebSocket | null>(null);
     const [status, setStatus] = useState<WebsocketStatus>("CONNECTING");
-    const [lastMessage, setLastMessage] = useState<T | null>(null);
 
     useEffect(() => {
-        if (!url) return;
+        if (!url || !onMessage) return;
         ws.current = new WebSocket(url);
         ws.current.binaryType = "arraybuffer";
 
@@ -32,16 +29,13 @@ function useWebSocket<T = unknown, S = unknown>(url: string | null): WebSocketHo
         ws.current.onopen = () => setStatus("CONNECTED");
         ws.current.onclose = () => setStatus("DISCONNECTING");
         ws.current.onerror = (e) => console.error("WebSocket error: ", e);
-        ws.current.onmessage = (e: MessageEvent<string>) => {
-            const message = JSON.parse(e.data) as T;
-            setLastMessage(message);
-        };
+        ws.current.onmessage = (e: MessageEvent<string>) => onMessage(JSON.parse(e.data) as T);
 
         return () => {
             clearTimeout(connectingTimeout);
             ws.current?.close()
         }
-    }, [url]);
+    }, [url, onMessage]);
 
     useEffect(() => {
         if (status !== "DISCONNECTING") return;
@@ -61,7 +55,7 @@ function useWebSocket<T = unknown, S = unknown>(url: string | null): WebSocketHo
         ws.current.send(JSON.stringify(payload));
     }, []);
 
-    return { status, lastMessage, sendBinary, sendJSON };
+    return { status, sendBinary, sendJSON };
 }
 
 export default useWebSocket;
