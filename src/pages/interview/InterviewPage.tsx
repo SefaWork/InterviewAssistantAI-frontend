@@ -84,7 +84,7 @@ function InterviewPage() {
                 if (!message.id) return;
                 return navigate(message.id? `/result/${message.id}` : `/history/`);
             case "time":
-                return setStartTime(Date.now() - message.elapsed_time);
+                return setStartTime(Date.now() - message.elapsed_time * 1_000); // Convert to milliseconds.
             case "result": {
                 const {face_count = 0, eye_avg = 0, emotion_avg = 0, emotion = "Nötr"} = message.data
                 if (face_count < 1) return setError("no_face");
