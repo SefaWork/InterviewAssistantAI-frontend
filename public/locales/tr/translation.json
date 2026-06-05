@@ -113,6 +113,7 @@
         "options": "Seçenekler",
         "empty_page": "Bu sayfa boş, lütfen önceki sayfalara dönün.",
         "past_analysis": "Geçmiş Analizi",
+        "emotion_analysis": "Duygu Analizi",
 
         "trend_zero": "Bu zaman aralığında performansınız çok değişmedi.",
         "trend_up": "Bu zaman aralığında performansınız genel olarak yükseldi.",
@@ -140,6 +141,17 @@
 
         "no_feedback": "Öneri ve sonuçlar daha çıkmadı.",
         "no_past_analysis": "Geçmiş analizi yapılamıyor."
+    },
+
+    "emotion": {
+        "happy": "Mutlu",
+        "sad": "Üzgün",
+        "disgusted": "İğrenme",
+        "shocked": "Şaşkın",
+        "angry": "Kızkın",
+        "scared": "Korku",
+        "neutral": "Nötr",
+        "unknown": "Bilinmeyen"
     },
 
     "back": "Geri",

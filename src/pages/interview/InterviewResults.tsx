@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { useTranslation } from 'react-i18next';
+import { EMOTION_COLORS, EMOTIONS, type EmotionWeight } from '../../types/emotion';
 import './InterviewResults.css'
+import { Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import CollapsibleDiv from '../../components/common/CollapsibleDiv';
 
 type InterviewResultsType = {
-    total: number,
-    emotion: number,
-    eye: number,
+    total_score: number,
+    emotion_score: number,
+    eye_score: number,
     feedback: string[],
     past_analysis_feedback: string[]
-}
+} & EmotionWeight
 
 const SESSION_DISPLAY_PATH = "api/account/interviews/"
 
@@ -23,6 +26,8 @@ const convertFeedbackToTranslationKeys = (feedbackText: string): string[] => {
     }).filter(Boolean)
 }
 
+type CellDataType = {name: string, value: number, fill: string}
+
 // @TODO Improve the UI design.
 // @TODO Add distribution pie chart.
 function InterviewResults() {
@@ -30,6 +35,27 @@ function InterviewResults() {
 
     const [loading, setLoading] = useState(true)
     const [results, setResults] = useState<InterviewResultsType | null>(null)
+    const [animate, setAnimate] = useState(true)
+
+    const distributionData = useMemo<CellDataType[] | null>(() => {
+        if (!results) return null;
+
+        const distValues: CellDataType[] = [];
+
+        for (const emotion of EMOTIONS) {
+            const emotionDist = results[emotion];
+            if (!emotionDist) continue;
+
+            distValues.push({
+                name: t(`emotion.${emotion}`),
+                value: Math.round(emotionDist * 1000) / 10,
+                fill: EMOTION_COLORS[emotion]
+            })
+        }
+
+        distValues.sort((a, b) => b.value - a.value)
+        return distValues
+    }, [results, t])
 
     const { session } = useParams();
     const axiosServer = useAxiosPrivate();
@@ -44,19 +70,10 @@ function InterviewResults() {
         axiosServer
             .get(`${SESSION_DISPLAY_PATH}${session}/`, { signal: controller.signal })
             .then(({ data }) => {
-                const {emotion_score = 0, eye_score = 0, total_score = 0, feedback = "", past_analysis_feedback = ""} = data;
-
                 // Deconstruct the feedback and past analysis feedback.
-                const feedbackTranslated = convertFeedbackToTranslationKeys(feedback);
-                const pastAnalysisTranslated = convertFeedbackToTranslationKeys(past_analysis_feedback);
-
-                setResults({
-                    emotion: emotion_score,
-                    eye: eye_score,
-                    total: total_score,
-                    feedback: feedbackTranslated,
-                    past_analysis_feedback: pastAnalysisTranslated
-                })
+                data.feedback = convertFeedbackToTranslationKeys(data.feedback ?? "");
+                data.past_analysis_feedback = convertFeedbackToTranslationKeys(data.past_analysis_feedback ?? "");
+                setResults(data)
             })
             .catch(console.error)
             .finally(() => setLoading(false));
@@ -82,18 +99,44 @@ function InterviewResults() {
             <div className='interview-results-window'>
                 <div className='score-display'>
                     <div className='score-title'>{t("score_categories.total_score")}</div>
-                    <div className='score-value'>{t("percentage_sign", {value: results.total})}</div>
+                    <div className='score-value'>{t("percentage_sign", {value: results.total_score})}</div>
                 </div>
                 <div className='score-section'>
                     <div className='score-display'>
                         <div className='score-title'>{t("score_categories.emotion_score")}</div>
-                        <div className='score-value'>{t("percentage_sign", {value: results.emotion})}</div>
+                        <div className='score-value'>{t("percentage_sign", {value: results.emotion_score})}</div>
                     </div>
                     <div className='score-display'>
                         <div className='score-title'>{t("score_categories.eye_contact_score")}</div>
-                        <div className='score-value'>{t("percentage_sign", {value: results.eye})}</div>
+                        <div className='score-value'>{t("percentage_sign", {value: results.eye_score})}</div>
                     </div>
                 </div>
+                {distributionData && 
+                    <CollapsibleDiv 
+                        width="100%"
+                        title={t("interview_history.emotion_analysis")}
+                    >
+                        <ResponsiveContainer width={"100%"} height={400} style={{marginBottom: "1rem"}}>
+                            <PieChart>
+                                <Tooltip formatter={(value) => t("percentage_sign", {value})} />
+                                <Pie
+                                    isAnimationActive={animate? "auto" : false}
+                                    onAnimationStart={() => setAnimate(true)}
+                                    onAnimationEnd={() => setAnimate(false)}
+                                    data={distributionData}
+                                    dataKey="value"
+                                    nameKey="name"
+                                    cx="50%"
+                                    cy="50%"
+                                    outerRadius="70%"
+                                    label={({name, value}) => value > 5? `${name}: ${t("percentage_sign", {value})}` : undefined}
+                                    labelLine={false}
+                                />
+                                <Legend itemSorter={"dataKey"} />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </CollapsibleDiv>
+                }
                 <div className='suggestion-section'>
                     {results.feedback.length === 0? 
                         (<h3>{t("feedback.no_feedback")}</h3>)

@@ -113,6 +113,7 @@
         "options": "Options",
         "empty_page": "This page is empty. Please return to an earlier page.",
         "past_analysis": "Past Analysis",
+        "emotion_analysis": "Emotion Analysis",
 
         "trend_zero": "Your performance didn't have significant changes within this time range.",
         "trend_up": "Your performance had an overall increase within this time range.",
@@ -140,6 +141,17 @@
 
         "no_feedback": "No feedback generated yet.",
         "no_past_analysis": "No past analysis."
+    },
+
+    "emotion": {
+        "happy": "Happy",
+        "sad": "Sad",
+        "disgusted": "Disgusted",
+        "shocked": "Shocked",
+        "angry": "Angry",
+        "scared": "Scared",
+        "neutral": "Neutral",
+        "unknown": "Unknown"
     },
 
     "back": "Back",

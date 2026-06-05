@@ -86,7 +86,7 @@ function InterviewPage() {
             case "time":
                 return setStartTime(Date.now() - message.elapsed_time * 1_000); // Convert to milliseconds.
             case "result": {
-                const {face_count = 0, eye_avg = 0, emotion_avg = 0, emotion = "Nötr"} = message.data
+                const {face_count = 0, eye_avg = 0, emotion_avg = 0, emotion = "unknown"} = message.data
                 if (face_count < 1) return setError("no_face");
                 else {
                     setError(null);
@@ -161,7 +161,7 @@ function InterviewPage() {
                 : 
                 (
                     <>
-                        <div className={`score-field ${scoreValueToState(trackedScore.emotionScore)}`}><u>{t("interview_page.emotion")}</u><div>{trackedScore.emotion} [{t("percentage_sign", {value:trackedScore.emotionScore})}]</div></div>
+                        <div className={`score-field ${scoreValueToState(trackedScore.emotionScore)}`}><u>{t("interview_page.emotion")}</u><div>{t(`emotion.${trackedScore.emotion}`)} [{t("percentage_sign", {value:trackedScore.emotionScore})}]</div></div>
                         <div className={`score-field good`}><h1>{formatTime(currentTime)}</h1></div>
                         <div className={`score-field ${scoreValueToState(trackedScore.eyeScore)}`}><u>{t("interview_page.eye_contact")}</u><div>{t("percentage_sign", {value:trackedScore.eyeScore})}</div></div>
                     </>
