@@ -63,6 +63,9 @@
         "about_title": "What is InterviewHelper?",
         "reasoning_title": "Why use InterviewHelper?",
         "features_title": "Prototype Features",
+        
+        "scoring_title": "How does scoring work?",
+        "scoring_paragraph": "Total score is the average of both emotion and eye contact scores. Eye contact score is self explanatory, better eye contact yields better eye contact score. However, emotion score calculation is a bit more complicated. Each emotion has their own weight in determining score, with better emotions resulting in better score. Below are the list of emotion weights:",
 
         "about_paragraph": "This prototype is a demo for the InterviewHelper project. It allows users to take small interviews, and get feedback on non-verbal communication skills. Scoring is handled by a machine learning (ML) algorithm.",
         "reasoning_paragraph": "Non-verbal skills play a considerable role in the recruitment process. Candidates that appear more confident in themselves and their abilities stand out more from the rest, and practicing that isn't very simple. This tool acts as a means for practicing your non-verbal skills.",

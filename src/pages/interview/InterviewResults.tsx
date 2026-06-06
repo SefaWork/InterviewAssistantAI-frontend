@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { useTranslation } from 'react-i18next';
 import { EMOTION_COLORS, EMOTIONS, type EmotionWeight } from '../../types/emotion';
-import './InterviewResults.css'
 import { Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import CollapsibleDiv from '../../components/common/CollapsibleDiv';
+import './InterviewResults.css'
 
 type InterviewResultsType = {
     total_score: number,
@@ -29,7 +29,6 @@ const convertFeedbackToTranslationKeys = (feedbackText: string): string[] => {
 type CellDataType = {name: string, value: number, fill: string}
 
 // @TODO Improve the UI design.
-// @TODO Add distribution pie chart.
 function InterviewResults() {
     const {t} = useTranslation()
 
@@ -99,7 +98,7 @@ function InterviewResults() {
             <div className='interview-results-window'>
                 <div className='score-display'>
                     <div className='score-title'>{t("score_categories.total_score")}</div>
-                    <div className='score-value'>{t("percentage_sign", {value: results.total_score})}</div>
+                    <div className='score-value'>{t("percentage_sign", {value: results.total_score})} <Link to="/about/#scoring-info" className='info-link'>[?]</Link></div>
                 </div>
                 <div className='score-section'>
                     <div className='score-display'>

@@ -103,6 +103,18 @@ a.button.success:active, .button.success:enabled:active {
     background-color: var(--success-btn-disabled-color);
 }
 
+.info-link {
+    color: var(--primary-text-color);
+    text-decoration: none;
+    vertical-align: super;
+    font-size: smaller;
+}
+
+.info-link:visited {
+    color: var(--primary-text-color);
+    text-decoration: none;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

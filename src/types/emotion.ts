@@ -1,4 +1,4 @@
-export const EMOTIONS = ["happy", "neutral", "shocked", "sad", "angry", "scared", "disgusted", "unknown"] as const
+export const EMOTIONS = ["happy", "neutral", "shocked", "sad", "scared", "angry", "disgusted", "unknown"] as const
 export type EmotionType = typeof EMOTIONS[number]
 export type EmotionWeight = Record<EmotionType, number>
 
