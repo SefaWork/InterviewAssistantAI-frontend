@@ -167,7 +167,7 @@ function InterviewPage() {
                     </>
                 )}
             </div>
-            <button style={{marginBottom: "1rem"}} onClick={handleFinish} className='button danger large'>Finish</button>
+            <button disabled={currentTime <= 60_000} style={{marginBottom: "1rem"}} onClick={handleFinish} className='button danger large'>Finish</button>
         </div>
     )
 }
