@@ -64,6 +64,9 @@
         "reasoning_title": "Niye InterviewHelper?",
         "features_title": "Prototip Özellikleri",
 
+        "scoring_title": "Puanlama nasıl yapılıyor?",
+        "scoring_paragraph": "Toplam puan, duygu ve göz teması puanlarının ortalamasıdır. Göz teması puanı açıkça bellidir; daha iyi göz teması daha yüksek göz teması puanı getirir. Ancak duygu puanı hesaplaması biraz daha karmaşıktır. Her duygunun puanı belirlemedeki kendi ağırlığı vardır; daha olumlu duygular daha yüksek puana yol açar. Aşağıda duygu ağırlıklarının listesi bulunmaktadır:",
+
         "about_paragraph": "Bu prototip, InterviewHelper projesi için bir demodur. Kullanıcıların küçük mülakat simülasyonu almalarını ve bu mülakattan sözel olmayan iletişim becerilerini yorumlamasını sağlar. Puanlama makine öğrenimi (ML) teknolojisi ile sağlanır.",
         "reasoning_paragraph": "Sözel olmayan beceriler, işe alım sürecinde önemli bir rol oynamaktadır. Kendine ve yeteneklerine daha güvenli görünen adaylar diğerlerinden daha fazla öne çıkar ve bunu pratik yapmak pek kolay değildir. Bu araç, sözel olmayan becerilerinizi geliştirmeniz için bir ortam sunar.",
 
