@@ -12,8 +12,17 @@ type InterviewResultsType = {
     emotion_score: number,
     eye_score: number,
     feedback: string[],
-    past_analysis_feedback: string[]
+    past_analysis_feedback: string[],
+    duration: number,
 } & EmotionWeight
+
+const secondsToFormatted = (seconds: number) => {
+  const mm = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const ss = Math.floor(seconds % 60).toString().padStart(2, '0');
+  const ms = Math.floor((seconds % 1) * 100).toString().padStart(2, '0');
+
+  return `${mm}:${ss}.${ms}`;
+}
 
 const SESSION_DISPLAY_PATH = "api/account/interviews/"
 
@@ -24,6 +33,12 @@ const convertFeedbackToTranslationKeys = (feedbackText: string): string[] => {
         const split = x.split(':')
         return `feedback.${split[0]}_${split[1]}`
     }).filter(Boolean)
+}
+
+const scoreValueToState = (score: number): "good" | "average" | "bad" => {
+    if (score > 50) return "good"
+    else if (score > 25) return "average"
+    return "bad"
 }
 
 type CellDataType = {name: string, value: number, fill: string}
@@ -98,16 +113,20 @@ function InterviewResults() {
             <div className='interview-results-window'>
                 <div className='score-display'>
                     <div className='score-title'>{t("score_categories.total_score")}</div>
-                    <div className='score-value'>{t("percentage_sign", {value: results.total_score})} <Link to="/about/#scoring-info" className='info-link'>[?]</Link></div>
+                    <div className={`score-value ${scoreValueToState(results.total_score)}`}>{t("percentage_sign", {value: results.total_score})} <Link to="/about/#scoring-info" className='info-link'>[?]</Link></div>
                 </div>
                 <div className='score-section'>
                     <div className='score-display'>
                         <div className='score-title'>{t("score_categories.emotion_score")}</div>
-                        <div className='score-value'>{t("percentage_sign", {value: results.emotion_score})}</div>
+                        <div className={`score-value ${scoreValueToState(results.emotion_score)}`}>{t("percentage_sign", {value: results.emotion_score})}</div>
                     </div>
                     <div className='score-display'>
                         <div className='score-title'>{t("score_categories.eye_contact_score")}</div>
-                        <div className='score-value'>{t("percentage_sign", {value: results.eye_score})}</div>
+                        <div className={`score-value ${scoreValueToState(results.eye_score)}`}>{t("percentage_sign", {value: results.eye_score})}</div>
+                    </div>
+                    <div className='score-display'>
+                        <div className='score-title'>{t("interview_history.duration")}</div>
+                        <div className='score-value'>{secondsToFormatted(results.duration)}</div>
                     </div>
                 </div>
                 {distributionData && 

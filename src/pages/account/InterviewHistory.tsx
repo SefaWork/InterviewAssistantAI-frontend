@@ -9,14 +9,23 @@ import './InterviewHistory.css'
 type HistorySummary = {
     id: string,
     created_at: number,
-    totalScore: number
+    totalScore: number,
+    duration: number
 }
 
 const SESSION_LIST_PATH = '/api/account/interviews/'
 const SESSION_DELETE_PATH = '/api/account/delete-interview/'
 
-const deserializeResponse = (entry: {id: string, created_at: string, total_score: number}): HistorySummary => {
-    return {created_at: new Date(entry.created_at).getTime(), id: entry.id, totalScore: entry.total_score}
+const secondsToFormatted = (seconds: number) => {
+  const mm = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const ss = Math.floor(seconds % 60).toString().padStart(2, '0');
+  const ms = Math.floor((seconds % 1) * 100).toString().padStart(2, '0');
+
+  return `${mm}:${ss}.${ms}`;
+}
+
+const deserializeResponse = (entry: {id: string, created_at: string, total_score: number, duration: number}): HistorySummary => {
+    return {created_at: new Date(entry.created_at).getTime(), id: entry.id, totalScore: entry.total_score, duration: entry.duration}
 }
 
 const calculateTrend = (data: HistorySummary[]) => {
@@ -152,6 +161,7 @@ function InterviewHistory() {
                         <table className='history-table'>
                             <tr>
                                 <th>{t("interview_history.date")}</th>
+                                <th>{t("interview_history.duration")}</th>
                                 <th>{t("interview_history.score")}</th>
                                 <th>{t("interview_history.options")}</th>
                             </tr>
@@ -159,6 +169,7 @@ function InterviewHistory() {
                             interviews.map(data => (
                             <tr>
                                 <td>{dateFormatter.format(data.created_at)}</td>
+                                <td>{secondsToFormatted(data.duration)}</td>
                                 <td>{t("percentage_sign", {value: data.totalScore})}</td>
                                 <td className='options-block'>
                                     <Link className='button primary' to={`/history/${data.id}/`}>{t("view")}</Link>
