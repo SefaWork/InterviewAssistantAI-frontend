@@ -164,5 +164,19 @@
     "delete": "Delete",
     "page": "Page",
     "loading": "Loading",
-    "history": "History"
+    "history": "History",
+
+    "question": {
+        "about_self": "Tell us a bit about yourself.",
+        "why_work": "Why do you want to work at this company?",
+        "strengths": "What are your strengths?",
+        "weaknesses": "What are your weaknesses?",
+        "challenge": "Tell us about a challenge you've faced at work, and how you've dealt with it.",
+        "stress": "How do you handle stress?",
+        "future": "Where do you see yourself in five years?",
+        "goals": "What are your future goals?",
+        "pressure": "Can you work under pressure?",
+        "none": "No questions left! Try to think of things to ask your interviewer, or end the session here.",
+        "loading": "Loading question..."
+    }
 }

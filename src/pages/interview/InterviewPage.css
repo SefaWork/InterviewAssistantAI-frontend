@@ -34,6 +34,7 @@
 .instruction-section {
     flex: 1;
     padding: 1rem 0;
+    font-size: x-large;
 }
 
 .feedback-section {
@@ -96,4 +97,13 @@
 .score-field.error {
     border-color: var(--error-color);
     color: var(--error-color);
+}
+
+.buttons-section {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
 }
