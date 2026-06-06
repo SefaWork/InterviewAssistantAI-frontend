@@ -78,7 +78,7 @@ function InterviewPage() {
     const [trackedScore, setTrackedScore] = useState<TrackedScore>({
         eyeScore: 0,
         emotionScore: 0,
-        emotion: "Nötr"
+        emotion: "unknown"
     });
     
     const [errorMsg, setError] = useState<string | null>(null);
