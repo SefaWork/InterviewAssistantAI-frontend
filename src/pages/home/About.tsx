@@ -23,8 +23,6 @@ function About() {
         }
     }, []);
 
-    const features = (t("about_page.features", {returnObjects: true}) || []) as string[];
-
     return (
         <div className="about-page">
             <div style={{animationDelay:"100ms"}} className='image-text-wrapper left'>
