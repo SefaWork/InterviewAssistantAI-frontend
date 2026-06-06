@@ -20,7 +20,7 @@
     padding: 2rem 2rem;
 
     width: 50%;
-    max-width: 60vh;
+    max-width: 70vh;
 
     margin: 4rem 1rem;
 }
@@ -48,10 +48,9 @@
 }
 
 .score-display .score-value {
-    font-size: larger;
+    font-size: x-large;
     font-weight: bold;
-    margin-top: .5rem;
-    margin-bottom: .5rem;
+    margin: 1rem 0;
 }
 
 .total-score {
@@ -60,4 +59,16 @@
 
 .suggestion-section {
     margin-top: 1rem;
+}
+
+.good {
+    text-shadow: 1px 0px 10px #109410;
+}
+
+.average {
+    text-shadow: 1px 0px 10px #ffa000;
+}
+
+.bad {
+    text-shadow: 1px 0px 10px #a00000;
 }

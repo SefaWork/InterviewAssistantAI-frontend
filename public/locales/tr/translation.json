@@ -122,7 +122,8 @@
         "trend_up": "Bu zaman aralığında performansınız genel olarak yükseldi.",
         "trend_down": "Bu zaman aralığında performansınız genel olarak azaldı.",
 
-        "comment": "Grafik Yorumu"
+        "comment": "Grafik Yorumu",
+        "duration": "Zaman"
     },
 
     "feedback": {

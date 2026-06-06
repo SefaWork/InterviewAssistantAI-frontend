@@ -122,7 +122,8 @@
         "trend_up": "Your performance had an overall increase within this time range.",
         "trend_down": "Your performance had an overall decrease within this time range.",
 
-        "comment": "Graph Comment"
+        "comment": "Graph Comment",
+        "duration": "Duration"
     },
 
     "feedback": {
