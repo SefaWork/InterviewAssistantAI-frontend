@@ -164,5 +164,19 @@
     "delete": "Sil",
     "page": "Sayfa",
     "loading": "Yükleniyor",
-    "history": "Geçmiş"
+    "history": "Geçmiş",
+
+    "question": {
+        "about_self": "Bize biraz kendinizden bahsedin.",
+        "why_work": "Bu şirkette neden çalışmak istiyorsunuz?",
+        "strengths": "Güçlü yönleriniz nelerdir?",
+        "weaknesses": "Zayıf yönleriniz nelerdir?",
+        "challenge": "İş hayatınızda karşılaştığınız bir zorluğu ve bununla nasıl başa çıktığınızı anlatın.",
+        "stress": "Stresle nasıl başa çıkarsınız?",
+        "future": "Kendinizi beş yıl sonra nerede görüyorsunuz?",
+        "goals": "Gelecekteki hedefleriniz nelerdir?",
+        "pressure": "Baskı altında çalışabilir misiniz?",
+        "none": "Başka soru kalmadı! Mülakatçınıza sormak istediğiniz var ise sorabilirsiniz ya da oturumu sonlandırabilirsiniz.",
+        "loading": "Soru yükleniyor..."
+    }
 }

@@ -1,8 +1,8 @@
-import './Home.css'
 import HomeImage from '../../assets/home-image.jpg'
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth';
+import './Home.css'
 
 function Home() {
     const {t} = useTranslation();

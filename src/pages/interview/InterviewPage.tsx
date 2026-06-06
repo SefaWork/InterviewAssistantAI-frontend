@@ -31,7 +31,12 @@ type TimeSyncMessage = {
     elapsed_time: number
 }
 
-type WebsocketMessageType = SessionCompleteResponse | FrameResultResponse | TimeSyncMessage;
+type SessionQuestionResponse = {
+    type: "question",
+    question: string
+}
+
+type WebsocketMessageType = SessionCompleteResponse | FrameResultResponse | TimeSyncMessage | SessionQuestionResponse;
 
 type TrackedScore = {
     eyeScore: number,
@@ -61,12 +66,14 @@ const formatTime = (ms: number): string => {
 // @TODO Add progress bar.
 // @TODO Add confidence indicator.
 function InterviewPage() {
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
     const webcamRef = useRef<Webcam>(null);
     const navigate = useNavigate();
+    const [ question, setQuestion ] = useState<string>("loading");
     const [ startTime, setStartTime ] = useState<number>(() => Date.now());
     const [ currentTime, setCurrentTime ] = useState<number>(0);
     const { accessToken } = useAuth();
+    const [ playing, setPlaying ] = useState<boolean>(false);
 
     const [trackedScore, setTrackedScore] = useState<TrackedScore>({
         eyeScore: 0,
@@ -98,6 +105,7 @@ function InterviewPage() {
                     return;
                 }
             }
+            case "question": return setQuestion(message.question)
         }
     }, [navigate])
 
@@ -124,6 +132,11 @@ function InterviewPage() {
         sendJSON({"type": "finish"});
     }
 
+    const handleQuestion = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        sendJSON({"type": "question"});
+    }
+
     // Create interval to send frames.
     useEffect(() => {
         const intervalID = setInterval(sendFrame, SEND_INTERVAL)
@@ -131,6 +144,27 @@ function InterviewPage() {
             clearInterval(intervalID)
         }
     }, [sendFrame])
+
+    useEffect(() => {
+        try {
+            const audio = new Audio(`/question_audio/${i18n.languages[0]}/${question}.mp3`)
+            
+            audio.addEventListener("ended", () => {
+                setPlaying(false)
+            })
+
+            audio.play()
+                .then(() => {
+                    setPlaying(true)
+                })
+            
+            return () => {
+                audio.pause();
+            }
+        } catch(err) {
+            console.error(err)
+        }
+    }, [i18n.languages, question])
 
     useEffect(() => {
         const intervalID = setInterval(updateTime, UPDATE_INTERVAL)
@@ -149,7 +183,7 @@ function InterviewPage() {
                 <Webcam screenshotFormat='image/jpeg' videoConstraints={{facingMode: 'user'}} audio={false} mirrored ref={webcamRef} />
             </div>
             <div className='instruction-section'>
-                <p>{t("interview_page.instruction")}</p>
+                <p>{t(`question.${question}`)}</p>
             </div>
             <div className='feedback-section'>
                 {errorMsg ?
@@ -167,7 +201,10 @@ function InterviewPage() {
                     </>
                 )}
             </div>
-            <button disabled={currentTime <= 60_000} style={{marginBottom: "1rem"}} onClick={handleFinish} className='button danger large'>Finish</button>
+            <div className='buttons-section'>
+                <button disabled={playing} style={{marginBottom: "1rem"}} onClick={handleQuestion} className='button primary large'>Next Question</button>
+                <button disabled={currentTime <= 60_000} style={{marginBottom: "1rem"}} onClick={handleFinish} className='button danger large'>Finish</button>
+            </div>
         </div>
     )
 }
