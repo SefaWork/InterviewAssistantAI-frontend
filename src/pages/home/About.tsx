@@ -1,5 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import Interview1Image from '../../assets/interview_1.jpg'
+import Interview1Image from '../../assets/interview_1.jpg';
+import Interview2Image from '../../assets/interview_2.jpg';
+import Interview3Image from '../../assets/interview_3.jpg';
+import Interview4Image from '../../assets/interview_4.jpg';
 import useEmotionWeights from '../../hooks/useEmotionWeights';
 import { useEffect, useMemo } from 'react';
 import { EMOTIONS } from '../../types/emotion';
@@ -37,10 +40,10 @@ function About() {
                     <h1>{t("about_page.reasoning_title")}</h1>
                     <p>{t("about_page.reasoning_paragraph")}</p>
                 </div>
-                <img src={Interview1Image}></img>
+                <img src={Interview2Image}></img>
             </div>
             <div style={{animationDelay:"200ms"}} className='image-text-wrapper left'>
-                <img src={Interview1Image}></img>
+                <img src={Interview3Image}></img>
                 <div>
                     <h1>{t("about_page.features_title")}</h1>
                     <ul>
@@ -56,7 +59,7 @@ function About() {
                         {translatedWeights.map(x => (<li key={x}>{x}</li>))}
                     </ul>
                 </div>
-                <img src={Interview1Image}></img>
+                <img src={Interview4Image}></img>
             </div>
         </div>
     )   
