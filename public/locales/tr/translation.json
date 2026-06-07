@@ -123,7 +123,9 @@
         "trend_down": "Bu zaman aralığında performansınız genel olarak azaldı.",
 
         "comment": "Grafik Yorumu",
-        "duration": "Zaman"
+        "duration": "Süre",
+        "question_analysis": "Cevaplanan Sorular",
+        "question": "Soru"
     },
 
     "feedback": {

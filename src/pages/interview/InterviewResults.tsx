@@ -14,6 +14,8 @@ type InterviewResultsType = {
     feedback: string[],
     past_analysis_feedback: string[],
     duration: number,
+    question_list: string[],
+    question_answer_times: number[]
 } & EmotionWeight
 
 const secondsToFormatted = (seconds: number) => {
@@ -155,6 +157,28 @@ function InterviewResults() {
                         </ResponsiveContainer>
                     </CollapsibleDiv>
                 }
+                <CollapsibleDiv width="100%" title={t("interview_history.question_analysis")}>
+                    {results.question_list.length == 0?
+                        (<p>{t("interview_history.no_question_answered")}</p>)
+                        :
+                        (<table className='question-table'>
+                            <thead>
+                                <tr>
+                                    <th>{t("interview_history.duration")}</th>
+                                    <th>{t("interview_history.question")}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {results.question_list.map((tk, i) => (
+                                    <tr key={tk}>
+                                        <td>{secondsToFormatted(results.question_answer_times[i] ?? 0)}</td>
+                                        <td>{t(`question.${tk}`)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>)
+                    }
+                </CollapsibleDiv>
                 <div className='suggestion-section'>
                     {results.feedback.length === 0? 
                         (<h3>{t("feedback.no_feedback")}</h3>)

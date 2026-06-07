@@ -20,6 +20,8 @@ body {
     --link-visited-color: #551A8B;
     --error-color: #ff0000;
 
+    --table-alternate: #d9e6ff;
+
     --primary-btn-color: #4784ff;
     --primary-btn-hover-color: #0055ff;
     --primary-btn-active-color: #0043ca;
@@ -58,6 +60,8 @@ body.dark {
     --link-color: #386891;
     --link-visited-color: #915938;
     --error-color: #d50000;
+
+    --table-alternate: #110a20;
 
     --primary-btn-color: #5537ff;
     --primary-btn-hover-color: #3015c9;
