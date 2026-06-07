@@ -179,24 +179,26 @@ function InterviewResults() {
                         </table>)
                     }
                 </CollapsibleDiv>
-                <div className='suggestion-section'>
-                    {results.feedback.length === 0? 
-                        (<h3>{t("feedback.no_feedback")}</h3>)
-                        :
-                        (<ul>
-                            {results.feedback.map(x => (<li key={x}>{t(x)}</li>))}
-                        </ul>)
-                    }
-                </div>
-                <div className='past-analysis'>
-                    {results.past_analysis_feedback.length === 0? 
-                        (<h3>{t("feedback.no_past_analysis")}</h3>)
-                        :
-                        (<ul>
-                            {results.past_analysis_feedback.map(x => (<li key={x}>{t(x)}</li>))}
-                        </ul>)
-                    }
-                </div>
+                <CollapsibleDiv width="100%" title={t("interview_history.final_feedback")}>
+                    <div className='suggestion-section'>
+                        {results.feedback.length === 0? 
+                            (<h3>{t("feedback.no_feedback")}</h3>)
+                            :
+                            (<ul>
+                                {results.feedback.map(x => (<li key={x}>{t(x)}</li>))}
+                            </ul>)
+                        }
+                    </div>
+                    <div className='past-analysis'>
+                        {results.past_analysis_feedback.length === 0? 
+                            (<h3>{t("feedback.no_past_analysis")}</h3>)
+                            :
+                            (<ul>
+                                {results.past_analysis_feedback.map(x => (<li key={x}>{t(x)}</li>))}
+                            </ul>)
+                        }
+                    </div>
+                </CollapsibleDiv>
                 <button className='button primary large' onClick={handleBack}>
                     &lt;&lt; {t("interview_history.title")}
                 </button>
