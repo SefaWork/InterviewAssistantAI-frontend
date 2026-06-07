@@ -125,7 +125,8 @@
         "comment": "Graph Comment",
         "duration": "Duration",
         "question_analysis": "Questions Answered",
-        "question": "Question"
+        "question": "Question",
+        "final_feedback": "Final Feedback"
     },
 
     "feedback": {
