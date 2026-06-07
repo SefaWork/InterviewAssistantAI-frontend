@@ -5,6 +5,7 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
+    font-size: large;
 }
 
 .interview-results-window {
@@ -71,4 +72,26 @@
 
 .bad {
     text-shadow: 1px 0px 10px #a00000;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.question-table th,
+.question-table td {
+  border: 1px solid var(--foreground-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.question-table th {
+  background-color: var(--foreground-color);
+  font-weight: 600;
+  color: var(--secondary-text-color);
+}
+
+.question-table tr:nth-child(even) {
+  background-color: var(--table-alternate);
 }
