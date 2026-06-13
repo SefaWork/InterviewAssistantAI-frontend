@@ -5,13 +5,16 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import axios from 'axios';
 import './InterviewHistory.css'
+import { EMOTION_COLORS, EMOTIONS, type EmotionType } from '../../types/emotion';
+
+const LIST_BY_INDEX = ["total_score", ...EMOTIONS] as const;
 
 type HistorySummary = {
     id: string,
     created_at: number,
-    totalScore: number,
+    total_score: number,
     duration: number
-}
+} & Record<EmotionType, number>
 
 const SESSION_LIST_PATH = '/api/account/interviews/'
 const SESSION_DELETE_PATH = '/api/account/delete-interview/'
@@ -24,8 +27,9 @@ const secondsToFormatted = (seconds: number) => {
   return `${mm}:${ss}.${ms}`;
 }
 
-const deserializeResponse = (entry: {id: string, created_at: string, total_score: number, duration: number}): HistorySummary => {
-    return {created_at: new Date(entry.created_at).getTime(), id: entry.id, totalScore: entry.total_score, duration: entry.duration}
+const deserializeResponse = (entry: object): HistorySummary => {
+    if (!("created_at" in entry)) throw new Error("Expected created_at value.");
+    return {...entry, created_at: new Date(entry.created_at as string).getTime()} as HistorySummary
 }
 
 const calculateTrend = (data: HistorySummary[]) => {
@@ -34,8 +38,8 @@ const calculateTrend = (data: HistorySummary[]) => {
 
     for (let i = 0; i < n; i++) {
         sumX  += i;
-        sumY  += data[i].totalScore;
-        sumXY += i * data[i].totalScore;
+        sumY  += data[i].total_score;
+        sumXY += i * data[i].total_score;
         sumX2 += i * i;
     }
 
@@ -51,12 +55,23 @@ function InterviewHistory() {
     
     // States and references.
     const [interviews, setInterviews] = useState<HistorySummary[]>([]);
-    const chartData = useMemo(() => [...interviews].reverse(), [interviews]);
+    const chartData = useMemo(() => {
+        return [...interviews].reverse().map(entry => {
+            const mapped: typeof entry = { ...entry };
+            for (const emotion of EMOTIONS) {
+                mapped[emotion] = Math.round(entry[emotion] * 1000) / 10;
+            }
+            return mapped;
+        });
+    }, [interviews]);
     const slope = useMemo(() => calculateTrend(chartData), [chartData]);
     const [loading, setLoading] = useState<boolean>(true);
     const deletingStateRef = useRef<boolean>(false);
     const [totalPages, setTotalPages] = useState<number>(1);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+    const [dataIndex, setDataIndex] = useState<number>(0);
+    const dataKey = useMemo(() => LIST_BY_INDEX[dataIndex], [dataIndex])
 
     const currentPage = useMemo(() => {
         const value = parseInt(searchParams.get('page') ?? "1", 10)
@@ -130,6 +145,16 @@ function InterviewHistory() {
         setSearchParams(`?page=${newPage}`)
     }
 
+    const changeFilter = (e: React.MouseEvent<HTMLButtonElement>, increment: number) => {
+        e.stopPropagation();
+
+        let newFilterIndex = dataIndex + increment;
+        if (newFilterIndex >= LIST_BY_INDEX.length) newFilterIndex = 0;
+        else if (newFilterIndex < 0) newFilterIndex = LIST_BY_INDEX.length - 1;
+
+        setDataIndex(newFilterIndex);
+    }
+
     if (loading) return (<div className='interview-history-main'>
         <div className='interview-history-window'>
             <h1>{t("loading")}...</h1>
@@ -170,7 +195,7 @@ function InterviewHistory() {
                             <tr>
                                 <td>{dateFormatter.format(data.created_at)}</td>
                                 <td>{secondsToFormatted(data.duration)}</td>
-                                <td>{t("percentage_sign", {value: data.totalScore})}</td>
+                                <td>{t("percentage_sign", {value: data.total_score})}</td>
                                 <td className='options-block'>
                                     <Link className='button primary' to={`/history/${data.id}/`}>{t("view")}</Link>
                                     <button className='button danger' onClick={(e) => handleDelete(e, data.id)}>{t("delete")}</button>
@@ -192,7 +217,7 @@ function InterviewHistory() {
                                         tick={{dx: -10}} 
                                     />
                                     <YAxis 
-                                        dataKey="totalScore"
+                                        dataKey={dataKey}
                                         type='number'
                                         domain={[dataMin => Math.max(0, dataMin - 10), dataMax => Math.min(100, dataMax + 10)]}
                                         tickFormatter={(value) => t("percentage_sign", {value})}
@@ -206,9 +231,14 @@ function InterviewHistory() {
                                         formatter={(value, name) => [t("percentage_sign", {value}), name]}
                                     />
                                     <CartesianGrid stroke="#f5f5f5" />
-                                    <Line type="monotone" dataKey="totalScore" name={t("interview_history.score")} stroke="var(--foreground-color)" />
+                                    <Line type="monotone" dataKey={dataKey} name={dataKey === "total_score"? t("interview_history.score") : t("interview_history.percentage")} stroke={`${EMOTION_COLORS[dataKey as EmotionType] ?? "var(--foreground-color)"}`} />
                                 </LineChart>
                             </ResponsiveContainer>
+                            <div className='filter-navigator'>
+                                <button style={{marginRight: "1rem"}} className='button primary small' onClick={(e) => changeFilter(e, -1)}>&lt;</button>
+                                {dataKey === "total_score"? t("score_categories.total_score") : t("interview_history.percentageOf", { name: t(`emotion.${dataKey}`) })}
+                                <button style={{marginLeft: "1rem"}} className='button primary small' onClick={(e) => changeFilter(e, 1)}>&gt;</button>
+                            </div>
                             <h3>{t("interview_history.comment")}</h3>
                             {t(Math.abs(slope) < 0.25? "interview_history.trend_zero" : slope > 0? "interview_history.trend_up" : "interview_history.trend_down")}
                         </>)}
