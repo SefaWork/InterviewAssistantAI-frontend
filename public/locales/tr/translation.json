@@ -56,7 +56,11 @@
         "description": "InterviewHelper uygulamasının sizin iletişimde sözsüz performansınızı yorumlaması için webcam iznine ihtiyacı vardır. Lütfen internet tarayıcınız üzerinden webcam izni veriniz.",
         "ready": "Webcam hazır!",
         "not_ready": "Webcam hazır değil.",
-        "start": "Mülakata Başla"
+        "start": "Mülakata Başla",
+
+        "existing_interview": "Önceki mülakatınızı bitirmediniz. Devam etmek ister misiniz?",
+        "continue_session": "Devam Et",
+        "delete_session": "Sil & Tekrar Başla"
     },
 
     "about_page": {

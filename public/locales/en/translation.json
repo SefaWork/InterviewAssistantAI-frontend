@@ -56,7 +56,11 @@
         "description": "InterviewHelper requires webcam permission in order to evaluate your non-verbal performance. Please enable webcam permission from browser settings.",
         "ready": "Webcam is ready!",
         "not_ready": "Webcam is not ready.",
-        "start": "Start Interview"
+        "start": "Start Interview",
+
+        "existing_interview": "You haven't finished your previous interview. Would you like to continue?",
+        "continue_session": "Continue Interview",
+        "delete_session": "Delete & Start New"
     },
 
     "about_page": {
